@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stay Safe Elite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#38bdf8">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=> {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg=> console.log("SW registered:", reg.scope))
+      .catch(err=> console.log("SW registration failed:", err));
+  });
+}
+</script>
+</head>
+<body>
+
+<!-- Onboarding / language selector -->
+<section id="onboarding" class="overlay">
+<div>
+<div style="font-size:60px; margin-bottom:20px;">🛡️</div>
+<h1>Stay Safe Elite</h1>
+<div class="lang-grid">
+<div class="lang-btn" onclick="initApp('en')">🇺🇸 English</div>
+<div class="lang-btn" onclick="initApp('el')">🇬🇷 Greek</div>
+<div class="lang-btn" onclick="initApp('de')">🇩🇪 German</div>
+<div class="lang-btn" onclick="initApp('fr')">🇫🇷 French</div>
+<div class="lang-btn" onclick="initApp('es')">🇪🇸 Spanish</div>
+<div class="lang-btn" onclick="initApp('it')">🇮🇹 Italian</div>
+<div class="lang-btn" onclick="initApp('pt')">🇵🇹 Portuguese</div>
+<div class="lang-btn" onclick="initApp('ru')">🇷🇺 Russian</div>
+<div class="lang-btn" onclick="initApp('zh')">🇨🇳 Chinese</div>
+<div class="lang-btn" onclick="initApp('hi')">🇮🇳 Hindi</div>
+</div>
+</div>
+</section>
+
+<!-- Main App -->
+<div id="main_app" class="hidden">
+<header class="app-header">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <div style="color:var(--gold); font-weight:bold;">🔥 <span id="streak_val">1</span> <span id="txt_days">DAYS</span></div>
+    <div style="font-weight:900; color:var(--accent);">LEVEL <span id="level_val">1</span></div>
+  </div>
+  <div class="xp-bar"><div id="xp_fill" class="xp-fill"></div></div>
+</header>
+
+<main style="padding: 20px 20px 110px;">
+  <div id="ad_box" style="background:#1e293b; padding:10px; border-radius:10px; text-align:center; font-size:10px; color:var(--muted); margin-bottom:15px;">ADVERTISEMENT - ELITE TO REMOVE</div>
+
+  <section id="screen_home">
+    <div class="glass-card" id="quiz_container">
+      <h2 style="margin:0;" id="txt_daily">🛡️ Daily Training</h2>
+      <p id="quiz_text" style="color:var(--muted); font-size:0.9rem;">Ready for today's challenge?</p>
+      <div id="quiz_options"></div>
+      <button class="main-cta" id="quiz_btn" onclick="startQuiz()">START QUIZ</button>
+    </div>
+
+    <h3 style="font-size:1rem; margin-bottom:10px;" id="txt_achievements">🏆 Achievements</h3>
+    <div class="badge-grid">
+      <div id="badge1" class="badge">🎖️</div>
+      <div id="badge2" class="badge">🛡️</div>
+      <div id="badge3" class="badge">💎</div>
+      <div class="premium-btn-inline" onclick="openModal()">
+        <div style="font-size: 16px;">🔒</div>
+        <span>4,90€</span>
+      </div>
+    </div>
+
+    <div class="map-container">
+      <h4 style="margin:0 0 10px; color:var(--accent); font-size:0.8rem;" id="txt_map">TRAINING MAP</h4>
+      <div class="map-step active" id="step1"><div class="step-dot">1</div><small>Rookie</small></div>
+      <div class="map-step" id="step2"><div class="step-dot">5</div><small>Expert</small></div>
+      <div class="map-step" id="step3"><div class="step-dot">10</div><small>Elite</small></div>
+    </div>
+  </section>
+
+  <section id="screen_premium" class="hidden">
+    <div id="prem_locked" class="glass-card" style="border:2px solid var(--gold); text-align:center;">
+      <h2 style="color:var(--gold);">Elite Access</h2>
+      <p style="font-size:0.9rem;" id="txt_prem_desc">Unlock all security tools.</p>
+      <button class="main-cta" style="background:var(--gold); color:black;" onclick="openModal()">UNLOCK NOW (4.90€)</button>
+    </div>
+
+    <div id="prem_unlocked" class="hidden">
+      <div class="tools-grid">
+        <div class="tool-card" onclick="window.location.href='checkup.html'"><i>🔍</i><small>CHECKUP</small></div>
+        <div class="tool-card" onclick="window.location.href='sos_hub.html'"><i>🚨</i><small>SOS HUB</small></div>
+        <div class="tool-card" onclick="window.location.href='scam-alerts.html'"><i>⚠️</i><small>ALERTS</small></div>
+        <div class="tool-card" onclick="window.location.href='dojo.html'"><i>⚡</i><small>DOJO</small></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<nav class="nav-tabs">
+<button class="nav-tab active" id="nav_home" onclick="nav('home', this)">🏠</button>
+<button class="nav-tab" id="nav_premium" onclick="nav('premium', this)">💎</button>
+</nav>
+</div>
+
+<div id="premiumModal" class="modal">
+<div class="modal-content">
+<span class="close-modal" onclick="closeModal()">&times;</span>
+<div style="font-size:50px;">💎</div>
+<h2 style="color:var(--accent); margin-top:10px;">Elite Membership</h2>
+<div class="modal-body" style="text-align:left; font-size:0.9rem; margin:20px 0;">
+<p>✅ Unlock all tools</p>
+<p>✅ Remove Ads</p>
+<p>✅ Access Scam Alerts</p>
+</div>
+<div style="font-size:1.4rem; color:var(--gold); font-weight:bold; margin-bottom:20px;">4,90€ / month</div>
+<button class="main-cta" onclick="buyPremium()">BUY NOW</button>
+</div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
