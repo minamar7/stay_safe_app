@@ -1,4 +1,0 @@
-npm init @vitejs/app stay-safe-elite
-cd stay-safe-elite
-npm install
-npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor/ios
