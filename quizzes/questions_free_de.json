@@ -1,0 +1,53 @@
+{
+  "de": {
+    "levels": {
+      "1": [
+        { "q": "Wie lautet die europäische Notrufnummer?", "o": ["100", "112", "911"], "a": 1 },
+        { "q": "Was tun, wenn es zu Hause nach Gas riecht?", "o": ["Licht einschalten", "Fenster öffnen", "Polizei rufen"], "a": 1 },
+        { "q": "Ist es sicher, den Schlüssel unter die Fußmatte zu legen?", "o": ["Ja", "Nein", "Nur kurz"], "a": 1 },
+        { "q": "Wie löscht man einen Fettbrand in einer Pfanne?", "o": ["Mit Wasser", "Mit einem Deckel oder einer Löschdecke", "Durch Pusten"], "a": 1 },
+        { "q": "Wo sollten Haushaltsreiniger aufbewahrt werden?", "o": ["Auf dem Boden", "In einem hohen, verschlossenen Schrank", "Unter dem Bett"], "a": 1 }
+      ],
+
+      "2": [
+        { "q": "Was tun, wenn ein Kabel Funken schlägt?", "o": ["Anfassen", "Hauptsicherung ausschalten", "Wasser draufgießen"], "a": 1 },
+        { "q": "Wie oft sollte man den Rauchmelder testen?", "o": ["Jeden Monat", "Niemals", "Alle 10 Jahre"], "a": 0 },
+        { "q": "Wo sollte man die Hausschlüssel nachts lassen?", "o": ["In der Tür", "An einem festen Ort fern der Tür", "Auf dem Balkon"], "a": 1 },
+        { "q": "Was tun, wenn man im Aufzug stecken bleibt?", "o": ["Tür mit Gewalt öffnen", "Notruftaste drücken", "Schreien"], "a": 1 },
+        { "q": "Welche Nummer rufen Sie bei einem Brand in Griechenland an?", "o": ["100", "199", "166"], "a": 1 }
+      ],
+
+      "3": [
+        { "q": "Was tun, wenn Rauch aus einer Steckdose kommt?", "o": ["Gerät ausstecken", "Wasser gießen", "Hauptsicherung ausschalten"], "a": 2 },
+        { "q": "Ist es sicher, das Handy unter dem Kissen zu laden?", "o": ["Ja", "Nein, Überhitzungsgefahr", "Nur nachts"], "a": 1 },
+        { "q": "Was tun bei einem Erdbeben?", "o": ["Zur Treppe rennen", "Unter einem stabilen Tisch schützen", "Aufzug benutzen"], "a": 1 },
+        { "q": "Ist es sicher, Passwörter per E-Mail zu teilen?", "o": ["Ja", "Nein", "Nur mit der Familie"], "a": 1 },
+        { "q": "Was bedeutet 2FA?", "o": ["Doppelte Geschwindigkeit", "Zwei-Faktor-Authentisierung", "Chat-App"], "a": 1 }
+      ],
+
+      "4": [
+        { "q": "Sie finden einen USB-Stick auf der Straße. Was tun Sie?", "o": ["An meinen PC anschließen", "Wegwerfen", "Verschenken"], "a": 1 },
+        { "q": "Welches Passwort ist am stärksten?", "o": ["123456", "Pa$$w0rd!2024", "mein_name"], "a": 1 },
+        { "q": "Was bedeutet das Vorhängeschloss im Browser?", "o": ["Gesperrter PC", "Sichere Verbindung (HTTPS)", "Langsames Internet"], "a": 1 },
+        { "q": "Was tun, wenn Sie einen Link von einem Unbekannten erhalten?", "o": ["Anklicken", "Löschen", "An Freunde senden"], "a": 1 },
+        { "q": "Ist öffentliches WLAN sicher für Online-Banking?", "o": ["Ja", "Nein", "Nur mit Passwort"], "a": 1 }
+      ],
+
+      "5": [
+        { "q": "Was ist Phishing?", "o": ["Ein Update", "Elektronischer Betrug zum Datendiebstahl", "Ein Spiel"], "a": 1 },
+        { "q": "Wie schützen Sie Ihr Facebook-Konto?", "o": ["Einfaches Passwort", "2FA aktivieren", "Mit vielen Likes"], "a": 1 },
+        { "q": "Was tun, wenn Ihr PC durch Ransomware gesperrt ist?", "o": ["Bezahlen", "Techniker/Polizei rufen", "PC zerstören"], "a": 1 },
+        { "q": "Wie oft sollten Sie Passwörter ändern?", "o": ["Niemals", "Alle paar Monate", "Jeden Tag"], "a": 1 },
+        { "q": "Ist es sicher, Passwörter im Browser zu speichern?", "o": ["Ja, immer", "Nicht an öffentlichen PCs", "Nur auf dem Handy"], "a": 1 }
+      ],
+
+      "6": [
+        { "q": "SMS: 'Paket ausstehend, hier klicken'. Was tun Sie?", "o": ["Link anklicken", "Löschen", "Meine Daten senden"], "a": 1 },
+        { "q": "Risiko von Over-Sharing in sozialen Medien?", "o": ["Follower gewinnen", "Infos an Einbrecher geben", "Keines"], "a": 1 },
+        { "q": "Was bietet ein Antivirenprogramm?", "o": ["Schnelleres Internet", "Schutz vor Viren", "Gratis Filme"], "a": 1 },
+        { "q": "Jemand von der 'Bank' fragt nach Ihrer PIN. Was tun Sie?", "o": ["Geben", "Auflegen", "Fragen, wer es ist"], "a": 1 },
+        { "q": "SMS sagt, Sie haben ein iPhone gewonnen. Was tun Sie?", "o": ["Adresse senden", "Ignorieren/Löschen", "Link anklicken"], "a": 1 }
+      ]
+    }
+  }
+}
