@@ -11,173 +11,248 @@
 <link rel="stylesheet" href="styles.css">
 
 <script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js');
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=> {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg=> console.log("SW registered:", reg.scope))
+      .catch(err=> console.log("SW registration failed:", err));
   });
 }
 </script>
 </head>
-
 <body>
 
-<!-- ONBOARDING -->
+<!-- Onboarding / language selector -->
 <section id="onboarding" class="overlay">
-  <div>
-    <div style="font-size:60px;margin-bottom:20px;">🛡️</div>
-    <h1>Stay Safe Elite</h1>
-    <div class="lang-grid">
-      <div class="lang-btn" onclick="initApp('en')">🇺🇸 English</div>
-      <div class="lang-btn" onclick="initApp('el')">🇬🇷 Greek</div>
-      <div class="lang-btn" onclick="initApp('de')">🇩🇪 German</div>
-      <div class="lang-btn" onclick="initApp('fr')">🇫🇷 French</div>
-      <div class="lang-btn" onclick="initApp('es')">🇪🇸 Spanish</div>
-      <div class="lang-btn" onclick="initApp('it')">🇮🇹 Italian</div>
-      <div class="lang-btn" onclick="initApp('pt')">🇵🇹 Portuguese</div>
-      <div class="lang-btn" onclick="initApp('ru')">🇷🇺 Russian</div>
-      <div class="lang-btn" onclick="initApp('zh')">🇨🇳 Chinese</div>
-      <div class="lang-btn" onclick="initApp('hi')">🇮🇳 Hindi</div>
-    </div>
+<div>
+  <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
+  <h1>Stay Safe Elite</h1>
+  <div class="lang-grid">
+    <div class="lang-btn" onclick="initApp('en')">🇺🇸 English</div>
+    <div class="lang-btn" onclick="initApp('el')">🇬🇷 Greek</div>
+    <div class="lang-btn" onclick="initApp('de')">🇩🇪 German</div>
+    <div class="lang-btn" onclick="initApp('fr')">🇫🇷 French</div>
+    <div class="lang-btn" onclick="initApp('es')">🇪🇸 Spanish</div>
+    <div class="lang-btn" onclick="initApp('it')">🇮🇹 Italian</div>
+    <div class="lang-btn" onclick="initApp('pt')">🇵🇹 Portuguese</div>
+    <div class="lang-btn" onclick="initApp('ru')">🇷🇺 Russian</div>
+    <div class="lang-btn" onclick="initApp('zh')">🇨🇳 Chinese</div>
+    <div class="lang-btn" onclick="initApp('hi')">🇮🇳 Hindi</div>
   </div>
+</div>
 </section>
 
-<!-- APP -->
+<!-- Main App -->
 <div id="main_app" class="hidden">
-
 <header class="app-header">
-  <div style="display:flex;justify-content:space-between;">
-    <div style="color:var(--gold);font-weight:bold;">🔥 <span id="streak_val">1</span> DAYS</div>
-    <div style="color:var(--accent);font-weight:900;">LEVEL <span id="level_val">1</span></div>
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <div style="color:var(--gold); font-weight:bold;">🔥 <span id="streak_val">1</span> <span id="txt_days">DAYS</span></div>
+    <div style="font-weight:900; color:var(--accent);">LEVEL <span id="level_val">1</span></div>
   </div>
   <div class="xp-bar"><div id="xp_fill" class="xp-fill"></div></div>
 </header>
 
-<main style="padding:20px 20px 110px;">
+<main style="padding: 20px 20px 110px;">
 
-<!-- HOME -->
-<section id="screen_home">
-  <div class="glass-card">
-    <h2>🛡️ Daily Training</h2>
-    <p id="quiz_text">Ready for today's challenge?</p>
-    <div id="quiz_options"></div>
-    <button class="main-cta" onclick="startQuiz()">START QUIZ</button>
+  <!-- Home Screen -->
+  <section id="screen_home">
+    <div class="glass-card" id="quiz_container">
+      <h2 style="margin:0;" id="txt_daily">🛡️ Daily Training</h2>
+      <p id="quiz_text" style="color:var(--muted); font-size:0.9rem;">Ready for today's challenge?</p>
+      <div id="quiz_options"></div>
+      <button class="main-cta" id="quiz_btn" onclick="startQuiz()">START QUIZ</button>
+    </div>
+
+    <h3 style="font-size:1rem; margin-bottom:10px;" id="txt_achievements">🏆 Achievements</h3>
+    <div class="badge-grid">
+      <div id="badge1" class="badge">🎖️</div>
+      <div id="badge2" class="badge">🛡️</div>
+      <div id="badge3" class="badge">💎</div>
+      <div class="premium-btn-inline" onclick="openModal()">
+        <div style="font-size: 16px;">🔒</div>
+        <span>4,90€</span>
+      </div>
+    </div>
+
+    <div class="map-container">
+      <h4 style="margin:0 0 10px; color:var(--accent); font-size:0.8rem;" id="txt_map">TRAINING MAP</h4>
+      <div class="map-step active" id="step1"><div class="step-dot">1</div><small>Rookie</small></div>
+      <div class="map-step" id="step2"><div class="step-dot">5</div><small>Expert</small></div>
+      <div class="map-step" id="step3"><div class="step-dot">10</div><small>Elite</small></div>
+    </div>
+  </section>
+
+  <!-- Premium Screen -->
+  <section id="screen_premium" class="hidden">
+    <div id="prem_locked" class="glass-card" style="border:2px solid var(--gold); text-align:center;">
+      <h2 style="color:var(--gold);">Elite Access</h2>
+      <p style="font-size:0.9rem;" id="txt_prem_desc">Unlock all security tools.</p>
+      <button class="main-cta" style="background:var(--gold); color:black;" onclick="openModal()">UNLOCK NOW (4.90€)</button>
+    </div>
+
+    <div id="prem_unlocked" class="hidden">
+      <div class="premium-tabs">
+        <button class="tab-btn active" onclick="switchPremiumTab(event, 'alerts')">⚠️ Alerts</button>
+        <button class="tab-btn" onclick="switchPremiumTab(event, 'checkup')">🔍 Checkup</button>
+        <button class="tab-btn" onclick="switchPremiumTab(event, 'sos')">🚨 SOS Hub</button>
+      </div>
+
+      <!-- Alerts Tab -->
+      <div id="alerts_tab" class="tab-panel">
+        <h2>⚠️ Scam & Security Alerts</h2>
+        <ul id="alert_list"></ul>
+      </div>
+
+      <!-- ALERT DETAIL MODAL -->
+      <div id="alertModal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close-modal" onclick="closeAlertModal()">&times;</span>
+          <h2 id="alertModalTitle"></h2>
+          <p id="alertModalDesc"></p>
+          <button class="main-cta" onclick="closeAlertModal()">OK</button>
+        </div>
+      </div>
+<!-- Checkup Tab -->
+      <div id="checkup_tab" class="tab-panel hidden">
+        <h2>🔍 Device Checkup</h2>
+        <p>Privacy Score: <b id="privacy_score">85%</b></p>
+        <ul id="checkup_list"></ul>
+        <button class="main-cta" onclick="runCheckup()">Run Daily Checkup</button>
+      </div>
+
+      <!-- SOS Tab -->
+      <div id="sos_tab" class="tab-panel hidden">
+        <h2>🚨 SOS Hub</h2>
+        <button class="main-cta" onclick="sendSOS()">Send SOS</button>
+        <ul>
+          <li>📞 Police: 100</li>
+          <li>📞 Fire Department: 199</li>
+          <li>📞 Medical Emergency: 166</li>
+        </ul>
+        <p>Quick Tips: Stay calm, find safe location, notify trusted contact.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Premium Modal -->
+  <div id="premiumModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <div style="font-size:50px;">💎</div>
+      <h2 style="color:var(--accent); margin-top:10px;">Elite Membership</h2>
+      <div class="modal-body" style="text-align:left; font-size:0.9rem; margin:20px 0;">
+        <p>✅ Unlock all tools</p>
+        <p>✅ Remove Ads</p>
+        <p>✅ Access Scam Alerts</p>
+      </div>
+      <div style="font-size:1.4rem; color:var(--gold); font-weight:bold; margin-bottom:20px;">4,90€ / month</div>
+      <button class="main-cta" onclick="buyPremium()">BUY NOW</button>
+    </div>
   </div>
-
-  <h3>🏆 Achievements</h3>
-  <div class="badge-grid">
-    <div class="badge">🎖️</div>
-    <div class="badge">🛡️</div>
-    <div class="badge">💎</div>
-    <div class="premium-btn-inline" onclick="openModal()">🔒 4,90€</div>
-  </div>
-
-  <div class="map-container">
-    <h4>TRAINING MAP</h4>
-    <div class="map-step active"><div class="step-dot">1</div><small>Rookie</small></div>
-    <div class="map-step"><div class="step-dot">5</div><small>Expert</small></div>
-    <div class="map-step"><div class="step-dot">10</div><small>Elite</small></div>
-  </div>
-</section>
-
-<!-- PREMIUM -->
-<section id="screen_premium" class="hidden">
-
-<div id="prem_locked" class="glass-card">
-  <h2>Elite Access</h2>
-  <p>Unlock all security tools.</p>
-  <button class="main-cta" onclick="openModal()">UNLOCK 4.90€</button>
-</div>
-
-<div id="prem_unlocked" class="hidden">
-
-<div class="premium-tabs">
-  <button class="tab-btn active" onclick="switchTab(event,'alerts')">⚠️ Alerts</button>
-  <button class="tab-btn" onclick="switchTab(event,'checkup')">🔍 Checkup</button>
-  <button class="tab-btn" onclick="switchTab(event,'sos')">🚨 SOS</button>
-</div>
-
-<div id="alerts_tab" class="tab-panel">
-  <h2>⚠️ Scam & Security Alerts</h2>
-  <ul id="alert_list"></ul>
-</div>
-
-<div id="checkup_tab" class="tab-panel hidden">
-  <h2>🔍 Device Checkup</h2>
-  <p>Privacy Score: <b id="privacy_score">85%</b></p>
-  <ul id="checkup_list"></ul>
-  <button class="main-cta" onclick="runCheckup()">Run Checkup</button>
-</div>
-
-<div id="sos_tab" class="tab-panel hidden">
-  <h2>🚨 SOS Hub</h2>
-  <button class="main-cta" onclick="sendSOS()">Send SOS</button>
-</div>
-
-</div>
-</section>
 
 </main>
 
+<!-- Bottom Nav -->
 <nav class="nav-tabs">
-  <button class="nav-tab active" onclick="nav('home',this)">🏠</button>
-  <button class="nav-tab" onclick="nav('premium',this)">💎</button>
+  <button class="nav-tab active" id="nav_home" onclick="nav('home', this)">🏠</button>
+  <button class="nav-tab" id="nav_premium" onclick="nav('premium', this)">💎</button>
 </nav>
 
-</div>
-
 <script>
-/* ALERTS */
-const alerts = [
- {text:"🟠 Fake banking SMS detected",status:"New"},
- {text:"🔴 Malicious app removed from Play Store",status:"New"},
- {text:"🔵 App requesting excessive permissions",status:"Resolved"}
-];
-
-function renderAlerts(){
- const ul=document.getElementById("alert_list");
- ul.innerHTML=alerts.map(a=>`<li>${a.text} <small>[${a.status}]</small></li>`).join('');
+// Premium tab switch
+function switchPremiumTab(e, tab){
+  document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
+  document.getElementById(tab+'_tab').classList.remove('hidden');
 }
 
-/* CHECKUP */
-const checkupItems=[
- "No dangerous permissions detected",
- "Public Wi-Fi risk detected",
- "System update recommended"
+// Checkup logic
+const checkupData = [
+  "✅ No dangerous permissions detected",
+  "⚠️ Some apps request unnecessary permissions",
+  "✅ Wi-Fi networks are secure",
+  "⚠️ OS update recommended",
+  "✅ Security habits are good"
 ];
 
 function runCheckup(){
- document.getElementById("privacy_score").innerText=(80+Math.floor(Math.random()*20))+"%";
- document.getElementById("checkup_list").innerHTML=checkupItems.map(i=>`<li>${i}</li>`).join('');
- confetti({particleCount:40,spread:30});
+  const score = Math.floor(Math.random()*21)+80; // 80-100%
+  document.getElementById('privacy_score').innerText = score+'%';
+  const list = document.getElementById('checkup_list');
+  list.innerHTML = checkupData.map(i => `<li>${i}</li>`).join('');
+  confetti({particleCount:50, spread:30});
 }
 
-/* SOS */
+// SOS logic
 function sendSOS(){
- alert("SOS sent!");
- confetti({particleCount:100,spread:60});
+  alert("SOS sent to your emergency contacts!");
+  confetti({particleCount:100, spread:60, colors:['#facc15','#38bdf8','#22c55e']});
 }
 
-/* TABS */
-function switchTab(e,t){
- document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
- e.target.classList.add('active');
- document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
- document.getElementById(t+"_tab").classList.remove('hidden');
+// Alert modal logic
+function openAlert(type){
+  const modal = document.getElementById('alertModal');
+  const title = document.getElementById('alertModalTitle');
+  const desc = document.getElementById('alertModalDesc');
+
+  switch(type){
+    case 'scam':
+      title.innerText = "🟠 Scam Alert";
+      desc.innerText = "Detected a fake banking SMS or phishing attempt targeting your region.";
+      break;
+    case 'security':
+      title.innerText = "🔴 Security Alert";
+      desc.innerText = "Malicious app or vulnerability detected. Take action immediately!";
+      break;
+    case 'privacy':
+      title.innerText = "🔵 Privacy Alert";
+      desc.innerText = "An app is requesting excessive permissions. Review your app permissions.";
+      break;
+  }
+  modal.classList.remove('hidden');
 }
 
-/* PREMIUM STATE */
-function updatePremium(){
- if(localStorage.getItem("isElite")==="true"){
-  prem_locked.classList.add("hidden");
-  prem_unlocked.classList.remove("hidden");
- }
+function closeAlertModal(){
+  document.getElementById('alertModal').classList.add('hidden');
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
- renderAlerts();
- runCheckup();
- updatePremium();
-});
+// Quiz (placeholder)
+function startQuiz(){
+  const quizText = document.getElementById('quiz_text');
+  quizText.innerText = "New challenge loaded! Answer carefully.";
+}
+
+// Navigation
+function nav(screen, btn){
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('screen_home').classList.add('hidden');
+  document.getElementById('screen_premium').classList.add('hidden');
+  if(screen==='home') document.getElementById('screen_home').classList.remove('hidden');
+  if(screen==='premium') document.getElementById('screen_premium').classList.remove('hidden');
+}
+
+// Premium unlock logic
+function openModal(){
+  document.getElementById('premiumModal').classList.remove('hidden');
+}
+function closeModal(){
+  document.getElementById('premiumModal').classList.add('hidden');
+}
+function buyPremium(){
+  localStorage.setItem('isElite', 'true');
+  closeModal();
+  updatePremiumUI();
+}
+function updatePremiumUI(){
+  const isElite = localStorage.getItem('isElite')==='true';
+  if(isElite){
+    document.getElementById('prem_locked').classList.add('hidden');
+    document.getElementById('prem_unlocked').classList.remove('hidden');
+  }
+}
+updatePremiumUI();
 </script>
 
 <script src="app.js"></script>
