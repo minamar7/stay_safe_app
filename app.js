@@ -280,3 +280,28 @@ function sendSOS(){
 // Initial UI Update
 // =========================
 updateUI();
+function switchPremiumTab(event, tab) {
+
+  // κουμπιά
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+
+  // panels
+  document.querySelectorAll('.tab-panel').forEach(panel => {
+    panel.classList.add('hidden');
+  });
+
+  if (tab === 'alerts') {
+    document.getElementById('alerts_tab').classList.remove('hidden');
+  }
+
+  if (tab === 'checkup') {
+    document.getElementById('checkup_tab').classList.remove('hidden');
+  }
+
+  if (tab === 'sos') {
+    document.getElementById('sos_tab').classList.remove('hidden');
+  }
+} 
