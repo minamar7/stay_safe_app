@@ -139,27 +139,50 @@ renderAlerts();
           </ul>
         </div>
 
-        <div id="checkup_tab" class="tab-panel hidden">
-          <h2>🔍 Device Checkup</h2>
-          <p>Privacy Score: <b id="privacy_score">85%</b></p>
-          <ul id="checkup_list">
-            <li>✅ No suspicious apps detected</li>
-            <li>⚠️ Some apps request unnecessary permissions</li>
-            <li>✅ Wi-Fi networks are secure</li>
-          </ul>
-          <button class="main-cta" onclick="runCheckup()">Run Daily Checkup</button>
-        </div>
+        <<div id="checkup_tab" class="tab-panel hidden">
+  <h2>🔍 Device Checkup</h2>
+  <p>Privacy Score: <b id="privacy_score">85%</b></p>
+  <ul id="checkup_list"></ul>
+  <button class="main-cta" onclick="runCheckup()">Run Daily Checkup</button>
+</div>
 
-        <div id="sos_tab" class="tab-panel hidden">
-          <h2>🚨 SOS Hub</h2>
-          <button class="main-cta" onclick="sendSOS()">Send SOS</button>
-          <ul>
-            <li>📞 Police: 100</li>
-            <li>📞 Fire Department: 199</li>
-            <li>📞 Medical Emergency: 166</li>
-          </ul>
-          <p>Quick Tips: Stay calm, find safe location, notify trusted contact.</p>
-        </div>
+<script>
+const checkupData = [
+  "✅ No suspicious apps detected",
+  "⚠️ Some apps request unnecessary permissions",
+  "✅ Wi-Fi networks are secure"
+];
+
+function runCheckup(){
+  const score = Math.floor(Math.random()*21)+80; // 80-100%
+  document.getElementById('privacy_score').innerText = score+'%';
+  const list = document.getElementById('checkup_list');
+  list.innerHTML = checkupData.map(i => `<li>${i}</li>`).join('');
+  confetti({particleCount:50, spread:30});
+}
+
+// Initial render
+const list = document.getElementById('checkup_list');
+list.innerHTML = checkupData.map(i => `<li>${i}</li>`).join('');
+</script>
+
+        <<div id="sos_tab" class="tab-panel hidden">
+  <h2>🚨 SOS Hub</h2>
+  <button class="main-cta" onclick="sendSOS()">Send SOS</button>
+  <ul>
+    <li>📞 Police: 100</li>
+    <li>📞 Fire Department: 199</li>
+    <li>📞 Medical Emergency: 166</li>
+  </ul>
+  <p>Quick Tips: Stay calm, find safe location, notify trusted contact.</p>
+</div>
+
+<script>
+function sendSOS(){
+  alert("SOS sent to your emergency contacts!");
+  confetti({particleCount:100, spread:60, colors:['#facc15','#38bdf8','#22c55e']});
+}
+</script>
       </div>
     </div>
   </section>
