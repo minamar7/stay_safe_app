@@ -28,7 +28,6 @@ if('serviceWorker' in navigator){
   <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
   <h1>Stay Safe Elite</h1>
   <div class="lang-grid">
-    <!-- Σημαίες που αλλάζουν γλώσσα -->
     <div class="lang-btn" onclick="initApp('en')">🇺🇸 English</div>
     <div class="lang-btn" onclick="initApp('el')">🇬🇷 Greek</div>
     <div class="lang-btn" onclick="initApp('de')">🇩🇪 German</div>
@@ -103,6 +102,16 @@ if('serviceWorker' in navigator){
         <h2>⚠️ Scam & Security Alerts</h2>
         <ul id="alert_list"></ul>
       </div>
+
+      <!-- ALERT DETAIL MODAL -->
+      <div id="alertModal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close-modal" onclick="closeAlertModal()">&times;</span>
+          <h2 id="alertModalTitle"></h2>
+          <p id="alertModalDesc"></p>
+          <button class="main-cta" onclick="closeAlertModal()">OK</button>
+        </div>
+      </div>
 <!-- Checkup Tab -->
       <div id="checkup_tab" class="tab-panel hidden">
         <h2>🔍 Device Checkup</h2>
@@ -150,36 +159,100 @@ if('serviceWorker' in navigator){
 </nav>
 
 <script>
-// =========================
-// Language translations
-// =========================
-const translations = {
-  en: { daily: "🛡️ Daily Training", start: "START QUIZ", days: "DAYS", finish: "Congrats! You completed the training.", achievements: "🏆 Achievements", map: "TRAINING MAP", prem_desc: "Unlock all security tools." },
-  el: { daily: "🛡️ Καθημερινή Εκπαίδευση", start: "ΞΕΚΙΝΑ ΤΟ ΤΕΣΤ", days: "ΗΜΕΡΕΣ", finish: "Συγχαρητήρια! Ολοκλήρωσες την εκπαίδευση.", achievements: "🏆 Επιτεύγματα", map: "ΧΑΡΤΗΣ ΕΚΠΑΙΔΕΥΣΗΣ", prem_desc: "Ξεκλειδώστε όλα τα εργαλεία ασφαλείας." },
-  de: { daily: "🛡️ Tägliches Training", start: "QUIZ STARTEN", days: "TAGE", finish: "Glückwunsch! Training abgeschlossen.", achievements: "🏆 Erfolge", map: "TRAININGSKARTE", prem_desc: "Alle Sicherheitstools freischalten." },
-  fr: { daily: "🛡️ Entraînement Quotidien", start: "COMMENCER LE QUIZ", days: "JOURS", finish: "Félicitations ! Vous avez terminé l'entraînement.", achievements: "🏆 Réalisations", map: "CARTE D'ENTRAÎNEMENT", prem_desc: "Débloquez tous les outils de sécurité." },
-  es: { daily: "🛡️ Entrenamiento Diario", start: "COMENZAR QUIZ", days: "DÍAS", finish: "¡Felicidades! Has completado el entrenamiento.", achievements: "🏆 Logros", map: "MAPA DE ENTRENAMIENTO", prem_desc: "Desbloquea todas las herramientas de seguridad." },
-  it: { daily: "🛡️ Allenamento Giornaliero", start: "INIZIA QUIZ", days: "GIORNI", finish: "Complimenti! Allenamento completato.", achievements: "🏆 Obiettivi", map: "MAPPA D'ALLENAMENTO", prem_desc: "Sblocca tutti gli strumenti di sicurezza." },
-  pt: { daily: "🛡️ Treino Diário", start: "INICIAR QUIZ", days: "DIAS", finish: "Parabéns! Treino concluído.", achievements: "🏆 Conquistas", map: "MAPA DE TREINAMENTO", prem_desc: "Desbloqueie todas as ferramentas de segurança." },
-  ru: { daily: "🛡️ Ежедневная тренировка", start: "НАЧАТЬ ТЕСТ", days: "ДНИ", finish: "Поздравляем! Тренировка завершена.", achievements: "🏆 Достижения", map: "КАРТА ОБУЧЕНИЯ", prem_desc: "Разблокируйте все инструменты безопасности." },
-  zh: { daily: "🛡️ 每日训练", start: "开始测验", days: "天数", finish: "恭喜！你已完成训练。", achievements: "🏆 成就", map: "训练地图", prem_desc: "解锁所有安全工具。" },
-  hi: { daily: "🛡️ दैनिक प्रशिक्षण", start: "क्विज़ शुरू करें", days: "दिन", finish: "बधाई! आपने प्रशिक्षण पूरा कर लिया है।", achievements: "🏆 उपलब्धियां", map: "प्रशिक्षण मानचित्र", prem_desc: "सभी सुरक्षा उपकरण अनलॉक करें।" }
-};
-
-// =========================
-// Init app translation
-// =========================
-function initApp(lang){
-  document.getElementById('onboarding').classList.add('hidden');
-  document.getElementById('main_app').classList.remove('hidden');
-
-  document.getElementById('txt_daily').innerText = translations[lang].daily;
-  document.getElementById('quiz_btn').innerText = translations[lang].start;
-  document.getElementById('txt_days').innerText = translations[lang].days;
-  document.getElementById('txt_achievements').innerText = translations[lang].achievements;
-  document.getElementById('txt_map').innerText = translations[lang].map;
-  document.getElementById('txt_prem_desc').innerText = translations[lang].prem_desc;
+// Premium tab switch
+function switchPremiumTab(e, tab){
+  document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
+  document.getElementById(tab+'_tab').classList.remove('hidden');
 }
+
+// Checkup logic
+const checkupData = [
+  "✅ No dangerous permissions detected",
+  "⚠️ Some apps request unnecessary permissions",
+  "✅ Wi-Fi networks are secure",
+  "⚠️ OS update recommended",
+  "✅ Security habits are good"
+];
+
+function runCheckup(){
+  const score = Math.floor(Math.random()*21)+80; // 80-100%
+  document.getElementById('privacy_score').innerText = score+'%';
+  const list = document.getElementById('checkup_list');
+  list.innerHTML = checkupData.map(i => `<li>${i}</li>`).join('');
+  confetti({particleCount:50, spread:30});
+}
+
+// SOS logic
+function sendSOS(){
+  alert("SOS sent to your emergency contacts!");
+  confetti({particleCount:100, spread:60, colors:['#facc15','#38bdf8','#22c55e']});
+}
+
+// Alert modal logic
+function openAlert(type){
+  const modal = document.getElementById('alertModal');
+  const title = document.getElementById('alertModalTitle');
+  const desc = document.getElementById('alertModalDesc');
+
+  switch(type){
+    case 'scam':
+      title.innerText = "🟠 Scam Alert";
+      desc.innerText = "Detected a fake banking SMS or phishing attempt targeting your region.";
+      break;
+    case 'security':
+      title.innerText = "🔴 Security Alert";
+      desc.innerText = "Malicious app or vulnerability detected. Take action immediately!";
+      break;
+    case 'privacy':
+      title.innerText = "🔵 Privacy Alert";
+      desc.innerText = "An app is requesting excessive permissions. Review your app permissions.";
+      break;
+  }
+  modal.classList.remove('hidden');
+}
+
+function closeAlertModal(){
+  document.getElementById('alertModal').classList.add('hidden');
+}
+
+// Quiz (placeholder)
+function startQuiz(){
+  const quizText = document.getElementById('quiz_text');
+  quizText.innerText = "New challenge loaded! Answer carefully.";
+}
+
+// Navigation
+function nav(screen, btn){
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('screen_home').classList.add('hidden');
+  document.getElementById('screen_premium').classList.add('hidden');
+  if(screen==='home') document.getElementById('screen_home').classList.remove('hidden');
+  if(screen==='premium') document.getElementById('screen_premium').classList.remove('hidden');
+}
+
+// Premium unlock logic
+function openModal(){
+  document.getElementById('premiumModal').classList.remove('hidden');
+}
+function closeModal(){
+  document.getElementById('premiumModal').classList.add('hidden');
+}
+function buyPremium(){
+  localStorage.setItem('isElite', 'true');
+  closeModal();
+  updatePremiumUI();
+}
+function updatePremiumUI(){
+  const isElite = localStorage.getItem('isElite')==='true';
+  if(isElite){
+    document.getElementById('prem_locked').classList.add('hidden');
+    document.getElementById('prem_unlocked').classList.remove('hidden');
+  }
+}
+updatePremiumUI();
 </script>
 
 <script src="app.js"></script>
