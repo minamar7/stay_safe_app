@@ -8,6 +8,10 @@ const urlsToCache = [
   './icons/icon-512.png',
   './quizzes/questions_free_en.json',
   './quizzes/questions_premium_en.json'
+  './quizzes/questions_free_el.json',
+  './quizzes/questions_premium_el.json'
+  './quizzes/questions_free_de.json',
+  './quizzes/questions_premium_de.json'
   // Προσθέστε όλα τα JSON για άλλες γλώσσες
 ];
 
