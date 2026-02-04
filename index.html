@@ -21,7 +21,7 @@ if ('serviceWorker' in navigator) {
 
 <body>
 
-<!-- ONBOARDING -->
+<!-- Onboarding / Language Selector -->
 <section id="onboarding" class="overlay">
   <div>
     <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
@@ -42,11 +42,11 @@ if ('serviceWorker' in navigator) {
   </div>
 </section>
 
-<!-- APP -->
+<!-- Main App -->
 <div id="main_app" class="hidden">
 
 <header class="app-header">
-  <div style="display:flex; justify-content:space-between;">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
     <div style="color:var(--gold); font-weight:bold;">
       🔥 <span id="streak_val">1</span> <span id="txt_days">DAYS</span>
     </div>
@@ -59,16 +59,19 @@ if ('serviceWorker' in navigator) {
   </div>
 </header>
 
-<main style="padding:20px 20px 120px;">
+<main style="padding:20px 20px 110px;">
 
-<div id="ad_box">ADVERTISEMENT - ELITE TO REMOVE</div>
+<div id="ad_box" style="background:#1e293b; padding:10px; border-radius:10px; text-align:center; font-size:10px; color:var(--muted); margin-bottom:15px;">
+  ADVERTISEMENT - ELITE TO REMOVE
+</div>
 
 <!-- HOME -->
 <section id="screen_home">
-
-  <div class="glass-card">
+  <div class="glass-card" id="quiz_container">
     <h2 id="txt_daily">🛡️ Daily Training</h2>
-    <p id="quiz_text">Ready for today's challenge?</p>
+    <p id="quiz_text" style="color:var(--muted); font-size:0.9rem;">
+      Ready for today's challenge?
+    </p>
     <div id="quiz_options"></div>
     <button class="main-cta" id="quiz_btn" onclick="startQuiz()">START QUIZ</button>
   </div>
@@ -80,30 +83,31 @@ if ('serviceWorker' in navigator) {
     <div id="badge2" class="badge">🛡️</div>
     <div id="badge3" class="badge">💎</div>
 
-    <div class="premium-btn-inline" onclick="openModal()">🔒 4,90€</div>
+    <div class="premium-btn-inline" onclick="openModal()">
+      <div>🔒</div>
+      <span>4,90€</span>
+    </div>
   </div>
 
-  <!-- MAP -->
   <div class="map-container">
     <h4 id="txt_map">TRAINING MAP</h4>
     <div class="map-step active" id="step1"><div class="step-dot">1</div><small>Rookie</small></div>
     <div class="map-step" id="step2"><div class="step-dot">5</div><small>Expert</small></div>
     <div class="map-step" id="step3"><div class="step-dot">10</div><small>Elite</small></div>
   </div>
-
 </section>
 
 <!-- PREMIUM -->
 <section id="screen_premium" class="hidden">
-
-  <div id="prem_locked" class="glass-card">
-    <h2>Elite Access</h2>
+  <div id="prem_locked" class="glass-card" style="border:2px solid var(--gold); text-align:center;">
+    <h2 style="color:var(--gold);">Elite Access</h2>
     <p id="txt_prem_desc">Unlock all security tools.</p>
-    <button class="main-cta" onclick="openModal()">UNLOCK (4.90€)</button>
+    <button class="main-cta" style="background:var(--gold); color:black;" onclick="openModal()">
+      UNLOCK NOW (4.90€)
+    </button>
   </div>
 
   <div id="prem_unlocked" class="hidden">
-
     <div class="premium-tabs">
       <button class="tab-btn active" onclick="switchPremiumTab(event,'alerts')">⚠️ Alerts</button>
       <button class="tab-btn" onclick="switchPremiumTab(event,'checkup')">🔍 Checkup</button>
@@ -111,38 +115,44 @@ if ('serviceWorker' in navigator) {
     </div>
 
     <div id="alerts_tab" class="tab-panel">
+      <h2>⚠️ Scam & Security Alerts</h2>
       <ul id="alert_list"></ul>
     </div>
 
     <div id="checkup_tab" class="tab-panel hidden">
+      <h2>🔍 Device Checkup</h2>
       <p>Privacy Score: <b id="privacy_score">85%</b></p>
       <ul id="checkup_list"></ul>
-      <button class="main-cta" onclick="runCheckup()">Run Checkup</button>
+      <button class="main-cta" onclick="runCheckup()">Run Daily Checkup</button>
     </div>
 
     <div id="sos_tab" class="tab-panel hidden">
+      <h2>🚨 SOS Hub</h2>
       <button class="main-cta" onclick="sendSOS()">Send SOS</button>
+      <ul>
+        <li>📞 Police: 100</li>
+        <li>📞 Fire: 199</li>
+        <li>📞 Medical: 166</li>
+      </ul>
     </div>
-
   </div>
 </section>
 
 </main>
 
+<!-- NAV -->
 <nav class="nav-tabs">
   <button class="nav-tab active" onclick="nav('home',this)">🏠</button>
   <button class="nav-tab" onclick="nav('premium',this)">💎</button>
 </nav>
 
-<!-- MODAL -->
-<div id="premiumModal" class="modal">
+<!-- PREMIUM MODAL -->
+<div id="premiumModal" class="modal hidden">
   <div class="modal-content">
-    <span class="close-modal" onclick="closeModal()">×</span>
+    <span class="close-modal" onclick="closeModal()">&times;</span>
     <h2>Elite Membership</h2>
     <button class="main-cta" onclick="buyPremium()">BUY NOW</button>
   </div>
-</div>
-
 </div>
 
 <script src="app.js"></script>
