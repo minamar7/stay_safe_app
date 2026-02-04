@@ -1,0 +1,137 @@
+{
+  "en": {
+    "levels": {
+      "7": [
+        {
+          "q": "You receive a video call from your boss. The image is clear, but the voice sounds metallic and they barely blink. They ask for an urgent wire transfer. What do you do?",
+          "o": ["Execute the transfer immediately.", "Hang up and call them on their mobile to verify.", "Ask them to send the request via email."],
+          "a": 1,
+          "exp": "This is a Deepfake. Lack of blinking and robotic voices are classic signs of AI fraud."
+        },
+        {
+          "q": "A friend sends a voice memo asking for $50 via Revolut because they lost their wallet. The voice sounds exactly like them. What is your move?",
+          "o": ["Send it immediately.", "Ask a question only the real friend would know.", "Ignore the message."],
+          "a": 1,
+          "exp": "AI Voice Cloning can mimic any voice with just a few seconds of audio."
+        },
+        {
+          "q": "You see an ad with a celebrity promoting a high‑return investment platform. What’s the first thing you check?",
+          "o": ["If the lip movement syncs with the audio.", "How many likes the ad has.", "If the celebrity wears expensive clothes."],
+          "a": 0,
+          "exp": "Deepfakes often show slight desync between audio and lip movement."
+        },
+        {
+          "q": "A 'bank technician' asks you to share your screen to fix an issue. What do you do?",
+          "o": ["Share your screen.", "Hang up and call the bank using the official number.", "Give them a temporary code."],
+          "a": 1,
+          "exp": "Banks never ask for screen sharing. This is a remote‑access scam."
+        },
+        {
+          "q": "You receive a video of your CEO requesting an urgent payment. What do you do?",
+          "o": ["Send the payment.", "Verify the request through a second official channel.", "Reply to the email."],
+          "a": 1,
+          "exp": "Deepfake videos are used in corporate fraud. Always verify through another channel."
+        }
+      ],
+
+      "8": [
+        {
+          "q": "You get an email saying your password was leaked on the Dark Web. What is the risk?",
+          "o": ["None.", "Hackers may use it to access your email or banking.", "Only the old app is affected."],
+          "a": 1,
+          "exp": "Leaked passwords are used for Credential Stuffing attacks."
+        },
+        {
+          "q": "An extortion email contains an old password of yours and demands Bitcoin. How do you react?",
+          "o": ["Pay.", "Ignore and change passwords.", "Negotiate."],
+          "a": 1,
+          "exp": "This is Sextortion. An old password does not mean camera access."
+        },
+        {
+          "q": "At the airport, you connect to 'Airport_Free_HighSpeed'. What should you avoid?",
+          "o": ["Reading news.", "Logging into banking or social media without a VPN.", "Basic browsing."],
+          "a": 1,
+          "exp": "Open Wi‑Fi networks allow Man‑in‑the‑Middle attacks."
+        },
+        {
+          "q": "Your phone suddenly loses all signal and doesn't return. What might be happening?",
+          "o": ["Provider outage.", "SIM Swapping attack.", "Battery issue."],
+          "a": 1,
+          "exp": "SIM Swapping lets attackers steal your 2FA SMS codes."
+        },
+        {
+          "q": "You receive a login alert from another country. What should you do?",
+          "o": ["Ignore it.", "Change your password and enable 2FA immediately.", "Wait to see if it happens again."],
+          "a": 1,
+          "exp": "Unexpected login attempts indicate a possible breach."
+        }
+      ],
+
+      "9": [
+        {
+          "q": "A 'Financial Advisor' promises 200% weekly returns. What is most likely?",
+          "o": ["A great opportunity.", "A 'Pig Butchering' scam.", "A legitimate investment."],
+          "a": 1,
+          "exp": "Unrealistic returns are a clear scam indicator."
+        },
+        {
+          "q": "What should you NEVER share, even with official support?",
+          "o": ["Your name.", "Your Seed Phrase.", "Your email."],
+          "a": 1,
+          "exp": "Your Seed Phrase gives full access to your wallet."
+        },
+        {
+          "q": "A free NFT appears in your wallet asking you to connect to unlock it. What do you do?",
+          "o": ["Connect.", "Never connect — it's a drainer scam.", "Send it to a friend."],
+          "a": 1,
+          "exp": "Malicious NFTs can drain your entire wallet."
+        },
+        {
+          "q": "Where should you store large amounts of crypto long‑term?",
+          "o": ["On an exchange.", "In a Hardware Wallet.", "In a Word document."],
+          "a": 1,
+          "exp": "Hardware wallets are offline and far safer."
+        },
+        {
+          "q": "You receive a crypto 'Airdrop' from an unknown company. What is it?",
+          "o": ["Free money.", "A phishing trap.", "An ad."],
+          "a": 1,
+          "exp": "Unknown airdrops are almost always scams."
+        }
+      ],
+
+      "10": [
+        {
+          "q": "You receive an email from 'Microsoft Security' saying your account will be disabled. What do you do?",
+          "o": ["Click the link.", "Check the sender and log in only through the official website.", "Reply to the email."],
+          "a": 1,
+          "exp": "Phishing emails often impersonate major companies."
+        },
+        {
+          "q": "Someone asks you to install a 'security app' to fix an issue. What do you do?",
+          "o": ["Install it.", "Decline — it's a remote access scam.", "Ask for more details."],
+          "a": 1,
+          "exp": "Scammers use remote‑access apps to take over devices."
+        },
+        {
+          "q": "A caller knows your name, address, and IBAN and claims to be from your bank. What does this mean?",
+          "o": ["It's definitely the bank.", "Your data was leaked.", "There is no risk."],
+          "a": 1,
+          "exp": "Scammers buy leaked personal data to appear legitimate."
+        },
+        {
+          "q": "You receive a QR code to 'verify your identity'. What do you do?",
+          "o": ["Scan it.", "Do not scan — it may be malicious.", "Forward it to a friend."],
+          "a": 1,
+          "exp": "QR codes can lead to phishing or malware sites."
+        },
+        {
+          "q": "Someone tells you to transfer money to a 'safe account'. What do you do?",
+          "o": ["Transfer it.", "Call your bank using the official number.", "Ask for more details."],
+          "a": 1,
+          "exp": "Banks never ask customers to move money to 'safe accounts'."
+        }
+      ]
+    }
+  }
+}
