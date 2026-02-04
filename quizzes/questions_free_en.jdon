@@ -1,0 +1,53 @@
+{
+  "en": {
+    "levels": {
+      "1": [
+        { "q": "What is the European emergency number?", "o": ["100", "112", "911"], "a": 1 },
+        { "q": "What should you do if you smell gas at home?", "o": ["Turn on the lights", "Open windows", "Call the police"], "a": 1 },
+        { "q": "Is it safe to leave a key under the doormat?", "o": ["Yes", "No", "Only for a short time"], "a": 1 },
+        { "q": "How do you put out a grease fire in a pan?", "o": ["With water", "With a lid or fire blanket", "By blowing on it"], "a": 1 },
+        { "q": "Where should household cleaning products be stored?", "o": ["On the floor", "In a high, locked cabinet", "Under the bed"], "a": 1 }
+      ],
+
+      "2": [
+        { "q": "What should you do if a cable is sparking?", "o": ["Touch it", "Turn off the main power breaker", "Pour water on it"], "a": 1 },
+        { "q": "How often should you test your smoke detector?", "o": ["Every month", "Never", "Every 10 years"], "a": 0 },
+        { "q": "Where should you leave your house keys at night?", "o": ["In the door", "In a fixed spot away from the door", "On the balcony"], "a": 1 },
+        { "q": "What should you do if you get stuck in an elevator?", "o": ["Force the door open", "Press the emergency button", "Shout loudly"], "a": 1 },
+        { "q": "Which number do you call for a fire emergency?", "o": ["100", "199", "166"], "a": 1 }
+      ],
+
+      "3": [
+        { "q": "What should you do if you see smoke coming from an outlet?", "o": ["Unplug the device", "Pour water", "Turn off the main breaker"], "a": 2 },
+        { "q": "Is it safe to charge your phone under a pillow?", "o": ["Yes", "No, risk of overheating", "Only at night"], "a": 1 },
+        { "q": "What should you do during an earthquake?", "o": ["Run to the stairs", "Hide under a sturdy table", "Take the elevator"], "a": 1 },
+        { "q": "What is the Police emergency number in Greece?", "o": ["199", "100", "166"], "a": 1 },
+        { "q": "What do you do if you find your front door tampered with?", "o": ["Go inside", "Call the police from outside", "Shout for neighbors"], "a": 1 }
+      ],
+
+      "4": [
+        { "q": "Is it safe to share passwords via email?", "o": ["Yes", "No", "Only with family"], "a": 1 },
+        { "q": "What does 2FA stand for?", "o": ["Double speed", "Two-Factor Authentication", "Chat app"], "a": 1 },
+        { "q": "You find a USB drive on the street. What do you do?", "o": ["Plug it into your PC", "Throw it away", "Give it as a gift"], "a": 1 },
+        { "q": "Which password is the strongest?", "o": ["123456", "Pa$$w0rd!2024", "my_name"], "a": 1 },
+        { "q": "What does the padlock icon in a browser mean?", "o": ["Locked PC", "Secure connection (HTTPS)", "Slow internet"], "a": 1 }
+      ],
+
+      "5": [
+        { "q": "What to do if you get a link from a stranger on Viber?", "o": ["Click it", "Delete it", "Send it to friends"], "a": 1 },
+        { "q": "Is public Wi-Fi safe for online banking?", "o": ["Yes", "No", "Only with a password"], "a": 1 },
+        { "q": "What is Phishing?", "o": ["An update", "Electronic scam to steal data", "A game"], "a": 1 },
+        { "q": "How do you protect your Facebook account?", "o": ["With an easy password", "Enable 2-Factor Authentication", "With many likes"], "a": 1 },
+        { "q": "What to do if your PC is locked by ransomware?", "o": ["Pay the ransom", "Call a technician/police", "Break the PC"], "a": 1 }
+      ],
+
+      "6": [
+        { "q": "When should you change your passwords?", "o": ["Never", "Every few months", "Every day"], "a": 1 },
+        { "q": "Is it safe to save passwords in a browser?", "o": ["Yes, always", "Not on public computers", "Only on mobile"], "a": 1 },
+        { "q": "You get an SMS: 'Package pending, click here'. What do you do?", "o": ["Click the link", "Delete it", "Send your details"], "a": 1 },
+        { "q": "What is the risk of 'over-sharing' on Social Media?", "o": ["Gain followers", "Give info to burglars", "Nothing"], "a": 1 },
+        { "q": "What does an Antivirus provide?", "o": ["Faster internet", "Protection from viruses", "Free movies"], "a": 1 }
+      ]
+    }
+  }
+}
