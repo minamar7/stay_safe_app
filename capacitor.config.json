@@ -1,0 +1,6 @@
+{
+  "appId": "com.yourcompany.safeeelite",
+  "appName": "Stay Safe Elite",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
