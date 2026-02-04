@@ -1,0 +1,45 @@
+[
+  {
+    "level": 7,
+    "q": "Recibes una videollamada de tu jefe. La imagen es clara, pero la voz suena metálica y no parpadea casi nunca. Te pide una transferencia urgente. ¿Qué haces?",
+    "o": ["Hago la transferencia de inmediato.", "Cuelgo y lo llamo a su móvil para confirmar.", "Le pido que me envíe la solicitud por email."],
+    "a": 1,
+    "exp": "Es un Deepfake. La falta de parpadeo y las voces robóticas son señales clásicas de fraude por IA."
+  },
+  {
+    "level": 7,
+    "q": "Un amigo te envía un mensaje de voz pidiendo 50€ por Revolut porque perdió su cartera. La voz suena idéntica. ¿Qué haces?",
+    "o": ["Se los envío, es mi amigo.", "Le hago una pregunta que solo mi amigo real sabría.", "Ignoro el mensaje."],
+    "a": 1,
+    "exp": "¡Cuidado con el Voice Cloning por IA! Con solo 3 segundos de audio, la IA puede imitar cualquier voz."
+  },
+  {
+    "level": 8,
+    "q": "Recibes un email diciendo que tu contraseña se filtró en la Dark Web desde una app antigua. ¿Cuál es el riesgo?",
+    "o": ["Ninguno, ya no uso esa app.", "Que la usen para entrar en mi email o cuenta bancaria.", "Que solo hackeen esa app específica."],
+    "a": 1,
+    "exp": "Los estafadores usan 'Credential Stuffing': prueban tu contraseña filtrada en todos los servicios principales."
+  },
+  {
+    "level": 8,
+    "q": "Un mensaje de extorsión contiene una contraseña tuya antigua. Te piden Bitcoin para no publicar videos privados. ¿Cómo reaccionas?",
+    "o": ["Pago la cantidad.", "Ignoro y cambio mis contraseñas. Es estafa psicológica.", "Intento negociar."],
+    "a": 1,
+    "exp": "Es 'Sextortion'. Tener una contraseña vieja no significa que tengan acceso a tu cámara."
+  },
+  {
+    "level": 9,
+    "q": "Un 'Asesor Financiero' en Telegram promete ganancias del 200% semanal en Cripto. ¿Qué es lo más probable?",
+    "o": ["Una gran oportunidad.", "Una estafa de tipo 'Pig Butchering'.", "Una inversión legítima si la web es bonita."],
+    "a": 1,
+    "exp": "Las estafas de inversión prometen rentabilidades irreales para robar grandes sumas de dinero."
+  },
+  {
+    "level": 9,
+    "q": "¿Qué no deberías compartir NUNCA, ni siquiera con el soporte oficial de un monedero Cripto?",
+    "o": ["Tu nombre completo.", "Tu frase semilla de 12 palabras (Seed Phrase).", "Tu dirección de email."],
+    "a": 1,
+    "exp": "La frase semilla es la llave maestra. Quien la tenga, controla tus fondos."
+  }
+]
+ 

@@ -1,0 +1,137 @@
+{
+  "it": {
+    "levels": {
+      "7": [
+        {
+          "q": "Ricevi una videochiamata dal tuo capo. L'immagine è chiara, ma la voce è metallica e non batte ciglio. Ti chiede un bonifico urgente. Cosa fai?",
+          "o": ["Eseguo il bonifico immediatamente.", "Riaggancio e lo chiamo sul cellulare per confermare.", "Gli chiedo di inviare la richiesta via email."],
+          "a": 1,
+          "exp": "È un Deepfake. L'assenza di battito di ciglia e le voci robotiche sono segni classici di frode AI."
+        },
+        {
+          "q": "Un amico ti invia un messaggio vocale chiedendo 50€ via Revolut perché ha perso il portafoglio. La voce è identica. Cosa fai?",
+          "o": ["Li invio subito, è il mio amico.", "Gli faccio una domanda che solo il mio vero amico conoscerebbe.", "Ignoro il messaggio."],
+          "a": 1,
+          "exp": "Attenzione al Voice Cloning! Con soli 3 secondi di audio, l'AI può imitare qualsiasi voce."
+        },
+        {
+          "q": "Vedi una pubblicità con un famoso presentatore che promuove una piattaforma di guadagni automatici. Cosa controlli per primo?",
+          "o": ["Se il labiale è sincronizzato con l'audio.", "Quanti like ha il video.", "Che vestiti indossa."],
+          "a": 0,
+          "exp": "I Deepfake spesso mostrano un leggero ritardo tra audio e movimento delle labbra."
+        },
+        {
+          "q": "Ricevi un messaggio WhatsApp da un numero sconosciuto che usa la foto del tuo capo e ti chiede documenti riservati. Cosa fai?",
+          "o": ["Invio i documenti.", "Verifico tramite un canale ufficiale.", "Rispondo chiedendo dettagli."],
+          "a": 1,
+          "exp": "Gli scammer usano foto rubate per impersonare colleghi o superiori."
+        },
+        {
+          "q": "Un tecnico sconosciuto ti chiede di installare un'app per 'controllare il tuo telefono'. Cosa fai?",
+          "o": ["La installo.", "Rifiuto e chiudo la conversazione.", "Chiedo più informazioni."],
+          "a": 1,
+          "exp": "Le app di controllo remoto permettono ai truffatori di accedere al tuo dispositivo."
+        }
+      ],
+
+      "8": [
+        {
+          "q": "Ricevi un'email che dice che la tua password è finita nel Dark Web. Qual è il rischio maggiore?",
+          "o": ["Nessuno, non uso più quell'app.", "Che la usino per accedere alla mia email o banca.", "Solo quell'app specifica verrà hackerata."],
+          "a": 1,
+          "exp": "I truffatori usano il 'Credential Stuffing': provano la tua password su tutti i servizi principali."
+        },
+        {
+          "q": "Ricevi un'email di ricatto con una tua vecchia password. Ti chiedono Bitcoin. Cosa fai?",
+          "o": ["Pago.", "Ignoro e cambio le password.", "Provo a negoziare."],
+          "a": 1,
+          "exp": "È 'Sextortion'. Avere una vecchia password non significa avere accesso ai tuoi dispositivi."
+        },
+        {
+          "q": "Ti connetti al Wi-Fi gratuito dell'aeroporto. Cosa devi evitare?",
+          "o": ["Leggere notizie.", "Accedere a banca o social senza VPN.", "Navigare normalmente."],
+          "a": 1,
+          "exp": "Gli attacchi Man-in-the-Middle permettono ai criminali di intercettare i dati."
+        },
+        {
+          "q": "Il tuo telefono perde completamente il segnale e non torna. Cosa potrebbe essere?",
+          "o": ["Problema dell'operatore.", "Attacco SIM Swapping.", "Batteria scarica."],
+          "a": 1,
+          "exp": "Il SIM Swapping permette ai truffatori di ricevere i tuoi codici 2FA."
+        },
+        {
+          "q": "Ricevi un codice di verifica che non hai richiesto. Cosa fai?",
+          "o": ["Lo ignoro.", "Cambio subito la password e attivo 2FA.", "Lo inoltro a chi me lo chiede."],
+          "a": 1,
+          "exp": "Codici non richiesti indicano tentativi di accesso al tuo account."
+        }
+      ],
+
+      "9": [
+        {
+          "q": "Un 'Consulente Finanziario' su Telegram promette guadagni del 200% a settimana in Cripto. Cosa è più probabile?",
+          "o": ["Una grande opportunità.", "Una truffa di tipo 'Pig Butchering'.", "Un investimento legale se il sito è ben fatto."],
+          "a": 1,
+          "exp": "Le truffe sugli investimenti promettono rendimenti irrealistici per rubare grandi somme."
+        },
+        {
+          "q": "Cosa non devi MAI condividere, nemmeno con il supporto ufficiale di un wallet?",
+          "o": ["Il tuo nome completo.", "La tua Seed Phrase di 12 parole.", "La tua email."],
+          "a": 1,
+          "exp": "La Seed Phrase è la chiave del tuo wallet. Chi la possiede controlla i tuoi fondi."
+        },
+        {
+          "q": "Ricevi un NFT 'gratuito' che ti chiede di collegare il wallet per sbloccarlo. Cosa fai?",
+          "o": ["Lo sblocco subito.", "Non collego mai il wallet: è un drainer.", "Lo mando a un amico."],
+          "a": 1,
+          "exp": "Gli NFT malevoli possono svuotare completamente il tuo wallet."
+        },
+        {
+          "q": "Dove è più sicuro conservare grandi quantità di criptovalute?",
+          "o": ["Su un exchange.", "In un Hardware Wallet.", "In un file Word."],
+          "a": 1,
+          "exp": "Gli Hardware Wallet non sono connessi a Internet, quindi sono molto più sicuri."
+        },
+        {
+          "q": "Ricevi un messaggio che dice che hai vinto un Airdrop da un'azienda sconosciuta. Cosa significa?",
+          "o": ["Soldi gratis.", "Phishing per rubare i tuoi dati.", "Pubblicità."],
+          "a": 1,
+          "exp": "Nessuno regala criptovalute senza motivo. È quasi sempre phishing."
+        }
+      ],
+
+      "10": [
+        {
+          "q": "Ricevi un'email da 'Microsoft Security' che dice che il tuo account verrà chiuso. Cosa fai?",
+          "o": ["Clicco sul link.", "Controllo il mittente e accedo solo dal sito ufficiale.", "Rispondo all'email."],
+          "a": 1,
+          "exp": "Le email di phishing imitano grandi aziende per rubare credenziali."
+        },
+        {
+          "q": "Un tecnico ti chiede di installare un'app per 'verificare il tuo dispositivo'. Cosa fai?",
+          "o": ["La installo.", "Rifiuto: è un tentativo di accesso remoto.", "Chiedo più dettagli."],
+          "a": 1,
+          "exp": "Le app di controllo remoto permettono ai truffatori di prendere il controllo del telefono."
+        },
+        {
+          "q": "Un chiamante conosce il tuo nome, indirizzo e banca e dice di essere della sicurezza. Cosa significa?",
+          "o": ["È davvero della banca.", "I tuoi dati sono stati rubati.", "Nessun rischio."],
+          "a": 1,
+          "exp": "I truffatori usano dati trapelati per sembrare credibili."
+        },
+        {
+          "q": "Ti inviano un QR code per 'verificare la tua identità'. Cosa fai?",
+          "o": ["Lo scansiono.", "Non lo scansiono: potrebbe portare a un sito malevolo.", "Lo inoltro a un amico."],
+          "a": 1,
+          "exp": "I QR code possono reindirizzare a pagine di phishing."
+        },
+        {
+          "q": "Ti dicono di trasferire i soldi su un 'conto sicuro'. Cosa fai?",
+          "o": ["Trasferisco subito.", "Chiamo la banca tramite il numero ufficiale.", "Chiedo più informazioni."],
+          "a": 1,
+          "exp": "Le banche non chiedono mai trasferimenti verso 'conti sicuri'."
+        }
+      ]
+    }
+  }
+} 

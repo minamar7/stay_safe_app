@@ -1,0 +1,137 @@
+{
+  "fr": {
+    "levels": {
+      "7": [
+        {
+          "q": "Vous recevez un appel vidéo de votre patron. L'image est nette, mais la voix est métallique et il ne cligne presque pas des yeux. Il demande un virement urgent. Que faites-vous ?",
+          "o": ["Je fais le virement immédiatement.", "Je raccroche et je l'appelle sur son mobile pour vérifier.", "Je lui demande d'envoyer la demande par email."],
+          "a": 1,
+          "exp": "C'est un Deepfake. L'absence de clignement d'yeux et les voix robotiques sont des signes classiques de fraude par IA."
+        },
+        {
+          "q": "Un ami envoie un message vocal demandant 50€ via Revolut car il a perdu son portefeuille. La voix est identique. Que faites-vous ?",
+          "o": ["Je les envoie.", "Je lui pose une question que seul mon vrai ami connaîtrait.", "J'ignore le message."],
+          "a": 1,
+          "exp": "Le clonage de voix par IA peut imiter n'importe qui avec quelques secondes d'audio."
+        },
+        {
+          "q": "Vous voyez une publicité avec une célébrité promouvant une plateforme d'investissement. Que vérifiez-vous en premier ?",
+          "o": ["La synchronisation des lèvres avec l'audio.", "Le nombre de likes.", "La tenue de la célébrité."],
+          "a": 0,
+          "exp": "Les Deepfakes présentent souvent un léger décalage entre les lèvres et le son."
+        },
+        {
+          "q": "Un faux technicien bancaire vous demande de partager votre écran pour 'résoudre un problème'. Que faites-vous ?",
+          "o": ["Je partage l'écran.", "Je raccroche et j'appelle la banque via son numéro officiel.", "Je lui donne un code temporaire."],
+          "a": 1,
+          "exp": "Les banques ne demandent jamais de partage d'écran. C'est une arnaque d'accès à distance."
+        },
+        {
+          "q": "Vous recevez une vidéo de votre PDG demandant un paiement urgent. Que faites-vous ?",
+          "o": ["Je fais le paiement.", "Je vérifie la demande via un second canal officiel.", "Je réponds au mail."],
+          "a": 1,
+          "exp": "Les Deepfakes sont utilisés dans les fraudes professionnelles. Toujours vérifier par un autre canal."
+        }
+      ],
+
+      "8": [
+        {
+          "q": "Vous recevez un email indiquant que votre mot de passe a été divulgué sur le Dark Web. Quel est le risque ?",
+          "o": ["Aucun.", "Accès possible à votre email ou banque.", "Seule l'ancienne app est concernée."],
+          "a": 1,
+          "exp": "Les mots de passe divulgués sont testés sur tous les services (Credential Stuffing)."
+        },
+        {
+          "q": "Un message d'extorsion contient un ancien mot de passe à vous. Que faites-vous ?",
+          "o": ["Je paie.", "J'ignore et je change mes mots de passe.", "Je négocie."],
+          "a": 1,
+          "exp": "C'est de la Sextortion. Un ancien mot de passe ne signifie pas accès à votre caméra."
+        },
+        {
+          "q": "À l'aéroport, vous vous connectez à 'Airport_Free_HighSpeed'. Que devez-vous éviter ?",
+          "o": ["Lire les actualités.", "Vous connecter à la banque sans VPN.", "Naviguer normalement."],
+          "a": 1,
+          "exp": "Les réseaux ouverts permettent des attaques Man-in-the-Middle."
+        },
+        {
+          "q": "Votre téléphone perd soudainement tout signal et ne revient pas. Que peut-il se passer ?",
+          "o": ["Panne de l'opérateur.", "Attaque SIM Swapping.", "Batterie défectueuse."],
+          "a": 1,
+          "exp": "Le SIM Swapping permet de voler vos codes 2FA."
+        },
+        {
+          "q": "Vous recevez une alerte de connexion depuis un autre pays. Que faites-vous ?",
+          "o": ["Ignorer.", "Changer le mot de passe et activer la 2FA.", "Attendre."],
+          "a": 1,
+          "exp": "Une tentative de connexion inconnue indique une possible intrusion."
+        }
+      ],
+
+      "9": [
+        {
+          "q": "Un 'Conseiller Financier' promet 200% de profit hebdomadaire. Que se passe-t-il réellement ?",
+          "o": ["Une opportunité rare.", "Une arnaque 'Pig Butchering'.", "Un investissement légitime."],
+          "a": 1,
+          "exp": "Des rendements irréalistes sont un signe clair d'arnaque."
+        },
+        {
+          "q": "Que ne devez-vous JAMAIS partager, même avec un support officiel ?",
+          "o": ["Votre nom.", "Votre Seed Phrase.", "Votre email."],
+          "a": 1,
+          "exp": "La Seed Phrase donne un accès total à votre portefeuille."
+        },
+        {
+          "q": "Vous recevez un NFT gratuit demandant de connecter votre wallet pour le 'débloquer'. Que faites-vous ?",
+          "o": ["Je connecte.", "Je ne connecte jamais — c'est un drainer.", "Je l'envoie à un ami."],
+          "a": 1,
+          "exp": "Les NFTs malveillants peuvent vider votre portefeuille."
+        },
+        {
+          "q": "Où stocker de grandes quantités de crypto à long terme ?",
+          "o": ["Sur un exchange.", "Dans un Hardware Wallet.", "Dans un fichier Word."],
+          "a": 1,
+          "exp": "Les Hardware Wallets sont hors ligne et donc plus sûrs."
+        },
+        {
+          "q": "Vous recevez un 'Airdrop' d'une entreprise inconnue. Qu'est-ce que c'est ?",
+          "o": ["De l'argent gratuit.", "Une tentative de phishing.", "Une publicité."],
+          "a": 1,
+          "exp": "Les airdrops inconnus sont presque toujours des arnaques."
+        }
+      ],
+
+      "10": [
+        {
+          "q": "Vous recevez un email de 'Microsoft Security' disant que votre compte sera désactivé. Que faites-vous ?",
+          "o": ["Cliquer sur le lien.", "Vérifier l'expéditeur et passer par le site officiel.", "Répondre au mail."],
+          "a": 1,
+          "exp": "Les emails de phishing imitent les grandes entreprises."
+        },
+        {
+          "q": "Quelqu'un vous demande d'installer une 'application de sécurité'. Que faites-vous ?",
+          "o": ["Je l'installe.", "Je refuse — arnaque d'accès à distance.", "Je demande plus d'infos."],
+          "a": 1,
+          "exp": "Les applications d'accès à distance permettent de prendre le contrôle de votre appareil."
+        },
+        {
+          "q": "Un appelant connaît votre nom, adresse et IBAN et dit être de votre banque. Que signifie cela ?",
+          "o": ["C'est la banque.", "Vos données ont fuité.", "Aucun risque."],
+          "a": 1,
+          "exp": "Les escrocs achètent des données pour paraître légitimes."
+        },
+        {
+          "q": "Vous recevez un QR code pour 'vérifier votre identité'. Que faites-vous ?",
+          "o": ["Je le scanne.", "Je ne le scanne pas — risque de phishing.", "Je l'envoie à un ami."],
+          "a": 1,
+          "exp": "Les QR codes peuvent mener à des sites malveillants."
+        },
+        {
+          "q": "On vous demande de transférer de l'argent vers un 'compte sécurisé'. Que faites-vous ?",
+          "o": ["Je transfère.", "J'appelle la banque via son numéro officiel.", "Je demande plus d'informations."],
+          "a": 1,
+          "exp": "Les banques ne demandent jamais de transférer de l'argent vers un 'compte sécurisé'."
+        }
+      ]
+    }
+  }
+}
