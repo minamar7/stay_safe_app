@@ -14,9 +14,25 @@ let activeQuestions = [];
 // Language Translations
 // =========================
 const translations = {
-  en: { daily: "🛡️ Daily Training", start: "START QUIZ", days: "DAYS", finish: "Congrats! You completed the training.", achievements: "🏆 Achievements", map: "TRAINING MAP", prem_desc: "Unlock all security tools." },
-  el: { daily: "🛡️ Καθημερινή Εκπαίδευση", start: "ΞΕΚΙΝΑ ΤΟ ΤΕΣΤ", days: "ΗΜΕΡΕΣ", finish: "Συγχαρητήρια! Ολοκλήρωσες την εκπαίδευση.", achievements: "🏆 Επιτεύγματα", map: "ΧΑΡΤΗΣ ΕΚΠΑΙΔΕΥΣΗΣ", prem_desc: "Ξεκλειδώστε όλα τα εργαλεία ασφαλείας." },
-  // Προσθέστε και άλλες γλώσσες εδώ...
+  en: { 
+    daily: "🛡️ Daily Training", 
+    start: "START QUIZ", 
+    days: "DAYS", 
+    finish: "Congrats! You completed the training.", 
+    achievements: "🏆 Achievements", 
+    map: "TRAINING MAP", 
+    prem_desc: "Unlock all security tools." 
+  },
+  el: { 
+    daily: "🛡️ Καθημερινή Εκπαίδευση", 
+    start: "ΞΕΚΙΝΑ ΤΟ ΤΕΣΤ", 
+    days: "ΗΜΕΡΕΣ", 
+    finish: "Συγχαρητήρια! Ολοκλήρωσες την εκπαίδευση.", 
+    achievements: "🏆 Επιτεύγματα", 
+    map: "ΧΑΡΤΗΣ ΕΚΠΑΙΔΕΥΣΗΣ", 
+    prem_desc: "Ξεκλειδώστε όλα τα εργαλεία ασφαλείας." 
+  },
+  // Προσθέστε κι άλλες γλώσσες...
 };
 
 // =========================
@@ -40,7 +56,7 @@ function initApp(lang){
 }
 
 // =========================
-// Load Quizzes (Free + Premium)
+// Load Quizzes
 // =========================
 function loadQuizzes(lang){
   fetch(`quizzes/questions_free_${lang}.json`)
@@ -55,7 +71,7 @@ function loadQuizzes(lang){
 }
 
 // =========================
-// Update UI (XP, Streak, Badges, Steps)
+// Update UI
 // =========================
 function updateUI(){
   let level = Math.floor(xp/100)+1;
@@ -91,7 +107,7 @@ function startQuiz(){
   document.getElementById('quiz_btn').classList.add('hidden');
   currentScore = 0;
   currentIndex = 0;
-  activeQuestions = generateQuestions(level,5); // 5 questions per quiz
+  activeQuestions = generateQuestions(level,5);
   renderQuestion();
 }
 
@@ -178,11 +194,10 @@ function buyPremium(){
 function showAd(){
   if(isElite) return;
   console.log("Showing Ad for Free user...");
-  // AdMob / Google Ads calls here
 }
 
 // =========================
-// Onboarding Streak Update
+// Streak Update
 // =========================
 let lastDate = localStorage.getItem('lastDate') || '';
 const today = new Date().toISOString().slice(0,10);
@@ -191,3 +206,60 @@ if(today !== lastDate){
   localStorage.setItem('streak', streak);
   localStorage.setItem('lastDate', today);
 }
+
+// =========================
+// Alerts, Checkup & SOS
+// =========================
+const alertsData = [
+  {id:1, type:"Phishing", desc:"Phishing email targeting your region", status:"New", date:"02/04"},
+  {id:2, type:"Malware", desc:"New malicious app on Play Store", status:"New", date:"02/03"},
+  {id:3, type:"Banking Scam", desc:"Fake banking SMS campaigns", status:"Resolved", date:"01/30"}
+];
+
+function renderAlerts(){
+  const list = document.getElementById('alert_list');
+  list.innerHTML = alertsData.map(a => `
+    <li>
+      <div>${a.desc} <span class="status">[${a.status}]</span></div>
+      <div style="font-size:0.8rem; color:var(--muted); margin-top:5px;">${a.date}</div>
+      ${a.status==="New" ? `<button onclick="markResolved(${a.id})">Resolve</button>` : ""}
+    </li>
+  `).join('');
+}
+
+function markResolved(id){
+  const alert = alertsData.find(a => a.id===id);
+  if(alert) alert.status = "Resolved";
+  renderAlerts();
+}
+
+renderAlerts();
+
+// Device Checkup
+const checkupData = [
+  "✅ No suspicious apps detected",
+  "⚠️ Some apps request unnecessary permissions",
+  "✅ Wi-Fi networks are secure"
+];
+
+function runCheckup(){
+  const score = Math.floor(Math.random()*21)+80;
+  document.getElementById('privacy_score').innerText = score+'%';
+  const list = document.getElementById('checkup_list');
+  list.innerHTML = checkupData.map(i => `<li>${i}</li>`).join('');
+  confetti({particleCount:50, spread:30});
+}
+
+// Initial render
+document.getElementById('checkup_list').innerHTML = checkupData.map(i => `<li>${i}</li>`).join('');
+
+// SOS Hub
+function sendSOS(){
+  alert("SOS sent to your emergency contacts!");
+  confetti({particleCount:100, spread:60, colors:['#facc15','#38bdf8','#22c55e']});
+}
+
+// =========================
+// Initial UI Update
+// =========================
+updateUI();
