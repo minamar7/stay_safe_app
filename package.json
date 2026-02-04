@@ -1,0 +1,4 @@
+"scripts": {
+  "build": "vite build",
+  "copy": "npx cap copy"
+}
