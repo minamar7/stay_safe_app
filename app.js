@@ -178,3 +178,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+document.addEventListener('DOMContentLoaded', () => {
+
+  // default language
+  initApp(currentLang);
+
+  // premium tabs default
+  const firstTabBtn = document.querySelector('.tab-btn');
+  if (firstTabBtn) {
+    firstTabBtn.click();
+  }
+
+  // alerts render
+  renderAlerts();
+});
