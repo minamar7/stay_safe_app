@@ -4,8 +4,10 @@ const urlsToCache = [
   './index.html',
   './app.js',
   './styles.css',
+  './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
+  './icons/icon-512-maskable.png',
 
   // Free Quizzes
   './quizzes/questions_free_en.json',
@@ -32,30 +34,34 @@ const urlsToCache = [
   './quizzes/questions_premium_hi.json'
 ];
 
-// Install SW & cache all files
+// Install
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
 });
 
-// Activate SW & clean old caches
+// Activate — remove old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(
-      keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
-    ))
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+      )
+    )
   );
 });
 
-// Fetch handler: cache-first strategy
+// Fetch: cache first
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(res => res || fetch(event.request).then(fetchRes => {
-      return caches.open(CACHE_NAME).then(cache => {
-        cache.put(event.request, fetchRes.clone());
-        return fetchRes;
+    caches.match(event.request).then(resp => {
+      return resp || fetch(event.request).then(fetchRes => {
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, fetchRes.clone());
+          return fetchRes;
+        });
       });
-    }))
+    })
   );
 });
