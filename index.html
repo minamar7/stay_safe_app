@@ -11,247 +11,153 @@
 <link rel="stylesheet" href="styles.css">
 
 <script>
-if('serviceWorker' in navigator){
-  window.addEventListener('load', ()=> {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(reg=> console.log("SW registered:", reg.scope))
-      .catch(err=> console.log("SW registration failed:", err));
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js');
   });
 }
 </script>
 </head>
+
 <body>
 
-<!-- Onboarding / language selector -->
+<!-- Onboarding / Language Selector -->
 <section id="onboarding" class="overlay">
-<div>
-  <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
-  <h1>Stay Safe Elite</h1>
-  <div class="lang-grid">
-    <div class="lang-btn" onclick="initApp('en')">🇺🇸 English</div>
-    <div class="lang-btn" onclick="initApp('el')">🇬🇷 Greek</div>
-    <div class="lang-btn" onclick="initApp('de')">🇩🇪 German</div>
-    <div class="lang-btn" onclick="initApp('fr')">🇫🇷 French</div>
-    <div class="lang-btn" onclick="initApp('es')">🇪🇸 Spanish</div>
-    <div class="lang-btn" onclick="initApp('it')">🇮🇹 Italian</div>
-    <div class="lang-btn" onclick="initApp('pt')">🇵🇹 Portuguese</div>
-    <div class="lang-btn" onclick="initApp('ru')">🇷🇺 Russian</div>
-    <div class="lang-btn" onclick="initApp('zh')">🇨🇳 Chinese</div>
-    <div class="lang-btn" onclick="initApp('hi')">🇮🇳 Hindi</div>
+  <div>
+    <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
+    <h1>Stay Safe Elite</h1>
+
+    <div class="lang-grid">
+      <div class="lang-btn" onclick="initApp('en')">🇺🇸 English</div>
+      <div class="lang-btn" onclick="initApp('el')">🇬🇷 Greek</div>
+      <div class="lang-btn" onclick="initApp('de')">🇩🇪 German</div>
+      <div class="lang-btn" onclick="initApp('fr')">🇫🇷 French</div>
+      <div class="lang-btn" onclick="initApp('es')">🇪🇸 Spanish</div>
+      <div class="lang-btn" onclick="initApp('it')">🇮🇹 Italian</div>
+      <div class="lang-btn" onclick="initApp('pt')">🇵🇹 Portuguese</div>
+      <div class="lang-btn" onclick="initApp('ru')">🇷🇺 Russian</div>
+      <div class="lang-btn" onclick="initApp('zh')">🇨🇳 Chinese</div>
+      <div class="lang-btn" onclick="initApp('hi')">🇮🇳 Hindi</div>
+    </div>
   </div>
-</div>
 </section>
 
 <!-- Main App -->
 <div id="main_app" class="hidden">
+
 <header class="app-header">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <div style="color:var(--gold); font-weight:bold;">🔥 <span id="streak_val">1</span> <span id="txt_days">DAYS</span></div>
-    <div style="font-weight:900; color:var(--accent);">LEVEL <span id="level_val">1</span></div>
+    <div style="color:var(--gold); font-weight:bold;">
+      🔥 <span id="streak_val">1</span> <span id="txt_days">DAYS</span>
+    </div>
+    <div style="font-weight:900; color:var(--accent);">
+      LEVEL <span id="level_val">1</span>
+    </div>
   </div>
-  <div class="xp-bar"><div id="xp_fill" class="xp-fill"></div></div>
+  <div class="xp-bar">
+    <div id="xp_fill" class="xp-fill"></div>
+  </div>
 </header>
 
-<main style="padding: 20px 20px 110px;">
-  <div id="ad_box" style="background:#1e293b; padding:10px; border-radius:10px; text-align:center; font-size:10px; color:var(--muted); margin-bottom:15px;">ADVERTISEMENT - ELITE TO REMOVE</div>
+<main style="padding:20px 20px 110px;">
 
-  <!-- Home Screen -->
-  <section id="screen_home">
-    <div class="glass-card" id="quiz_container">
-      <h2 style="margin:0;" id="txt_daily">🛡️ Daily Training</h2>
-      <p id="quiz_text" style="color:var(--muted); font-size:0.9rem;">Ready for today's challenge?</p>
-      <div id="quiz_options"></div>
-      <button class="main-cta" id="quiz_btn" onclick="startQuiz()">START QUIZ</button>
-    </div>
-
-    <h3 style="font-size:1rem; margin-bottom:10px;" id="txt_achievements">🏆 Achievements</h3>
-    <div class="badge-grid">
-      <div id="badge1" class="badge">🎖️</div>
-      <div id="badge2" class="badge">🛡️</div>
-      <div id="badge3" class="badge">💎</div>
-      <div class="premium-btn-inline" onclick="openModal()">
-        <div style="font-size: 16px;">🔒</div>
-        <span>4,90€</span>
-      </div>
-    </div>
-
-    <div class="map-container">
-      <h4 style="margin:0 0 10px; color:var(--accent); font-size:0.8rem;" id="txt_map">TRAINING MAP</h4>
-      <div class="map-step active" id="step1"><div class="step-dot">1</div><small>Rookie</small></div>
-      <div class="map-step" id="step2"><div class="step-dot">5</div><small>Expert</small></div>
-      <div class="map-step" id="step3"><div class="step-dot">10</div><small>Elite</small></div>
-    </div>
-  </section>
-
-  <!-- Premium Screen -->
-  <section id="screen_premium" class="hidden">
-    <div id="prem_locked" class="glass-card" style="border:2px solid var(--gold); text-align:center;">
-      <h2 style="color:var(--gold);">Elite Access</h2>
-      <p style="font-size:0.9rem;" id="txt_prem_desc">Unlock all security tools.</p>
-      <button class="main-cta" style="background:var(--gold); color:black;" onclick="openModal()">UNLOCK NOW (4.90€)</button>
-    </div>
-
-    <div id="prem_unlocked" class="hidden">
-      <div class="premium-tabs">
-        <button class="tab-btn active" onclick="switchPremiumTab(event, 'alerts')">⚠️ Alerts</button>
-        <button class="tab-btn" onclick="switchPremiumTab(event, 'checkup')">🔍 Checkup</button>
-        <button class="tab-btn" onclick="switchPremiumTab(event, 'sos')">🚨 SOS Hub</button>
-      </div>
-
-      <<div id="alerts_tab" class="tab-panel">
-  <h2>⚠️ Scam & Security Alerts</h2>
-  <ul id="alert_list"></ul>
+<div id="ad_box" style="background:#1e293b; padding:10px; border-radius:10px; text-align:center; font-size:10px; color:var(--muted); margin-bottom:15px;">
+  ADVERTISEMENT - ELITE TO REMOVE
 </div>
 
-<script>
-// Alerts data
-const alertsData = [
-  {id:1, type:"Phishing", desc:"Phishing email targeting your region", status:"New", date:"02/04"},
-  {id:2, type:"Malware", desc:"New malicious app on Play Store", status:"New", date:"02/03"},
-  {id:3, type:"Banking Scam", desc:"Fake banking SMS campaigns", status:"Resolved", date:"01/30"}
-];
+<!-- HOME -->
+<section id="screen_home">
+  <div class="glass-card" id="quiz_container">
+    <h2 id="txt_daily">🛡️ Daily Training</h2>
+    <p id="quiz_text" style="color:var(--muted); font-size:0.9rem;">
+      Ready for today's challenge?
+    </p>
+    <div id="quiz_options"></div>
+    <button class="main-cta" id="quiz_btn" onclick="startQuiz()">START QUIZ</button>
+  </div>
 
-// Render alerts
-function renderAlerts(){
-  const list = document.getElementById('alert_list');
-  list.innerHTML = alertsData.map(a => `
-    <li>
-      <div>${a.desc} <span class="status">[${a.status}]</span></div>
-      <div style="font-size:0.8rem; color:var(--muted); margin-top:5px;">${a.date}</div>
-      ${a.status==="New" ? `<button onclick="markResolved(${a.id})">Resolve</button>` : ""}
-    </li>
-  `).join('');
-}
+  <h3 id="txt_achievements">🏆 Achievements</h3>
 
-// Mark alert as resolved
-function markResolved(id){
-  const alert = alertsData.find(a => a.id===id);
-  if(alert) alert.status = "Resolved";
-  renderAlerts();
-}
+  <div class="badge-grid">
+    <div id="badge1" class="badge">🎖️</div>
+    <div id="badge2" class="badge">🛡️</div>
+    <div id="badge3" class="badge">💎</div>
 
-// Initial render
-renderAlerts();
-</script>
-            <li>🚨 Phishing email targeting your region</li>
-            <li>🔒 New malicious app on Play Store</li>
-            <li>💳 Beware of fake banking SMS campaigns</li>
-          </ul>
-        </div>
-
-        <<div id="checkup_tab" class="tab-panel hidden">
-  <h2>🔍 Device Checkup</h2>
-  <p>Privacy Score: <b id="privacy_score">85%</b></p>
-  <ul id="checkup_list"></ul>
-  <button class="main-cta" onclick="runCheckup()">Run Daily Checkup</button>
-</div>
-
-<script>
-const checkupData = [
-  "✅ No suspicious apps detected",
-  "⚠️ Some apps request unnecessary permissions",
-  "✅ Wi-Fi networks are secure"
-];
-
-function runCheckup(){
-  const score = Math.floor(Math.random()*21)+80; // 80-100%
-  document.getElementById('privacy_score').innerText = score+'%';
-  const list = document.getElementById('checkup_list');
-  list.innerHTML = checkupData.map(i => `<li>${i}</li>`).join('');
-  confetti({particleCount:50, spread:30});
-}
-
-// Initial render
-const list = document.getElementById('checkup_list');
-list.innerHTML = checkupData.map(i => `<li>${i}</li>`).join('');
-</script>
-
-        <<div id="sos_tab" class="tab-panel hidden">
-  <h2>🚨 SOS Hub</h2>
-  <button class="main-cta" onclick="sendSOS()">Send SOS</button>
-  <ul>
-    <li>📞 Police: 100</li>
-    <li>📞 Fire Department: 199</li>
-    <li>📞 Medical Emergency: 166</li>
-  </ul>
-  <p>Quick Tips: Stay calm, find safe location, notify trusted contact.</p>
-</div>
-
-<script>
-function sendSOS(){
-  alert("SOS sent to your emergency contacts!");
-  confetti({particleCount:100, spread:60, colors:['#facc15','#38bdf8','#22c55e']});
-}
-</script>
-      </div>
+    <div class="premium-btn-inline" onclick="openModal()">
+      <div>🔒</div>
+      <span>4,90€</span>
     </div>
-  </section>
+  </div>
+<!-- PREMIUM -->
+<section id="screen_premium" class="hidden">
 
-  <style>
-    .premium-tabs { display:flex; justify-content:space-around; margin:15px 0; }
-    .tab-btn { flex:1; margin:0 5px; padding:12px; border-radius:20px; border:none; font-weight:bold; background:rgba(30,41,59,0.2); color:var(--muted); cursor:pointer; transition:0.3s; }
-    .tab-btn.active { background: var(--accent); color:#020617; box-shadow:0 0 10px var(--accent); }
-    .tab-content { padding:15px 0; }
-    .tab-panel { display:block; background: rgba(15,23,42,0.9); padding:20px; border-radius:25px; border:1px solid rgba(255,255,255,0.08); margin-bottom:20px; }
-    .tab-panel.hidden { display:none; }
-    .tab-panel h2 { color: var(--accent); margin-bottom:10px; text-align:center; }
-    .tab-panel ul { list-style:none; padding:0; }
-    .tab-panel li { padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.9rem; }
-    .tab-panel button.main-cta { margin-top:15px; width:100%; }
-  </style>
+  <div id="prem_locked" class="glass-card" style="border:2px solid var(--gold); text-align:center;">
+    <h2 style="color:var(--gold);">Elite Access</h2>
+    <p id="txt_prem_desc">Unlock all security tools.</p>
+    <button class="main-cta" style="background:var(--gold); color:black;" onclick="openModal()">
+      UNLOCK NOW (4.90€)
+    </button>
+  </div>
 
-  <script>
-    function switchPremiumTab(e, tab){
-      document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
-      document.getElementById(tab+'_tab').classList.remove('hidden');
-    }
+  <div id="prem_unlocked" class="hidden">
 
-    function runCheckup(){
-      const score = Math.floor(Math.random()*21)+80;
-      document.getElementById('privacy_score').innerText = score+'%';
-      confetti({particleCount:50, spread:30});
-    }
+    <div class="premium-tabs">
+      <button class="tab-btn active" onclick="switchPremiumTab(event,'alerts')">⚠️ Alerts</button>
+      <button class="tab-btn" onclick="switchPremiumTab(event,'checkup')">🔍 Checkup</button>
+      <button class="tab-btn" onclick="switchPremiumTab(event,'sos')">🚨 SOS</button>
+    </div>
 
-    function sendSOS(){
-      alert("SOS sent to your emergency contacts!");
-      confetti({particleCount:100, spread:60, colors:['#facc15','#38bdf8','#22c55e']});
-    }
+    <div id="alerts_tab" class="tab-panel">
+      <h2>⚠️ Scam & Security Alerts</h2>
+      <ul id="alert_list"></ul>
+    </div>
 
-    function updatePremiumUI(){
-      const isElite = localStorage.getItem('isElite')==='true';
-      if(isElite){
-        document.getElementById('prem_locked').classList.add('hidden');
-        document.getElementById('prem_unlocked').classList.remove('hidden');
-      }
-    }
-    updatePremiumUI();
-  </script>
+    <div id="checkup_tab" class="tab-panel hidden">
+      <h2>🔍 Device Checkup</h2>
+      <p>Privacy Score: <b id="privacy_score">85%</b></p>
+      <ul id="checkup_list"></ul>
+      <button class="main-cta" onclick="runCheckup()">Run Daily Checkup</button>
+    </div>
+
+    <div id="sos_tab" class="tab-panel hidden">
+      <h2>🚨 SOS Hub</h2>
+      <button class="main-cta" onclick="sendSOS()">Send SOS</button>
+      <ul>
+        <li>📞 Police: 100</li>
+        <li>📞 Fire: 199</li>
+        <li>📞 Medical: 166</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
 
 </main>
 
+<!-- NAV -->
 <nav class="nav-tabs">
-<button class="nav-tab active" id="nav_home" onclick="nav('home', this)">🏠</button>
-<button class="nav-tab" id="nav_premium" onclick="nav('premium', this)">💎</button>
+  <button class="nav-tab active" onclick="nav('home',this)">🏠</button>
+  <button class="nav-tab" onclick="nav('premium',this)">💎</button>
 </nav>
-</div>
 
-<div id="premiumModal" class="modal">
-<div class="modal-content">
-<span class="close-modal" onclick="closeModal()">&times;</span>
-<div style="font-size:50px;">💎</div>
-<h2 style="color:var(--accent); margin-top:10px;">Elite Membership</h2>
-<div class="modal-body" style="text-align:left; font-size:0.9rem; margin:20px 0;">
-<p>✅ Unlock all tools</p>
-<p>✅ Remove Ads</p>
-<p>✅ Access Scam Alerts</p>
-</div>
-<div style="font-size:1.4rem; color:var(--gold); font-weight:bold; margin-bottom:20px;">4,90€ / month</div>
-<button class="main-cta" onclick="buyPremium()">BUY NOW</button>
-</div>
+<!-- PREMIUM MODAL -->
+<div id="premiumModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <h2>Elite Membership</h2>
+    <button class="main-cta" onclick="buyPremium()">BUY NOW</button>
+  </div>
 </div>
 
 <script src="app.js"></script>
+
 </body>
 </html>
+
+  <div class="map-container">
+    <h4 id="txt_map">TRAINING MAP</h4>
+    <div class="map-step active" id="step1"><div class="step-dot">1</div><small>Rookie</small></div>
+    <div class="map-step" id="step2"><div class="step-dot">5</div><small>Expert</small></div>
+    <div class="map-step" id="step3"><div class="step-dot">10</div><small>Elite</small></div>
+  </div>
+</section>
