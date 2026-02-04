@@ -98,10 +98,41 @@ if('serviceWorker' in navigator){
         <button class="tab-btn" onclick="switchPremiumTab(event, 'sos')">🚨 SOS Hub</button>
       </div>
 
-      <div class="tab-content">
-        <div id="alerts_tab" class="tab-panel">
-          <h2>⚠️ Scam & Security Alerts</h2>
-          <ul id="alert_list">
+      <<div id="alerts_tab" class="tab-panel">
+  <h2>⚠️ Scam & Security Alerts</h2>
+  <ul id="alert_list"></ul>
+</div>
+
+<script>
+// Alerts data
+const alertsData = [
+  {id:1, type:"Phishing", desc:"Phishing email targeting your region", status:"New", date:"02/04"},
+  {id:2, type:"Malware", desc:"New malicious app on Play Store", status:"New", date:"02/03"},
+  {id:3, type:"Banking Scam", desc:"Fake banking SMS campaigns", status:"Resolved", date:"01/30"}
+];
+
+// Render alerts
+function renderAlerts(){
+  const list = document.getElementById('alert_list');
+  list.innerHTML = alertsData.map(a => `
+    <li>
+      <div>${a.desc} <span class="status">[${a.status}]</span></div>
+      <div style="font-size:0.8rem; color:var(--muted); margin-top:5px;">${a.date}</div>
+      ${a.status==="New" ? `<button onclick="markResolved(${a.id})">Resolve</button>` : ""}
+    </li>
+  `).join('');
+}
+
+// Mark alert as resolved
+function markResolved(id){
+  const alert = alertsData.find(a => a.id===id);
+  if(alert) alert.status = "Resolved";
+  renderAlerts();
+}
+
+// Initial render
+renderAlerts();
+</script>
             <li>🚨 Phishing email targeting your region</li>
             <li>🔒 New malicious app on Play Store</li>
             <li>💳 Beware of fake banking SMS campaigns</li>
