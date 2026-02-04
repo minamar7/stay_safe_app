@@ -1,14 +1,28 @@
 {
   "name": "Stay Safe Elite",
-  "short_name": "SafeElite",
+  "short_name": "StaySafe",
+  "description": "Daily security training, alerts, checkup, and SOS for your safety.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#38bdf8",
+  "orientation": "portrait",
   "icons": [
-    {"src":"icons/icon-48.png","sizes":"48x48","type":"image/png"},
-    {"src":"icons/icon-72.png","sizes":"72x72","type":"image/png"},
-    {"src":"icons/icon-96.png","sizes":"96x96","type":"image/png"},
-    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png"}
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
