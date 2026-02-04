@@ -40,7 +40,6 @@ const translations = {
 // =========================
 function initApp(lang){
   currentLang = lang;
-  // Update static texts
   document.getElementById('txt_daily').innerText = translations[lang].daily;
   document.getElementById('quiz_btn').innerText = translations[lang].start;
   document.getElementById('txt_days').innerText = translations[lang].days;
@@ -123,7 +122,9 @@ function renderQuestion(){
     return;
   }
   const q = activeQuestions[currentIndex];
-  document.getElementById('quiz_text').innerHTML = `<b>Q:</b> ${q.q}`;
+  const quizText = document.getElementById('quiz_text');
+  quizText.innerHTML = `<b>Q:</b> ${q.q}`;
+  
   const optionsDiv = document.getElementById('quiz_options');
   optionsDiv.innerHTML = "";
   q.o.forEach((opt,i)=>{
@@ -144,16 +145,39 @@ function checkAnswer(selected){
     if(i===selected && i!==q.a) btn.style.background='var(--danger)';
     btn.disabled = true;
   });
+
+  const quizText = document.getElementById('quiz_text');
+
+  // Feedback Correct / Wrong
+  const feedbackDiv = document.createElement('div');
+  feedbackDiv.style.marginTop = '10px';
+  feedbackDiv.style.fontSize = '1rem';
+  feedbackDiv.style.fontWeight = 'bold';
+  feedbackDiv.style.color = (selected===q.a) ? 'var(--success)' : 'var(--danger)';
+  feedbackDiv.innerText = (selected===q.a) ? '✅ Correct!' : '❌ Wrong!';
+  quizText.appendChild(feedbackDiv);
+
+  // Show explanation if available
+  if(q.exp){
+    const expDiv = document.createElement('div');
+    expDiv.style.marginTop = '5px';
+    expDiv.style.fontSize = '0.85rem';
+    expDiv.style.color = '#facc15';
+    expDiv.innerText = q.exp;
+    quizText.appendChild(expDiv);
+  }
+
   if(selected===q.a){
     xp += 50;
     localStorage.setItem('xp', xp);
     confetti({particleCount:50,spread:30});
     currentScore++;
   }
+
   setTimeout(()=>{
     currentIndex++;
     renderQuestion();
-  },700);
+  },2500);
 }
 
 function finishQuiz(){
@@ -235,7 +259,6 @@ function markResolved(id){
 
 renderAlerts();
 
-// Device Checkup
 const checkupData = [
   "✅ No suspicious apps detected",
   "⚠️ Some apps request unnecessary permissions",
@@ -250,10 +273,8 @@ function runCheckup(){
   confetti({particleCount:50, spread:30});
 }
 
-// Initial render
 document.getElementById('checkup_list').innerHTML = checkupData.map(i => `<li>${i}</li>`).join('');
 
-// SOS Hub
 function sendSOS(){
   alert("SOS sent to your emergency contacts!");
   confetti({particleCount:100, spread:60, colors:['#facc15','#38bdf8','#22c55e']});
