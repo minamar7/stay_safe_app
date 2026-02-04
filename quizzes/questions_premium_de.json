@@ -1,0 +1,137 @@
+{
+  "de": {
+    "levels": {
+      "7": [
+        {
+          "q": "Sie erhalten einen Videoanruf von Ihrem Chef. Das Bild ist klar, aber die Stimme klingt metallisch und er blinzelt kaum. Er bittet um eine dringende Überweisung. Was tun Sie?",
+          "o": ["Ich führe die Überweisung sofort aus.", "Ich lege auf und rufe ihn auf seinem Handy an, um es zu prüfen.", "Ich bitte ihn, die Anfrage per E-Mail zu senden."],
+          "a": 1,
+          "exp": "Das ist ein Deepfake. Fehlendes Blinzeln und Roboterstimmen sind klassische Anzeichen für KI-Betrug."
+        },
+        {
+          "q": "Ein Freund schickt eine Sprachnachricht und bittet um 50€ via Revolut, weil er seinen Geldbeutel verloren hat. Die Stimme klingt exakt wie er. Was tun Sie?",
+          "o": ["Ich sende es sofort, es ist mein Freund.", "Ich stelle eine Frage, die nur mein echter Freund beantworten könnte.", "Ich ignoriere die Nachricht."],
+          "a": 1,
+          "exp": "Vorsicht vor KI-Stimmen-Klonen! Mit nur wenigen Sekunden Audiomaterial kann eine KI jede Stimme imitieren."
+        },
+        {
+          "q": "Sie sehen eine Anzeige mit einem Prominenten, der eine Plattform für automatische Gewinne bewirbt. Was prüfen Sie zuerst?",
+          "o": ["Ob die Lippenbewegungen perfekt zum Ton passen.", "Wie viele Likes die Anzeige hat.", "Ob der Prominente teure Kleidung trägt."],
+          "a": 0,
+          "exp": "Deepfakes haben oft eine kleine Verzögerung (Desync) zwischen Ton und Lippenbewegung."
+        },
+        {
+          "q": "Ein angeblicher Bankmitarbeiter bittet Sie, Ihren Bildschirm zu teilen, um ein Problem zu lösen. Was tun Sie?",
+          "o": ["Ich teile meinen Bildschirm.", "Ich lege sofort auf und rufe die Bank über die offizielle Nummer an.", "Ich gebe ihm einen temporären Code."],
+          "a": 1,
+          "exp": "Banken fordern niemals Bildschirmfreigabe. Das ist ein klassischer Remote-Access-Betrug."
+        },
+        {
+          "q": "Sie erhalten ein Video, in dem Ihr CEO eine sofortige Zahlung verlangt. Was tun Sie?",
+          "o": ["Ich führe die Zahlung aus.", "Ich bestätige die Anfrage über einen zweiten offiziellen Kommunikationskanal.", "Ich antworte auf die E-Mail."],
+          "a": 1,
+          "exp": "Deepfake-Videos werden zunehmend für Unternehmensbetrug genutzt. Immer zweite Bestätigung einholen."
+        }
+      ],
+
+      "8": [
+        {
+          "q": "Sie erhalten eine E-Mail, dass Ihr Passwort im Dark Web aufgetaucht ist. Was ist das größte Risiko?",
+          "o": ["Keines.", "Hacker könnten es nutzen, um in E-Mail oder Online-Banking zu gelangen.", "Nur die alte App ist betroffen."],
+          "a": 1,
+          "exp": "Betrüger nutzen 'Credential Stuffing': Sie testen Ihr Passwort bei allen großen Diensten."
+        },
+        {
+          "q": "Eine Erpresser-E-Mail enthält ein altes Passwort von Ihnen. Man fordert Bitcoin. Wie reagieren Sie?",
+          "o": ["Ich bezahle.", "Ich ignoriere es und ändere meine Passwörter.", "Ich verhandle."],
+          "a": 1,
+          "exp": "Das ist Sextortion. Ein altes Passwort bedeutet keinen Kamerazugriff."
+        },
+        {
+          "q": "Am Flughafen verbinden Sie sich mit dem WLAN 'Airport_Free_HighSpeed'. Was sollten Sie vermeiden?",
+          "o": ["Nachrichten lesen.", "Login in Online-Banking oder Social Media ohne VPN.", "Normales Surfen."],
+          "a": 1,
+          "exp": "Offene Netzwerke ermöglichen Man-in-the-Middle-Angriffe."
+        },
+        {
+          "q": "Ihr Handy verliert plötzlich komplett den Empfang und er kommt nicht zurück. Was könnte passieren?",
+          "o": ["Netzfehler.", "SIM-Swapping-Angriff.", "Akku defekt."],
+          "a": 1,
+          "exp": "Beim SIM-Swapping übernimmt ein Betrüger Ihre Nummer, um 2FA-Codes zu stehlen."
+        },
+        {
+          "q": "Sie erhalten eine Warnung über einen Login-Versuch aus einem anderen Land. Was tun Sie?",
+          "o": ["Ignorieren.", "Passwort sofort ändern und 2FA aktivieren.", "Abwarten."],
+          "a": 1,
+          "exp": "Unbekannte Login-Versuche sind ein Zeichen für einen möglichen Angriff."
+        }
+      ],
+
+      "9": [
+        {
+          "q": "Ein 'Finanzberater' auf Telegram verspricht 200% Gewinn pro Woche. Was ist am wahrscheinlichsten?",
+          "o": ["Eine Chance.", "Ein 'Pig Butchering'-Betrug.", "Eine seriöse Investition."],
+          "a": 1,
+          "exp": "Unrealistische Gewinne sind ein klares Betrugsmerkmal."
+        },
+        {
+          "q": "Was sollten Sie NIEMALS teilen, selbst nicht mit offiziellem Support?",
+          "o": ["Ihren Namen.", "Ihre Seed Phrase.", "Ihre E-Mail-Adresse."],
+          "a": 1,
+          "exp": "Die Seed Phrase gibt vollständigen Zugriff auf Ihre Wallet."
+        },
+        {
+          "q": "Ein NFT wird kostenlos an Ihre Wallet geschickt. Sie sollen sich einloggen, um es freizuschalten. Was tun Sie?",
+          "o": ["Einloggen.", "Nicht verbinden – es ist ein Drainer.", "Weiterleiten."],
+          "a": 1,
+          "exp": "Bösartige NFTs können Ihre Wallet leeren."
+        },
+        {
+          "q": "Wo bewahren Sie große Mengen Krypto langfristig am sichersten auf?",
+          "o": ["Auf einer Börse.", "In einer Hardware-Wallet.", "In einer Word-Datei."],
+          "a": 1,
+          "exp": "Hardware-Wallets sind offline und daher sicherer."
+        },
+        {
+          "q": "Sie erhalten einen Airdrop von einer unbekannten Firma. Was ist das?",
+          "o": ["Geschenk.", "Phishing-Falle.", "Werbung."],
+          "a": 1,
+          "exp": "Unbekannte Airdrops sind fast immer Betrug."
+        }
+      ],
+
+      "10": [
+        {
+          "q": "Sie erhalten eine E-Mail von 'Microsoft Security', dass Ihr Konto deaktiviert wird. Was tun Sie?",
+          "o": ["Auf den Link klicken.", "Absender prüfen und nur über die offizielle Website einloggen.", "Antworten."],
+          "a": 1,
+          "exp": "Phishing-E-Mails imitieren große Unternehmen."
+        },
+        {
+          "q": "Jemand fordert Sie auf, eine 'Sicherheits-App' zu installieren. Was tun Sie?",
+          "o": ["Installieren.", "Ablehnen – Remote-Access-Betrug.", "Nach Details fragen."],
+          "a": 1,
+          "exp": "Betrüger nutzen Remote-Apps, um Geräte zu übernehmen."
+        },
+        {
+          "q": "Ein Anrufer kennt Ihren Namen, Ihre Adresse und Ihr IBAN und behauptet, von der Bank zu sein. Was bedeutet das?",
+          "o": ["Es ist sicher die Bank.", "Ihre Daten wurden geleakt.", "Kein Risiko."],
+          "a": 1,
+          "exp": "Betrüger kaufen echte Daten, um vertrauenswürdig zu wirken."
+        },
+        {
+          "q": "Sie erhalten einen QR-Code zur 'Identitätsbestätigung'. Was tun Sie?",
+          "o": ["Scannen.", "Nicht scannen – könnte bösartig sein.", "Weiterleiten."],
+          "a": 1,
+          "exp": "QR-Codes können zu Phishing-Seiten führen."
+        },
+        {
+          "q": "Jemand fordert Sie auf, Geld auf ein 'sicheres Konto' zu überweisen. Was tun Sie?",
+          "o": ["Überweisen.", "Offizielle Banknummer anrufen.", "Mehr Infos verlangen."],
+          "a": 1,
+          "exp": "Banken verlangen niemals Überweisungen auf 'sichere Konten'."
+        }
+      ]
+    }
+  }
+}
