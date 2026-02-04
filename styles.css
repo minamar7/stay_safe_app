@@ -361,3 +361,43 @@ body {
 .tab-panel ul::-webkit-scrollbar-track {
   background: rgba(30,41,59,0.1);
 }
+/* ===== PREMIUM TABS FIX ===== */
+
+.tab-content {
+  position: relative;
+}
+
+.tab-panel { 
+  display: none;               /* ΟΛΑ κλειστά by default */
+  background: #0f172a;         /* FULL αδιαφανές */
+  padding:20px; 
+  border-radius:25px; 
+  border:1px solid rgba(255,255,255,0.08); 
+  margin-bottom:20px; 
+  position: relative;
+  z-index: 10;
+}
+
+.tab-panel.active {
+  display: block;              /* ΜΟΝΟ το ενεργό φαίνεται */
+}
+
+.tab-panel h2 {
+  color: var(--accent);
+  margin-bottom:10px;
+  text-align:center;
+}
+
+.tab-panel ul {
+  list-style:none;
+  padding:0;
+}
+
+.tab-panel li {
+  padding:8px 10px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  font-size:0.9rem;
+  border-radius:12px;
+  margin-bottom:6px;
+  background: rgba(30,41,59,0.6);
+}
