@@ -1,16 +1,35 @@
-const cacheName = 'stay-safe-cache-v1';
-const assets = [
+const CACHE_NAME = 'stay-safe-elite-v1';
+const urlsToCache = [
   './',
   './index.html',
-  './styles.css',
   './app.js',
-  './manifest.json',
+  './styles.css',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './quizzes/questions_free_en.json',
+  './quizzes/questions_premium_en.json'
+  // Προσθέστε όλα τα JSON για άλλες γλώσσες
 ];
 
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(cacheName).then(cache => cache.addAll(assets)));
+// Install SW & cache files
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+  );
 });
 
-self.addEventListener('fetch', e => {
-  e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+// Activate SW
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+    ))
+  );
+});
+
+// Fetch from cache first
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(res => res || fetch(event.request))
+  );
 });
