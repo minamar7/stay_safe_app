@@ -1,12 +1,11 @@
 {
   "name": "Stay Safe Elite",
   "short_name": "StaySafe",
-  "description": "Daily security training, alerts, checkup, and SOS for your safety.",
-  "start_url": "./index.html",
+  "description": "Daily security training, alerts, checkup, and SOS",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#38bdf8",
-  "orientation": "portrait",
   "icons": [
     {
       "src": "icons/icon-192.png",
