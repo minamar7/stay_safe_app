@@ -89,7 +89,6 @@ function updateUI(){
     document.getElementById('badge3').classList.add('unlocked');
     document.getElementById('prem_locked').classList.add('hidden');
     document.getElementById('prem_unlocked').classList.remove('hidden');
-    document.getElementById('ad_box').classList.add('hidden');
   }
 }
 
@@ -147,8 +146,6 @@ function checkAnswer(selected){
   });
 
   const quizText = document.getElementById('quiz_text');
-
-  // Feedback Correct / Wrong
   const feedbackDiv = document.createElement('div');
   feedbackDiv.style.marginTop = '10px';
   feedbackDiv.style.fontSize = '1rem';
@@ -157,7 +154,6 @@ function checkAnswer(selected){
   feedbackDiv.innerText = (selected===q.a) ? '✅ Correct!' : '❌ Wrong!';
   quizText.appendChild(feedbackDiv);
 
-  // Show explanation if available
   if(q.exp){
     const expDiv = document.createElement('div');
     expDiv.style.marginTop = '5px';
