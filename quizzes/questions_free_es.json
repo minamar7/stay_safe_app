@@ -1,0 +1,53 @@
+{
+  "es": {
+    "levels": {
+      "1": [
+        { "q": "¿Cuál es el número de emergencia europeo?", "o": ["100", "112", "911"], "a": 1 },
+        { "q": "¿Qué hacer si huele a gas en casa?", "o": ["Encender la luz", "Abrir ventanas", "Llamar a la policía"], "a": 1 },
+        { "q": "¿Es seguro dejar la llave debajo del felpudo?", "o": ["Sí", "No", "Solo un momento"], "a": 1 },
+        { "q": "¿Cómo se apaga un fuego de aceite en una sartén?", "o": ["Con agua", "Con una tapa o manta ignífuga", "Soplando"], "a": 1 },
+        { "q": "¿Dónde deben guardarse los productos de limpieza?", "o": ["En el suelo", "En un armario alto y cerrado", "Debajo de la cama"], "a": 1 }
+      ],
+
+      "2": [
+        { "q": "¿Qué hacer si un cable echa chispas?", "o": ["Tocarlo", "Bajar el interruptor general", "Echarle agua"], "a": 1 },
+        { "q": "¿Cada cuánto tiempo hay que revisar el detector de humo?", "o": ["Cada mes", "Nunca", "Cada 10 años"], "a": 0 },
+        { "q": "¿Dónde dejar las llaves de casa por la noche?", "o": ["En la puerta", "En un lugar fijo lejos de la puerta", "En el balcón"], "a": 1 },
+        { "q": "¿Qué hacer si te quedas atrapado en un ascensor?", "o": ["Forzar la puerta", "Pulsar el botón de emergencia", "Gritar"], "a": 1 },
+        { "q": "¿A qué número llamas en caso de incendio?", "o": ["100", "199", "166"], "a": 1 }
+      ],
+
+      "3": [
+        { "q": "¿Qué hacer si sale humo de un enchufe?", "o": ["Desenchufar el aparato", "Echar agua", "Bajar el interruptor general"], "a": 2 },
+        { "q": "¿Es seguro cargar el móvil bajo la almohada?", "o": ["Sí", "No, riesgo de sobrecalentamiento", "Solo de noche"], "a": 1 },
+        { "q": "¿Qué hacer durante un terremoto?", "o": ["Correr a las escaleras", "Esconderse bajo una mesa resistente", "Usar el ascensor"], "a": 1 },
+        { "q": "¿Es seguro compartir contraseñas por email?", "o": ["Sí", "No", "Solo con la familia"], "a": 1 },
+        { "q": "¿Qué significa 2FA?", "o": ["Doble velocidad", "Autenticación de dos factores", "App de chat"], "a": 1 }
+      ],
+
+      "4": [
+        { "q": "Encuentras un USB en la calle. ¿Qué haces?", "o": ["Lo conecto a mi PC", "Lo tiro a la basura", "Lo regalo"], "a": 1 },
+        { "q": "¿Cuál de estas contraseñas es más fuerte?", "o": ["123456", "Pa$$w0rd!2024", "mi_nombre"], "a": 1 },
+        { "q": "¿Qué significa el candado en el navegador?", "o": ["PC bloqueado", "Conexión segura (HTTPS)", "Internet lento"], "a": 1 },
+        { "q": "¿Qué haces si recibes un link de un extraño?", "o": ["Pulsar", "Borrarlo", "Enviarlo a amigos"], "a": 1 },
+        { "q": "¿Es seguro el Wi-Fi público para el banco?", "o": ["Sí", "No", "Solo con contraseña"], "a": 1 }
+      ],
+
+      "5": [
+        { "q": "¿Qué es el Phishing?", "o": ["Una actualización", "Estafa para robar datos", "Un juego"], "a": 1 },
+        { "q": "¿Cómo proteges tu cuenta de Facebook?", "o": ["Contraseña fácil", "Activar 2FA", "Con muchos likes"], "a": 1 },
+        { "q": "¿Qué hacer si el PC pide un rescate por tus archivos?", "o": ["Pagar", "Llamar a un técnico/policía", "Romperlo"], "a": 1 },
+        { "q": "¿Cada cuánto cambiar las contraseñas?", "o": ["Nunca", "Cada pocos meses", "Cada día"], "a": 1 },
+        { "q": "¿Es seguro guardar contraseñas en el navegador?", "o": ["Sí, siempre", "No en PCs públicos", "Solo en el móvil"], "a": 1 }
+      ],
+
+      "6": [
+        { "q": "SMS: 'Paquete pendiente, pulsa aquí'. ¿Qué haces?", "o": ["Pulsar el link", "Borrarlo", "Enviar mis datos"], "a": 1 },
+        { "q": "¿Riesgo de compartir todo en redes sociales?", "o": ["Ganar seguidores", "Dar info a ladrones", "Ninguno"], "a": 1 },
+        { "q": "¿Qué ofrece un Antivirus?", "o": ["Internet rápido", "Protección contra virus", "Películas gratis"], "a": 1 },
+        { "q": "Alguien llama del 'Banco' pidiendo tu PIN. ¿Qué haces?", "o": ["Se lo doy", "Colgar", "Preguntar quién es"], "a": 1 },
+        { "q": "SMS dice que ganaste un iPhone. ¿Qué haces?", "o": ["Enviar mi dirección", "Ignorar/Borrar", "Pulsar el link"], "a": 1 }
+      ]
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "fr": {
+    "levels": {
+      "1": [
+        { "q": "Quel est le numéro d'urgence européen ?", "o": ["100", "112", "911"], "a": 1 },
+        { "q": "Que faire si ça sent le gaz chez vous ?", "o": ["Allumer la lumière", "Ouvrir les fenêtres", "Appeler la police"], "a": 1 },
+        { "q": "Est-il sûr de laisser une clé sous le paillasson ?", "o": ["Oui", "Non", "Seulement un instant"], "a": 1 },
+        { "q": "Comment éteindre un feu d'huile dans une poêle ?", "o": ["Avec de l'eau", "Avec un couvercle ou une couverture anti-feu", "En soufflant"], "a": 1 },
+        { "q": "Où doivent être rangés les produits d'entretien ?", "o": ["Sur le sol", "Dans un placard haut et verrouillé", "Sous le lit"], "a": 1 }
+      ],
+
+      "2": [
+        { "q": "Que faire si un câble produit des étincelles ?", "o": ["Le toucher", "Couper le disjoncteur général", "Verser de l'eau"], "a": 1 },
+        { "q": "À quelle fréquence faut-il tester le détecteur de fumée ?", "o": ["Chaque mois", "Jamais", "Tous les 10 ans"], "a": 0 },
+        { "q": "Où laisser les clés de la maison la nuit ?", "o": ["Sur la porte", "Dans un endroit fixe loin de la porte", "Sur le balcon"], "a": 1 },
+        { "q": "Que faire si vous êtes coincé dans un ascenseur ?", "o": ["Forcer la porte", "Appuyer sur le bouton d'urgence", "Crier"], "a": 1 },
+        { "q": "Quel numéro appeler en cas d'incendie en Grèce ?", "o": ["100", "199", "166"], "a": 1 }
+      ],
+
+      "3": [
+        { "q": "Que faire si de la fumée sort d'une prise ?", "o": ["Débrancher l'appareil", "Verser de l'eau", "Couper le disjoncteur"], "a": 2 },
+        { "q": "Est-il sûr de charger son téléphone sous l'oreiller ?", "o": ["Oui", "Non, risque de surchauffe", "Uniquement la nuit"], "a": 1 },
+        { "q": "Que faire pendant un tremblement de terre ?", "o": ["Courir vers les escaliers", "Se cacher sous une table solide", "Prendre l'ascenseur"], "a": 1 },
+        { "q": "Est-il sûr de partager des mots de passe par e-mail ?", "o": ["Oui", "Non", "Seulement avec la famille"], "a": 1 },
+        { "q": "Que signifie 2FA ?", "o": ["Double vitesse", "Authentification à deux facteurs", "Application de chat"], "a": 1 }
+      ],
+
+      "4": [
+        { "q": "Vous trouvez une clé USB dans la rue. Que faites-vous ?", "o": ["Je la branche sur mon PC", "Je la jette", "Je l'offre"], "a": 1 },
+        { "q": "Quel mot de passe est le plus fort ?", "o": ["123456", "Pa$$w0rd!2024", "mon_nom"], "a": 1 },
+        { "q": "Que signifie le cadenas dans le navigateur ?", "o": ["PC verrouillé", "Connexion sécurisée (HTTPS)", "Internet lent"], "a": 1 },
+        { "q": "Que faire si vous recevez un lien d'un inconnu ?", "o": ["Cliquer", "Le supprimer", "L'envoyer à des amis"], "a": 1 },
+        { "q": "Le Wi-Fi public est-il sûr pour la banque en ligne ?", "o": ["Oui", "Non", "Seulement avec un mot de passe"], "a": 1 }
+      ],
+
+      "5": [
+        { "q": "Qu'est-ce que le Phishing ?", "o": ["Une mise à jour", "Une arnaque pour voler des données", "Un jeu"], "a": 1 },
+        { "q": "Comment protéger votre compte Facebook ?", "o": ["Mot de passe facile", "Activer la 2FA", "Avec beaucoup de likes"], "a": 1 },
+        { "q": "Que faire si votre PC est bloqué par un rançongiciel ?", "o": ["Payer", "Appeler un technicien/la police", "Le casser"], "a": 1 },
+        { "q": "À quelle fréquence changer vos mots de passe ?", "o": ["Jamais", "Tous les quelques mois", "Chaque jour"], "a": 1 },
+        { "q": "Est-il sûr d'enregistrer les mots de passe dans le navigateur ?", "o": ["Oui, toujours", "Pas sur les PC publics", "Uniquement sur mobile"], "a": 1 }
+      ],
+
+      "6": [
+        { "q": "SMS : 'Colis en attente, cliquez ici'. Que faites-vous ?", "o": ["Cliquer sur le lien", "Le supprimer", "Envoyer mes coordonnées"], "a": 1 },
+        { "q": "Risque de trop partager sur les réseaux sociaux ?", "o": ["Gagner des abonnés", "Donner des infos aux cambrioleurs", "Aucun"], "a": 1 },
+        { "q": "Que propose un antivirus ?", "o": ["Internet rapide", "Protection contre les virus", "Films gratuits"], "a": 1 },
+        { "q": "Quelqu'un de la 'Banque' demande votre code PIN. Que faites-vous ?", "o": ["Je le donne", "Raccrocher", "Demander qui c'est"], "a": 1 },
+        { "q": "Un SMS dit que vous avez gagné un iPhone. Que faites-vous ?", "o": ["Envoyer mon adresse", "Ignorer/Supprimer", "Cliquer sur le lien"], "a": 1 }
+      ]
+    }
+  }
+}

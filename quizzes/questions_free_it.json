@@ -1,0 +1,53 @@
+{
+  "it": {
+    "levels": {
+      "1": [
+        { "q": "Qual è il numero di emergenza europeo?", "o": ["100", "112", "911"], "a": 1 },
+        { "q": "Cosa fare se si sente odore di gas in casa?", "o": ["Accendere la luce", "Aprire le finestre", "Chiamare la polizia"], "a": 1 },
+        { "q": "È sicuro lasciare la chiave sotto lo zerbino?", "o": ["Sì", "No", "Solo per poco"], "a": 1 },
+        { "q": "Come si spegne un incendio di olio in padella?", "o": ["Con acqua", "Con un coperchio o coperta antincendio", "Soffiando"], "a": 1 },
+        { "q": "Dove vanno conservati i prodotti per la pulizia?", "o": ["Sul pavimento", "In un armadio alto e chiuso a chiave", "Sotto il letto"], "a": 1 }
+      ],
+
+      "2": [
+        { "q": "Cosa fare se un cavo emette scintille?", "o": ["Toccarlo", "Staccare l'interruttore generale", "Versare acqua"], "a": 1 },
+        { "q": "Ogni quanto testare il rilevatore di fumo?", "o": ["Ogni mese", "Mai", "Ogni 10 anni"], "a": 0 },
+        { "q": "Dove lasciare le chiavi di casa la notte?", "o": ["Nella porta", "In un posto fisso lontano dalla porta", "Sul balcone"], "a": 1 },
+        { "q": "Cosa fare se si rimane bloccati in ascensore?", "o": ["Forzare la porta", "Premere il pulsante di emergenza", "Gridare"], "a": 1 },
+        { "q": "Qual è il numero per gli incendi in Grecia?", "o": ["100", "199", "166"], "a": 1 }
+      ],
+
+      "3": [
+        { "q": "Cosa fare se esce fumo da una presa elettrica?", "o": ["Scollegare l'apparecchio", "Versare acqua", "Staccare l'interruttore generale"], "a": 2 },
+        { "q": "È sicuro caricare il telefono sotto il cuscino?", "o": ["Sì", "No, rischio surriscaldamento", "Solo di notte"], "a": 1 },
+        { "q": "Cosa fare durante un terremoto?", "o": ["Correre verso le scale", "Ripararsi sotto un tavolo robusto", "Prendere l'ascensore"], "a": 1 },
+        { "q": "È sicuro condividere le password via email?", "o": ["Sì", "No", "Solo con i familiari"], "a": 1 },
+        { "q": "Cosa significa 2FA?", "o": ["Doppia velocità", "Autenticazione a due fattori", "App di chat"], "a": 1 }
+      ],
+
+      "4": [
+        { "q": "Trovi una chiavetta USB per strada. Cosa fai?", "o": ["La collego al PC", "La butto via", "La regalo"], "a": 1 },
+        { "q": "Quale password è la più forte?", "o": ["123456", "Pa$$w0rd!2024", "mio_nome"], "a": 1 },
+        { "q": "Cosa significa il lucchetto nel browser?", "o": ["PC bloccato", "Connessione sicura (HTTPS)", "Internet lento"], "a": 1 },
+        { "q": "Cosa fai se ricevi un link da uno sconosciuto?", "o": ["Clicco", "Lo cancello", "Lo invio agli amici"], "a": 1 },
+        { "q": "Il Wi-Fi pubblico è sicuro per il banking online?", "o": ["Sì", "No", "Solo con password"], "a": 1 }
+      ],
+
+      "5": [
+        { "q": "Cos'è il Phishing?", "o": ["Un aggiornamento", "Truffa elettronica per rubare dati", "Un gioco"], "a": 1 },
+        { "q": "Come proteggi il tuo account Facebook?", "o": ["Password semplice", "Attivare la 2FA", "Con molti like"], "a": 1 },
+        { "q": "Cosa fare se il PC è bloccato da un Ransomware?", "o": ["Pagare", "Chiamare tecnico/polizia", "Rompere il PC"], "a": 1 },
+        { "q": "Ogni quanto cambiare le password?", "o": ["Mai", "Ogni pochi mesi", "Ogni giorno"], "a": 1 },
+        { "q": "È sicuro salvare le password nel browser?", "o": ["Sì, sempre", "Non su PC pubblici", "Solo sul cellulare"], "a": 1 }
+      ],
+
+      "6": [
+        { "q": "SMS: 'Pacco in attesa, clicca qui'. Cosa fai?", "o": ["Clicco sul link", "Lo cancello", "Invio i miei dati"], "a": 1 },
+        { "q": "Rischio di condividere troppo sui social?", "o": ["Guadagnare follower", "Dare info ai ladri", "Nessuno"], "a": 1 },
+        { "q": "Cosa offre un antivirus?", "o": ["Internet veloce", "Protezione dai virus", "Film gratis"], "a": 1 },
+        { "q": "Qualcuno della 'Banca' chiede il tuo PIN. Cosa fai?", "o": ["Lo do", "Riaggancio", "Chiedo chi è"], "a": 1 },
+        { "q": "Un SMS dice che hai vinto un iPhone. Cosa fai?", "o": ["Invio il mio indirizzo", "Ignoro/Cancello", "Clicco sul link"], "a": 1 }
+      ]
+    }
+  }
+}
