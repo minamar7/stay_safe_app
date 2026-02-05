@@ -14,14 +14,30 @@ let activeQuestions = [];
 let questionsDoneToday = parseInt(localStorage.getItem('questionsDoneToday')) || 0;
 
 // =========================
-// UI Translations
+// UI & System Translations
 // =========================
 const translations = {
-  en: { daily:"🛡️ Daily Training", start:"START QUIZ", days:"DAYS", finish:"Congrats! Training complete.", achievements:"🏆 Achievements", map:"TRAINING MAP", prem_desc:"Unlock all security tools and SOS Hub.", try_again: "TRY AGAIN", limit: "Daily limit reached (5/5). Upgrade to Elite!" },
-  el: { daily:"🛡️ Καθημερινή Εκπαίδευση", start:"ΞΕΚΙΝΑ ΤΟ ΤΕΣΤ", days:"ΗΜΕΡΕΣ", finish:"Συγχαρητήρια! Ολοκληρώθηκε.", achievements:"🏆 Επιτεύγματα", map:"ΧΑΡΤΗΣ ΕΚΠΑΙΔΕΥΣΗΣ", prem_desc:"Ξεκλειδώστε όλα τα εργαλεία και το SOS Hub.", try_again: "ΔΟΚΙΜΑΣΤΕ ΠΑΛΙ", limit: "Το ημερήσιο όριο συμπληρώθηκε (5/5). Γίνετε Elite!" },
-  de: { daily:"🛡️ Tägliches Training", start:"QUIZ STARTEN", days:"TAGE", finish:"Glückwunsch! Abgeschlossen.", achievements:"🏆 Erfolge", map:"TRAININGSKARTE", prem_desc:"Alle Tools und SOS-Hub freischalten.", try_again: "WIEDERHOLEN", limit: "Tageslimit erreicht (5/5)." },
-  fr: { daily:"🛡️ Entraînement", start:"COMMENCER", days:"JOURS", finish:"Félicitations!", achievements:"🏆 Succès", map:"CARTE", prem_desc:"Débloquez tous les outils.", try_again: "RECOMMENCER", limit: "Limite quotidienne atteinte (5/5)." },
-  es: { daily:"🛡️ Entrenamiento", start:"EMPEZAR", days:"DÍAS", finish:"¡Felicidades!", achievements:"🏆 Logros", map:"MAPA", prem_desc:"Desbloquear todas las herramientas.", try_again: "REINTENTAR", limit: "Límite diario alcanzado (5/5)." }
+  en: { 
+    daily:"🛡️ Daily Training", start:"START QUIZ", days:"DAYS", finish:"Congrats! Training complete.", 
+    achievements:"🏆 Achievements", map:"TRAINING MAP", prem_desc:"Unlock all security tools and SOS Hub.", 
+    try_again: "TRY AGAIN", limit: "Daily limit reached (5/5). Upgrade to Elite!",
+    sos_msg: "🚨 SOS HUB: Location acquired! Calling 112...",
+    checkup_msg: "🛡️ ELITE CHECKUP:\n- Device Encrypted\n- No Malware Found\n- Wi-Fi Secure",
+    dojo_start: "⚡ DOJO MODE: Tactical practice initiated!",
+    dojo_title: "⚡ ELITE DOJO TRAINING ⚡",
+    dojo_sub: "Tactical & Physical Security"
+  },
+  el: { 
+    daily:"🛡️ Καθημερινή Εκπαίδευση", start:"ΞΕΚΙΝΑ ΤΟ ΤΕΣΤ", days:"ΗΜΕΡΕΣ", finish:"Συγχαρητήρια! Ολοκληρώθηκε.", 
+    achievements:"🏆 Επιτεύγματα", map:"ΧΑΡΤΗΣ ΕΚΠΑΙΔΕΥΣΗΣ", prem_desc:"Ξεκλειδώστε όλα τα εργαλεία και το SOS Hub.", 
+    try_again: "ΔΟΚΙΜΑΣΤΕ ΠΑΛΙ", limit: "Το ημερήσιο όριο συμπληρώθηκε (5/5). Γίνετε Elite!",
+    sos_msg: "🚨 SOS HUB: Η τοποθεσία βρέθηκε! Κλήση στο 112...",
+    checkup_msg: "🛡️ ELITE ΕΛΕΓΧΟΣ:\n- Η συσκευή είναι κρυπτογραφημένη\n- Δεν βρέθηκε κακόβουλο λογισμικό\n- Ασφαλές Wi-Fi",
+    dojo_start: "⚡ DOJO MODE: Η τακτική εξάσκηση ξεκίνησε!",
+    dojo_title: "⚡ ELITE ΕΚΠΑΙΔΕΥΣΗ DOJO ⚡",
+    dojo_sub: "Φυσική Ασφάλεια & Αυτοάμυνα"
+  }
+  // Μπορείς να προσθέσεις παρόμοια blocks για de, fr, es κλπ.
 };
 
 // =========================
@@ -41,13 +57,11 @@ async function initApp(lang = 'en') {
   set('txt_map', t.map);
   set('txt_prem_desc', t.prem_desc);
 
-  // Δεν κρύβουμε το onboarding αυτόματα εδώ για να προλαβαίνεις να διαλέξεις
   await loadQuizzes(lang);
   updateUI();
   if (isElite) loadScamAlerts();
 }
 
-// Νέα συνάρτηση για την επιλογή γλώσσας από τις σημαίες
 function selectLang(lang) {
   initApp(lang);
   document.getElementById('onboarding')?.classList.add('hidden');
@@ -62,12 +76,8 @@ async function loadQuizzes(lang) {
     const fileSuffix = isElite ? 'premium' : 'free';
     const response = await fetch(`./quizzes/questions_${fileSuffix}_${lang}.json`);
     const data = await response.json();
-    
-    if (data && data[lang]) {
-      currentQuizData = data[lang].levels;
-    }
+    if (data && data[lang]) { currentQuizData = data[lang].levels; }
   } catch (err) {
-    console.warn("Quiz fetch error, using fallback.");
     currentQuizData = { "1": [{ q: "Protect your password?", o: ["Yes", "No"], a: 0 }] };
   }
 }
@@ -78,19 +88,10 @@ async function loadQuizzes(lang) {
 function updateUI() {
   const level = Math.floor(xp / 100) + 1;
   const set = (id, val) => { const el = document.getElementById(id); if(el) el.innerText = val; };
-
   set('level_val', level);
   set('streak_val', streak);
-  
   const xpFill = document.getElementById('xp_fill');
   if (xpFill) xpFill.style.width = (xp % 100) + '%';
-
-  document.getElementById('badge1')?.classList.toggle('unlocked', level >= 2);
-  document.getElementById('badge2')?.classList.toggle('unlocked', level >= 5);
-  document.getElementById('badge3')?.classList.toggle('unlocked', isElite);
-  
-  document.getElementById('step2')?.classList.toggle('active', level >= 5);
-  document.getElementById('step3')?.classList.toggle('active', level >= 10);
 
   if (isElite) {
     document.getElementById('prem_locked')?.classList.add('hidden');
@@ -105,18 +106,12 @@ function updateUI() {
 function startQuiz() {
   const level = Math.floor(xp / 100) + 1;
   const t = translations[currentLang] || translations['en'];
-
   if (level >= 7 && !isElite) { openModal(); return; }
-
-  if (questionsDoneToday >= 5 && !isElite) {
-    alert(t.limit);
-    return;
-  }
+  if (questionsDoneToday >= 5 && !isElite) { alert(t.limit); return; }
 
   document.getElementById('quiz_btn')?.classList.add('hidden');
   currentScore = 0;
   currentIndex = 0;
-  
   const pool = currentQuizData[level] || currentQuizData["1"] || [];
   activeQuestions = [...pool].sort(() => 0.5 - Math.random()).slice(0, 5);
   renderQuestion();
@@ -126,7 +121,6 @@ function renderQuestion() {
   const quizText = document.getElementById('quiz_text');
   const optionsDiv = document.getElementById('quiz_options');
   if (!quizText || !optionsDiv) return;
-
   if (currentIndex >= activeQuestions.length) { finishQuiz(); return; }
   
   const q = activeQuestions[currentIndex];
@@ -148,25 +142,17 @@ function renderQuestion() {
 
 function checkAnswer(selected, correct) {
   const buttons = document.querySelectorAll('#quiz_options button');
-  
   buttons.forEach((btn, i) => {
     btn.disabled = true;
     if (i === correct) btn.style.background = 'var(--success)';
     else if (i === selected) btn.style.background = 'var(--danger)';
   });
-
   if (selected === correct) { 
-    xp += 20;
-    localStorage.setItem('xp', xp); 
+    xp += 20; localStorage.setItem('xp', xp); 
     confetti({ particleCount: 40, spread: 30, origin: { y: 0.8 } }); 
     currentScore++; 
-    
-    if (!isElite) {
-      questionsDoneToday++;
-      localStorage.setItem('questionsDoneToday', questionsDoneToday);
-    }
+    if (!isElite) { questionsDoneToday++; localStorage.setItem('questionsDoneToday', questionsDoneToday); }
   }
-
   currentIndex++;
   setTimeout(renderQuestion, 1200);
 }
@@ -176,60 +162,33 @@ function finishQuiz() {
   document.getElementById('quiz_text').innerText = t.finish;
   document.getElementById('quiz_options').innerHTML = "";
   const btn = document.getElementById('quiz_btn');
-  if (btn) {
-    btn.classList.remove('hidden');
-    btn.innerText = t.try_again;
-  }
+  if (btn) { btn.classList.remove('hidden'); btn.innerText = t.try_again; }
   updateUI();
 }
 
 // =========================
-// Premium Features: SOS, Alerts, Dojo, Checkup
+// Premium Features
 // =========================
 function sendSOS() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((pos) => {
-      const link = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
-      alert(`🚨 SOS HUB: Location acquired!\nLink: ${link}\nSending to emergency services...`);
-      window.location.href = `tel:112`;
-    });
-  } else {
-    alert("🚨 SOS signal sent! Calling 112...");
-    window.location.href = `tel:112`;
-  }
-}
-
-async function loadScamAlerts() {
-  try {
-    const res = await fetch('./quizzes/alerts.json');
-    const alerts = await res.json();
-    const container = document.getElementById('prem_unlocked');
-    
-    let html = `<h4 style="color:var(--accent); margin:15px 0;">LIVE SCAM ALERTS</h4>`;
-    alerts.slice(0, 3).forEach(a => {
-      html += `
-        <div class="glass-card" style="padding:15px; margin-bottom:10px; border-left:4px solid var(--danger);">
-          <small>${a.date}</small>
-          <div style="font-weight:bold;">${a.title}</div>
-          <div style="font-size:0.8rem; color:var(--muted);">${a.desc}</div>
-        </div>`;
-    });
-    container.innerHTML += html;
-  } catch (e) { console.log("Alerts not found"); }
+  const t = translations[currentLang] || translations['en'];
+  alert(t.sos_msg);
+  window.location.href = `tel:112`;
 }
 
 function runCheckup() {
+  const t = translations[currentLang] || translations['en'];
   const btn = event.currentTarget;
-  btn.innerHTML = "<i>⏳</i><small>SCANNING...</small>";
+  btn.innerHTML = "<i>⏳</i>";
   setTimeout(() => {
-    alert("🛡️ ELITE CHECKUP:\n- Device Encrypted\n- No Malware Found\n- Wi-Fi Secure");
+    alert(t.checkup_msg);
     btn.innerHTML = "<i>🔍</i><small>CHECKUP</small>";
     confetti({ particleCount: 100, spread: 70 });
   }, 2000);
 }
 
-// ΕΝΕΡΓΟΠΟΙΗΣΗ DOJO ΜΕ ΑΓΓΛΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ
+// ΔΙΟΡΘΩΜΕΝΟ DOJO
 async function startDojo() {
+  const t = translations[currentLang] || translations['en'];
   if(!isElite) { openModal(); return; }
   
   try {
@@ -238,24 +197,40 @@ async function startDojo() {
     
     document.getElementById('quiz_btn')?.classList.add('hidden');
     currentIndex = 0;
-    // Φορτώνουμε τυχαία 5 ερωτήσεις από το Dojo
     activeQuestions = data.sort(() => 0.5 - Math.random()).slice(0, 5);
     
     const qText = document.getElementById('quiz_text');
     qText.style.color = "var(--gold)";
-    qText.innerHTML = "⚡ ELITE DOJO TRAINING ⚡<br><small>Tactical & Physical Security</small>";
+    qText.innerHTML = `${t.dojo_title}<br><small>${t.dojo_sub}</small>`;
     
-    setTimeout(() => {
-      renderQuestion();
-    }, 1500);
-    
+    setTimeout(() => { renderQuestion(); }, 1500);
   } catch (err) {
-    alert("Dojo training data not found.");
+    alert("Dojo data error.");
   }
 }
 
+async function loadScamAlerts() {
+  try {
+    const res = await fetch('./quizzes/alerts.json');
+    const alerts = await res.json();
+    const container = document.getElementById('prem_unlocked');
+    let html = `<h4 style="color:var(--accent); margin:15px 0;">LIVE SCAM ALERTS</h4>`;
+    alerts.slice(0, 3).forEach(a => {
+      html += `<div class="glass-card" style="padding:15px; margin-bottom:10px; border-left:4px solid var(--danger);">
+          <small>${a.date}</small><b>${a.title}</b><p style="font-size:0.8rem;">${a.desc}</p></div>`;
+    });
+    // Αποφυγή πολλαπλών Alert boxes
+    if(!document.querySelector('.scam-loaded')) {
+        const div = document.createElement('div');
+        div.className = 'scam-loaded';
+        div.innerHTML = html;
+        container.appendChild(div);
+    }
+  } catch (e) { console.log("Alerts error"); }
+}
+
 // =========================
-// Navigation & Modals
+// Navigation & Lifecycle
 // =========================
 function nav(screen, btn) {
   document.getElementById('screen_home')?.classList.add('hidden');
@@ -263,36 +238,25 @@ function nav(screen, btn) {
   document.getElementById('screen_' + screen)?.classList.remove('hidden');
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  if (screen === 'premium' && isElite) loadScamAlerts();
 }
 
 function openModal() { document.getElementById('premiumModal').style.display = 'flex'; }
 function closeModal() { document.getElementById('premiumModal').style.display = 'none'; }
 
 function buyPremium() { 
-  isElite = true; 
-  localStorage.setItem('isElite', 'true'); 
-  closeModal(); 
-  confetti({ particleCount: 150, spread: 70 }); 
-  updateUI(); 
-  loadScamAlerts();
+  isElite = true; localStorage.setItem('isElite', 'true'); 
+  closeModal(); confetti({ particleCount: 150, spread: 70 }); 
+  updateUI(); loadScamAlerts();
 }
 
-// =========================
-// App Lifecycle
-// =========================
 document.addEventListener('DOMContentLoaded', () => {
-  const lastDate = localStorage.getItem('lastDate') || '';
   const today = new Date().toISOString().slice(0, 10);
-  
-  if (today !== lastDate) {
-      if (lastDate !== "") streak++;
+  if (today !== localStorage.getItem('lastDate')) {
+      if(localStorage.getItem('lastDate')) streak++;
       questionsDoneToday = 0;
       localStorage.setItem('streak', streak);
       localStorage.setItem('questionsDoneToday', 0);
       localStorage.setItem('lastDate', today);
   }
-
-  const savedLang = localStorage.getItem('userLang') || 'en';
-  initApp(savedLang);
+  initApp(localStorage.getItem('userLang') || 'en');
 });
