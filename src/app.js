@@ -1,7 +1,7 @@
-// Εισαγωγές (Αν χρησιμοποιείς Vite/Webpack - αλλιώς τις αφαιρείς για απλό script)
-// import { Capacitor } from '@capacitor/core';
-// import { AdMob } from '@capacitor-community/admob';
-// import { InAppPurchases } from '@capacitor/in-app-purchases';
+/**
+ * Stay Safe Elite - Core App Logic
+ * Optimized for PWA & Super App Performance
+ */
 
 const App = {
   isElite: localStorage.getItem('isElite') === 'true',
@@ -10,25 +10,26 @@ const App = {
   currentLang: 'en',
   quizData: {},
 
-  // Μεταφράσεις για τα στατικά κείμενα του UI
+  // Στατικές μεταφράσεις για το UI
   translations: {
-    en: { daily: "🛡️ Daily Training", start: "START QUIZ", days: "DAYS", achievements: "🏆 Achievements", map: "TRAINING MAP", prem_desc: "Unlock all security tools." },
-    el: { daily: "🛡️ Καθημερινή Εκπαίδευση", start: "ΞΕΚΙΝΑ ΤΟ ΤΕΣΤ", days: "ΗΜΕΡΕΣ", achievements: "🏆 Επιτεύγματα", map: "ΧΑΡΤΗΣ ΕΚΠΑΙΔΕΥΣΗΣ", prem_desc: "Ξεκλειδώστε όλα τα εργαλεία ασφαλείας." },
-    de: { daily: "🛡️ Tägliches Training", start: "STARTEN", days: "TAGE", achievements: "🏆 Erfolge", map: "TRAININGSKARTE", prem_desc: "Alle Tools freischalten." },
-    fr: { daily: "🛡️ Entraînement", start: "COMMENCER", days: "JOURS", achievements: "🏆 Succès", map: "CARTE", prem_desc: "Débloquez tout." },
-    es: { daily: "🛡️ Entrenamiento", start: "EMPEZAR", days: "DÍAS", achievements: "🏆 Logros", map: "MAPA", prem_desc: "Desbloquear todo." },
-    it: { daily: "🛡️ Allenamento", start: "INIZIA", days: "GIORNI", achievements: "🏆 Traguardi", map: "MAPPA", prem_desc: "Sblocca tutto." },
-    pt: { daily: "🛡️ Treinamento", start: "INICIAR", days: "DIAS", achievements: "🏆 Conquistas", map: "MAPA", prem_desc: "Desbloquear tudo." },
-    ru: { daily: "🛡️ Тренировка", start: "НАЧАТЬ", days: "ДНЕЙ", achievements: "🏆 Достижения", map: "КАРТА", prem_desc: "Открыть всё." },
-    zh: { daily: "🛡️ 日常训练", start: "开始测试", days: "天", achievements: "🏆 成就", map: "训练地图", prem_desc: "解锁所有工具。" },
-    hi: { daily: "🛡️ दैनिक प्रशिक्षण", start: "शुरू करें", days: "दिन", achievements: "🏆 उपलब्धियां", map: "प्रशिक्षण मानचित्र", prem_desc: "सभी टूल अनलॉक करें।" }
+    en: { daily: "🛡️ Daily Training", start: "START QUIZ", days: "DAYS", achievements: "🏆 Achievements", map: "TRAINING MAP", prem_desc: "Unlock all security tools and Emergency Hub.", finish: "Training Complete!" },
+    el: { daily: "🛡️ Καθημερινή Εκπαίδευση", start: "ΞΕΚΙΝΑ ΤΟ ΤΕΣΤ", days: "ΗΜΕΡΕΣ", achievements: "🏆 Επιτεύγματα", map: "ΧΑΡΤΗΣ ΕΚΠΑΙΔΕΥΣΗΣ", prem_desc: "Ξεκλειδώστε όλα τα εργαλεία και το Κέντρο Ανάγκης.", finish: "Η εκπαίδευση ολοκληρώθηκε!" },
+    de: { daily: "🛡️ Tägliches Training", start: "QUIZ STARTEN", days: "TAGE", achievements: "🏆 Erfolge", map: "TRAININGSKARTE", prem_desc: "Alle Tools und Notruf-Hub freischalten.", finish: "Training abgeschlossen!" },
+    fr: { daily: "🛡️ Entraînement", start: "DÉMARRER", days: "JOURS", achievements: "🏆 Succès", map: "CARTE", prem_desc: "Débloquez tous les outils.", finish: "Formation terminée!" },
+    es: { daily: "🛡️ Entrenamiento", start: "EMPEZAR", days: "DÍAS", achievements: "🏆 Logros", map: "MAPA", prem_desc: "Desbloquea todas las herramientas.", finish: "¡Entrenamiento completado!" },
+    it: { daily: "🛡️ Allenamento", start: "INIZIA", days: "GIORNI", achievements: "🏆 Traguardi", map: "MAPPA", prem_desc: "Sblocca tutti gli strumenti.", finish: "Allenamento completato!" },
+    pt: { daily: "🛡️ Treinamento", start: "INICIAR", days: "DIAS", achievements: "🏆 Conquistas", map: "MAPA", prem_desc: "Desbloquear todas as ferramentas.", finish: "Treino concluído!" },
+    ru: { daily: "🛡️ Тренировка", start: "НАЧАТЬ", days: "ДНЕЙ", achievements: "🏆 Достижения", map: "КАΡΤΑ", prem_desc: "Открыть все инструменты.", finish: "Тренировка завершена!" },
+    zh: { daily: "🛡️ 日常训练", start: "开始测试", days: "天", achievements: "🏆 成就", map: "训练地图", prem_desc: "解锁所有工具。", finish: "训练完成！" },
+    hi: { daily: "🛡️ दैनिक प्रशिक्षण", start: "शुरू करें", days: "दिन", achievements: "🏆 उपलब्धियां", map: "प्रशिक्षण मानचित्र", prem_desc: "सभी टूल अनलॉक करें।", finish: "प्रशिक्षण पूरा हुआ!" }
   },
 
-  async init(lang = 'en') {
+  // Αρχικοποίηση - Καλείται από το Onboarding
+  async initApp(lang = 'en') {
     this.currentLang = lang;
     localStorage.setItem('userLang', lang);
 
-    // Ενημέρωση κειμένων UI
+    // Ενημέρωση κειμένων βάσει γλώσσας
     const t = this.translations[lang] || this.translations['en'];
     document.getElementById('txt_daily').innerText = t.daily;
     document.getElementById('quiz_btn').innerText = t.start;
@@ -37,20 +38,25 @@ const App = {
     document.getElementById('txt_map').innerText = t.map;
     document.getElementById('txt_prem_desc').innerText = t.prem_desc;
 
-    // Εναλλαγή οθονών
+    // UI Switch
     document.getElementById('onboarding').classList.add('hidden');
     document.getElementById('main_app').classList.remove('hidden');
 
-    // Φόρτωση Quizzes
+    // Φόρτωση Δεδομένων
+    await this.loadQuizzes(lang);
+    this.updateUI();
+  },
+
+  async loadQuizzes(lang) {
     try {
       const free = await fetch(`./quizzes/questions_free_${lang}.json`).then(r => r.json());
       const prem = await fetch(`./quizzes/questions_premium_${lang}.json`).then(r => r.json());
       this.quizData = { ...free[lang].levels, ...prem[lang].levels };
     } catch (e) {
-      console.error("Failed to load quizzes", e);
+      console.warn("Quiz files not found, using fallback local data.");
+      // Fallback αν τα αρχεία λείπουν
+      this.quizData = { "1": [{ q: "Is sharing passwords safe?", o: ["Yes", "No"], a: 1 }] };
     }
-
-    this.updateUI();
   },
 
   updateUI() {
@@ -59,7 +65,7 @@ const App = {
     document.getElementById('streak_val').innerText = this.streak;
     document.getElementById('xp_fill').style.width = (this.xp % 100) + "%";
 
-    // Ενημέρωση Badges & Map
+    // Achievements & Map Updates
     if (level >= 2) document.getElementById('badge1').classList.add('unlocked');
     if (level >= 5) {
       document.getElementById('badge2').classList.add('unlocked');
@@ -70,17 +76,19 @@ const App = {
       document.getElementById('step3').classList.add('active');
     }
 
+    // Elite Status UI
     if (this.isElite) {
       document.getElementById('prem_locked').classList.add('hidden');
       document.getElementById('prem_unlocked').classList.remove('hidden');
       document.getElementById('ad_box').classList.add('hidden');
+      document.getElementById('badge3').classList.add('unlocked');
     }
   },
 
-  async startQuiz() {
+  startQuiz() {
     const lvl = Math.floor(this.xp / 100) + 1;
     if (lvl >= 7 && !this.isElite) {
-      this.openPremiumModal();
+      this.openModal();
       return;
     }
     document.getElementById('quiz_btn').classList.add('hidden');
@@ -89,12 +97,12 @@ const App = {
 
   renderQuestion(idx, count) {
     const lvl = Math.floor(this.xp / 100) + 1;
-    const questions = this.quizData[lvl] || this.quizData[1];
+    const questions = this.quizData[lvl] || this.quizData["1"];
     const q = questions[idx % questions.length];
 
     document.getElementById('quiz_text').innerHTML = `<b>Q:</b> ${q.q}`;
     const html = q.o.map((o, i) => `
-      <button class="main-cta" style="margin-bottom:10px;" onclick="App.checkAnswer(${idx},${i},${count})">
+      <button class="main-cta" style="background:#1e293b; color:white; margin-bottom:10px;" onclick="App.checkAnswer(${idx},${i},${count})">
         ${o}
       </button>`).join('');
     document.getElementById('quiz_options').innerHTML = html;
@@ -102,7 +110,7 @@ const App = {
 
   checkAnswer(idx, selected, count) {
     const lvl = Math.floor(this.xp / 100) + 1;
-    const questions = this.quizData[lvl] || this.quizData[1];
+    const questions = this.quizData[lvl] || this.quizData["1"];
     const q = questions[idx % questions.length];
     
     const buttons = document.querySelectorAll('#quiz_options button');
@@ -120,54 +128,39 @@ const App = {
 
     count++;
     if (count < 5) {
-      setTimeout(() => this.renderQuestion(idx + 1, count), 1200);
+      setTimeout(() => this.renderQuestion(idx + 1, count), 1000);
     } else {
       setTimeout(() => {
-        document.getElementById('quiz_text').innerText = "Training Complete!";
+        const t = this.translations[this.currentLang];
+        document.getElementById('quiz_text').innerText = t.finish;
         document.getElementById('quiz_options').innerHTML = "";
         document.getElementById('quiz_btn').classList.remove('hidden');
-        document.getElementById('quiz_btn').innerText = "CONTINUE";
+        document.getElementById('quiz_btn').innerText = t.start;
         this.updateUI();
       }, 1200);
     }
   },
 
-  // Navigation Logic
   nav(screen, btn) {
-    document.querySelectorAll('section[id^="screen_"]').forEach(s => s.classList.add('hidden'));
+    document.getElementById('screen_home').classList.add('hidden');
+    document.getElementById('screen_premium').classList.add('hidden');
     document.getElementById('screen_' + screen).classList.remove('hidden');
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
   },
 
-  switchPremiumTab(e, tab) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    e.currentTarget.classList.add('active');
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
-    document.getElementById(tab + '_tab').classList.remove('hidden');
-  },
+  openModal() { document.getElementById('premiumModal').style.display = 'block'; },
+  closeModal() { document.getElementById('premiumModal').style.display = 'none'; },
 
-  openPremiumModal() { document.getElementById('premiumModal').classList.remove('hidden'); },
-  closePremiumModal() { document.getElementById('premiumModal').classList.add('hidden'); },
-
-  async buyPremium() {
-    // Εδώ καλείς το InAppPurchases αν είσαι σε κινητό
-    // Για το demo απλά το ενεργοποιούμε:
+  buyPremium() {
+    // Εδώ μπορεί να μπει το logic για In-App Purchase
     this.isElite = true;
     localStorage.setItem('isElite', 'true');
     this.updateUI();
-    this.closePremiumModal();
+    this.closeModal();
     confetti({ particleCount: 200, spread: 100 });
-  },
-
-  runCheckup() {
-    confetti({ particleCount: 100, spread: 70 });
-    alert("Device is secure! 🛡️");
-  },
-
-  sendSOS() {
-    alert("Emergency Signal Sent! 🚨");
   }
 };
 
+// Global Export
 window.App = App;
