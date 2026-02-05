@@ -98,3 +98,41 @@ function App() {
 }
 
 export default App;
+
+// ===================== XP & Level Up Animation =====================
+
+function addXP(amount) {
+    const xpFill = document.getElementById("xp_fill");
+    let currentWidth = parseFloat(xpFill.style.width) || 0;
+    let newWidth = currentWidth + amount;
+
+    if (newWidth >= 100) {
+        newWidth = newWidth - 100;
+        levelUp();
+    }
+
+    xpFill.style.width = `${newWidth}%`;
+}
+
+function levelUp() {
+    const levelEl = document.getElementById("level_val");
+    let currentLevel = parseInt(levelEl.innerText) || 1;
+    currentLevel += 1;
+    levelEl.innerText = currentLevel;
+
+    // Confetti effect
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+
+    // Optional: Animate streak text
+    const streakEl = document.getElementById("streak_val");
+    streakEl.style.transform = "scale(1.3)";
+    setTimeout(() => {
+        streakEl.style.transform = "scale(1)";
+    }, 500);
+}
+
+// Example: call addXP(25) whenever user completes a quiz
