@@ -15,12 +15,12 @@
     <link rel="stylesheet" href="styles.css">
 
     <script>
-    // Εγγραφή Service Worker από το φάκελο src
+    // Εγγραφή Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('src/sw.js')
           .then(reg => console.log("SW Registered!"))
-          .catch(err => console.log("SW registration failed:", err));
+          .catch(err => console.log("SW error", err));
       });
     }
     </script>
@@ -147,7 +147,9 @@
     <button class="nav-tab" onclick="App.nav('premium',this)">💎</button>
   </nav>
 
-</div> <div id="premiumModal" class="modal hidden">
+</div> 
+
+<div id="premiumModal" class="modal hidden">
   <div class="modal-content">
     <span class="close-modal" onclick="App.closePremiumModal()">&times;</span>
     <h2 style="color:var(--gold); margin-bottom:15px;">Elite Membership</h2>
