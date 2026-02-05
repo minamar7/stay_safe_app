@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#38bdf8">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="theme-color" content="#020617">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -15,150 +14,123 @@
     <link rel="stylesheet" href="styles.css">
 
     <script>
-    // Εγγραφή Service Worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('src/sw.js')
-          .then(reg => console.log("SW Registered!"))
-          .catch(err => console.log("SW error", err));
-      });
-    }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log("SW error", err));
+            });
+        }
     </script>
 </head>
 
 <body>
 
 <section id="onboarding" class="overlay">
-  <div>
-    <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
-    <h1>Stay Safe Elite</h1>
-    <p style="color:var(--muted); margin-bottom:20px;">Choose your language</p>
-
-    <div class="lang-grid">
-      <div class="lang-btn" onclick="App.init('en')">🇺🇸 English</div>
-      <div class="lang-btn" onclick="App.init('el')">🇬🇷 Greek</div>
-      <div class="lang-btn" onclick="App.init('de')">🇩🇪 German</div>
-      <div class="lang-btn" onclick="App.init('fr')">🇫🇷 French</div>
-      <div class="lang-btn" onclick="App.init('es')">🇪🇸 Spanish</div>
-      <div class="lang-btn" onclick="App.init('it')">🇮🇹 Italian</div>
-      <div class="lang-btn" onclick="App.init('pt')">🇵🇹 Portuguese</div>
-      <div class="lang-btn" onclick="App.init('ru')">🇷🇺 Russian</div>
-      <div class="lang-btn" onclick="App.init('zh')">🇨🇳 Chinese</div>
-      <div class="lang-btn" onclick="App.init('hi')">🇮🇳 Hindi</div>
+    <div>
+        <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
+        <h1>Stay Safe Elite</h1>
+        <div class="lang-grid">
+            <div class="lang-btn" onclick="App.init('en')">🇺🇸 English</div>
+            <div class="lang-btn" onclick="App.init('el')">🇬🇷 Greek</div>
+            <div class="lang-btn" onclick="App.init('de')">🇩🇪 German</div>
+            <div class="lang-btn" onclick="App.init('fr')">🇫🇷 French</div>
+            <div class="lang-btn" onclick="App.init('es')">🇪🇸 Spanish</div>
+            <div class="lang-btn" onclick="App.init('it')">🇮🇹 Italian</div>
+            <div class="lang-btn" onclick="App.init('pt')">🇵🇹 Portuguese</div>
+            <div class="lang-btn" onclick="App.init('ru')">🇷🇺 Russian</div>
+            <div class="lang-btn" onclick="App.init('zh')">🇨🇳 Chinese</div>
+            <div class="lang-btn" onclick="App.init('hi')">🇮🇳 Hindi</div>
+        </div>
     </div>
-  </div>
 </section>
 
 <div id="main_app" class="hidden">
+    <header class="app-header">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="color:var(--gold); font-weight:bold;">🔥 <span id="streak_val">1</span> <span id="txt_days">DAYS</span></div>
+            <div style="font-weight:900; color:var(--accent);">LEVEL <span id="level_val">1</span></div>
+        </div>
+        <div class="xp-bar"><div id="xp_fill" class="xp-fill"></div></div>
+    </header>
 
-  <header class="app-header">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-      <div style="color:var(--gold); font-weight:bold;">
-        🔥 <span id="streak_val">1</span> <span id="txt_days">DAYS</span>
-      </div>
-      <div style="font-weight:900; color:var(--accent);">
-        LEVEL <span id="level_val">1</span>
-      </div>
+    <main style="padding: 20px 20px 110px;">
+        <div id="ad_box" style="background:#1e293b; padding:10px; border-radius:10px; text-align:center; font-size:10px; color:var(--muted); margin-bottom:15px;">ADVERTISEMENT - ELITE TO REMOVE</div>
+
+        <section id="screen_home">
+            <div class="glass-card" id="quiz_container">
+                <h2 style="margin:0;" id="txt_daily">🛡️ Daily Training</h2>
+                <p id="quiz_text" style="color:var(--muted); font-size:0.9rem;">Are you ready for today's challenges?</p>
+                <div id="quiz_options"></div>
+                <button class="main-cta" id="quiz_btn" onclick="App.startQuiz()">START QUIZ</button>
+            </div>
+
+            <h3 style="font-size:1rem; margin-bottom:10px;" id="txt_achievements">🏆 Achievements</h3>
+            <div class="badge-grid">
+                <div id="badge1" class="badge">🎖️</div>
+                <div id="badge2" class="badge">🛡️</div>
+                <div id="badge3" class="badge">💎</div>
+                <div class="premium-btn-inline" onclick="App.openModal()">
+                    <div style="font-size: 16px;">🔒</div>
+                    <span>4,90€</span>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <h4 style="margin:0 0 10px; color:var(--accent); font-size:0.8rem;" id="txt_map">TRAINING MAP</h4>
+                <div class="map-step active" id="step1"><div class="step-dot">1</div><small>Rookie</small></div>
+                <div class="map-step" id="step2"><div class="step-dot">5</div><small>Expert</small></div>
+                <div class="map-step" id="step3"><div class="step-dot">10</div><small>Elite</small></div>
+            </div>
+        </section>
+
+        <section id="screen_premium" class="hidden">
+            <div id="prem_locked" class="glass-card" style="border:2px solid var(--gold); text-align:center;">
+                <h2 style="color:var(--gold);">Elite Access</h2>
+                <p style="font-size:0.9rem;" id="txt_prem_desc">Unlock all security tools and Emergency Hub.</p>
+                <button class="main-cta" style="background:var(--gold); color:black;" onclick="App.openModal()">UNLOCK NOW (4.90€)</button>
+            </div>
+
+            <div id="prem_unlocked" class="hidden">
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="location.href='checkup.html'"><i>🔍</i><small>CHECKUP</small></div>
+                    <div class="tool-card" onclick="location.href='sos_hub.html'"><i>🚨</i><small>SOS HUB</small></div>
+                    <div class="tool-card" onclick="location.href='scam-alerts.html'"><i>⚠️</i><small>ALERTS</small></div>
+                    <div class="tool-card" onclick="location.href='dojo.html'"><i>⚡</i><small>DOJO</small></div>
+                </div>
+
+                <div class="glass-card" style="margin-top:20px; border: 1px solid var(--danger);">
+                    <h3 style="color:var(--danger); margin-top:0;">🚨 Emergency Numbers</h3>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                        <a href="tel:112" class="tool-card" style="text-decoration:none; background:rgba(239, 68, 68, 0.1);"><b>112</b><br><small>Universal</small></a>
+                        <a href="tel:100" class="tool-card" style="text-decoration:none;"><b>100</b><br><small>Police</small></a>
+                        <a href="tel:166" class="tool-card" style="text-decoration:none;"><b>166</b><br><small>Ambulance</small></a>
+                        <a href="tel:199" class="tool-card" style="text-decoration:none;"><b>199</b><br><small>Fire Dept</small></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="nav-tabs">
+        <button class="nav-tab active" id="nav_home" onclick="App.nav('home', this)">🏠</button>
+        <button class="nav-tab" id="nav_premium" onclick="App.nav('premium', this)">💎</button>
+    </nav>
+</div>
+
+<div id="premiumModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="App.closeModal()">&times;</span>
+        <div style="font-size:50px;">💎</div>
+        <h2 style="color:var(--accent); margin-top:10px;">Elite Membership</h2>
+        <div class="modal-body" style="text-align:left; font-size:0.9rem; margin:20px 0;">
+            <p>✅ Unlock all Professional Tools</p>
+            <p>✅ Ad-Free Experience</p>
+            <p>✅ Access Scam Alerts & SOS Hub</p>
+        </div>
+        <div style="font-size:1.4rem; color:var(--gold); font-weight:bold; margin-bottom:20px;">4,90€ / mo</div>
+        <button class="main-cta" onclick="App.buyPremium()">UPGRADE NOW</button>
     </div>
-    <div class="xp-bar">
-      <div id="xp_fill" class="xp-fill"></div>
-    </div>
-  </header>
-
-  <main style="padding:20px 20px 110px;">
-
-    <div id="ad_box" style="background:#1e293b; padding:10px; border-radius:10px; text-align:center; font-size:10px; color:var(--muted); margin-bottom:15px;">
-      ADVERTISEMENT - ELITE TO REMOVE
-    </div>
-
-    <section id="screen_home">
-      <div class="glass-card" id="quiz_container">
-        <h2 id="txt_daily">🛡️ Daily Training</h2>
-        <p id="quiz_text" style="color:var(--muted); font-size:0.9rem; margin-bottom:15px;">
-          Ready for today's challenge?
-        </p>
-        <div id="quiz_options"></div>
-        <button class="main-cta" id="quiz_btn" onclick="App.startQuiz()">START QUIZ</button>
-      </div>
-
-      <h3 id="txt_achievements">🏆 Achievements</h3>
-      <div class="badge-grid">
-        <div id="badge1" class="badge">🎖️</div>
-        <div id="badge2" class="badge">🛡️</div>
-        <div id="badge3" class="badge">💎</div>
-        <div class="premium-btn-inline" onclick="App.openPremiumModal()">
-          <div>🔒</div>
-          <span>4,90€</span>
-        </div>
-      </div>
-
-      <div class="map-container">
-        <h4 id="txt_map">TRAINING MAP</h4>
-        <div class="map-step active" id="step1"><div class="step-dot">1</div><small>Rookie</small></div>
-        <div class="map-step" id="step2"><div class="step-dot">5</div><small>Expert</small></div>
-        <div class="map-step" id="step3"><div class="step-dot">10</div><small>Elite</small></div>
-      </div>
-    </section>
-
-    <section id="screen_premium" class="hidden">
-      <div id="prem_locked" class="glass-card" style="border:2px solid var(--gold); text-align:center;">
-        <h2 style="color:var(--gold);">Elite Access</h2>
-        <p id="txt_prem_desc">Unlock all security tools.</p>
-        <button class="main-cta" style="background:var(--gold); color:black;" onclick="App.openPremiumModal()">
-          UNLOCK NOW (4.90€)
-        </button>
-      </div>
-
-      <div id="prem_unlocked" class="hidden">
-        <div class="premium-tabs">
-          <button class="tab-btn active" onclick="App.switchPremiumTab(event,'alerts')">⚠️ Alerts</button>
-          <button class="tab-btn" onclick="App.switchPremiumTab(event,'checkup')">🔍 Checkup</button>
-          <button class="tab-btn" onclick="App.switchPremiumTab(event,'sos')">🚨 SOS</button>
-        </div>
-
-        <div id="alerts_tab" class="tab-panel active">
-          <h2>⚠️ Scam Alerts</h2>
-          <ul id="alert_list"></ul>
-        </div>
-
-        <div id="checkup_tab" class="tab-panel hidden">
-          <h2>🔍 Device Checkup</h2>
-          <p>Privacy Score: <b id="privacy_score">85%</b></p>
-          <ul id="checkup_list"></ul>
-          <button class="main-cta" onclick="App.runCheckup()">Run Daily Checkup</button>
-        </div>
-
-        <div id="sos_tab" class="tab-panel hidden">
-          <h2>🚨 SOS Hub</h2>
-          <button class="main-cta" style="background:var(--danger); color:white;" onclick="App.sendSOS()">Send SOS</button>
-          <ul style="margin-top:15px;">
-            <li>📞 Police: 100</li>
-            <li>📞 Fire: 199</li>
-            <li>📞 Medical: 166</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <nav class="nav-tabs">
-    <button class="nav-tab active" onclick="App.nav('home',this)">🏠</button>
-    <button class="nav-tab" onclick="App.nav('premium',this)">💎</button>
-  </nav>
-
-</div> 
-
-<div id="premiumModal" class="modal hidden">
-  <div class="modal-content">
-    <span class="close-modal" onclick="App.closePremiumModal()">&times;</span>
-    <h2 style="color:var(--gold); margin-bottom:15px;">Elite Membership</h2>
-    <p style="font-size:0.9rem; margin-bottom:20px;">Get ad-free experience, SOS tools, and all training levels.</p>
-    <button class="main-cta" onclick="App.buyPremium()">BUY NOW 4.90€</button>
-  </div>
 </div>
 
 <script src="src/app.js"></script>
-
 </body>
 </html>
