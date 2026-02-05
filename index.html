@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Stay Safe Elite</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-    
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#020617">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<title>Stay Safe Elite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#020617">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => console.log("SW error", err));
-            });
-        }
-    </script>
+<link rel="stylesheet" href="App.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log("SW error", err));
+    });
+}
+</script>
 </head>
 
 <body>
-
 <section id="onboarding" class="overlay">
     <div>
-        <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
+        <div class="icon-large">🛡️</div>
         <h1>Stay Safe Elite</h1>
         <div class="lang-grid">
             <div class="lang-btn" onclick="selectLang('en')">🇺🇸 English</div>
@@ -44,89 +43,88 @@
 </section>
 
 <div id="main_app" class="hidden">
-    <header class="app-header">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div style="color:var(--gold); font-weight:bold;">🔥 <span id="streak_val">1</span> <span id="txt_days">DAYS</span></div>
-            <div style="font-weight:900; color:var(--accent);">LEVEL <span id="level_val">1</span></div>
+<header class="app-header">
+    <div class="header-top">
+        <div class="streak">🔥 <span id="streak_val">1</span> <span id="txt_days">DAYS</span></div>
+        <div class="level">LEVEL <span id="level_val">1</span></div>
+    </div>
+    <div class="xp-bar"><div id="xp_fill" class="xp-fill"></div></div>
+</header>
+
+<main class="app-main">
+    <div id="ad_box" class="ad-box">ADVERTISEMENT - ELITE TO REMOVE</div>
+
+    <section id="screen_home">
+        <div class="glass-card" id="quiz_container">
+            <h2 id="txt_daily">🛡️ Daily Training</h2>
+            <p id="quiz_text">Are you ready for today's challenges?</p>
+            <div id="quiz_options"></div>
+            <button class="main-cta" id="quiz_btn" onclick="startQuiz()">START QUIZ</button>
         </div>
-        <div class="xp-bar"><div id="xp_fill" class="xp-fill"></div></div>
-    </header>
 
-    <main style="padding: 20px 20px 110px;">
-        <div id="ad_box" style="background:#1e293b; padding:10px; border-radius:10px; text-align:center; font-size:10px; color:var(--muted); margin-bottom:15px;">ADVERTISEMENT - ELITE TO REMOVE</div>
+        <h3 id="txt_achievements">🏆 Achievements</h3>
+        <div class="badge-grid">
+            <div id="badge1" class="badge">🎖️</div>
+            <div id="badge2" class="badge">🛡️</div>
+            <div id="badge3" class="badge">💎</div>
+            <div class="premium-btn-inline" onclick="openModal()">
+                <div>🔒</div><span>4,90€</span>
+            </div>
+        </div>
 
-        <section id="screen_home">
-            <div class="glass-card" id="quiz_container">
-                <h2 style="margin:0;" id="txt_daily">🛡️ Daily Training</h2>
-                <p id="quiz_text" style="color:var(--muted); font-size:0.9rem;">Are you ready for today's challenges?</p>
-                <div id="quiz_options"></div>
-                <button class="main-cta" id="quiz_btn" onclick="startQuiz()">START QUIZ</button>
+        <div class="map-container">
+            <h4 id="txt_map">TRAINING MAP</h4>
+            <div class="map-step active" id="step1"><div class="step-dot">1</div><small>Rookie</small></div>
+            <div class="map-step" id="step2"><div class="step-dot">5</div><small>Expert</small></div>
+            <div class="map-step" id="step3"><div class="step-dot">10</div><small>Elite</small></div>
+        </div>
+    </section>
+
+    <section id="screen_premium" class="hidden">
+        <div id="prem_locked" class="glass-card premium-card">
+            <h2>Elite Access</h2>
+            <p id="txt_prem_desc">Unlock all security tools and Emergency Hub.</p>
+            <button class="main-cta" onclick="openModal()">UNLOCK NOW (4.90€)</button>
+        </div>
+
+        <div id="prem_unlocked" class="hidden">
+            <div class="tools-grid">
+                <div class="tool-card" onclick="runCheckup()">🔍<small>CHECKUP</small></div>
+                <div class="tool-card" onclick="sendSOS()">🚨<small>SOS HUB</small></div>
+                <div class="tool-card" onclick="loadScamAlerts()">⚠️<small>ALERTS</small></div>
+                <div class="tool-card" onclick="startDojo()">⚡<small>DOJO</small></div>
             </div>
 
-            <h3 style="font-size:1rem; margin-bottom:10px;" id="txt_achievements">🏆 Achievements</h3>
-            <div class="badge-grid">
-                <div id="badge1" class="badge">🎖️</div>
-                <div id="badge2" class="badge">🛡️</div>
-                <div id="badge3" class="badge">💎</div>
-                <div class="premium-btn-inline" onclick="openModal()">
-                    <div style="font-size: 16px;">🔒</div>
-                    <span>4,90€</span>
+            <div class="glass-card emergency-card">
+                <h3>🚨 Emergency Numbers</h3>
+                <div class="emergency-grid">
+                    <a href="tel:112">112<br><small>Universal</small></a>
+                    <a href="tel:100">100<br><small>Police</small></a>
+                    <a href="tel:166">166<br><small>Ambulance</small></a>
+                    <a href="tel:199">199<br><small>Fire Dept</small></a>
                 </div>
             </div>
+        </div>
+    </section>
+</main>
 
-            <div class="map-container">
-                <h4 style="margin:0 0 10px; color:var(--accent); font-size:0.8rem;" id="txt_map">TRAINING MAP</h4>
-                <div class="map-step active" id="step1"><div class="step-dot">1</div><small>Rookie</small></div>
-                <div class="map-step" id="step2"><div class="step-dot">5</div><small>Expert</small></div>
-                <div class="map-step" id="step3"><div class="step-dot">10</div><small>Elite</small></div>
-            </div>
-        </section>
-
-        <section id="screen_premium" class="hidden">
-            <div id="prem_locked" class="glass-card" style="border:2px solid var(--gold); text-align:center;">
-                <h2 style="color:var(--gold);">Elite Access</h2>
-                <p style="font-size:0.9rem;" id="txt_prem_desc">Unlock all security tools and Emergency Hub.</p>
-                <button class="main-cta" style="background:var(--gold); color:black;" onclick="openModal()">UNLOCK NOW (4.90€)</button>
-            </div>
-
-            <div id="prem_unlocked" class="hidden">
-                <div class="tools-grid">
-                    <div class="tool-card" onclick="runCheckup()"><i>🔍</i><small>CHECKUP</small></div>
-                    <div class="tool-card" onclick="sendSOS()"><i>🚨</i><small>SOS HUB</small></div>
-                    <div class="tool-card" onclick="loadScamAlerts()"><i>⚠️</i><small>ALERTS</small></div>
-                    <div class="tool-card" onclick="startDojo()"><i>⚡</i><small>DOJO</small></div>
-                </div>
-
-                <div class="glass-card" style="margin-top:20px; border: 1px solid var(--danger);">
-                    <h3 style="color:var(--danger); margin-top:0;">🚨 Emergency Numbers</h3>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                        <a href="tel:112" class="tool-card" style="text-decoration:none; background:rgba(239, 68, 68, 0.1);"><b>112</b><br><small>Universal</small></a>
-                        <a href="tel:100" class="tool-card" style="text-decoration:none;"><b>100</b><br><small>Police</small></a>
-                        <a href="tel:166" class="tool-card" style="text-decoration:none;"><b>166</b><br><small>Ambulance</small></a>
-                        <a href="tel:199" class="tool-card" style="text-decoration:none;"><b>199</b><br><small>Fire Dept</small></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <nav class="nav-tabs">
-        <button class="nav-tab active" id="nav_home" onclick="nav('home', this)">🏠</button>
-        <button class="nav-tab" id="nav_premium" onclick="nav('premium', this)">💎</button>
-    </nav>
+<nav class="nav-tabs">
+    <button class="nav-tab active" id="nav_home" onclick="nav('home', this)">🏠</button>
+    <button class="nav-tab" id="nav_premium" onclick="nav('premium', this)">💎</button>
+</nav>
 </div>
 
 <div id="premiumModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal()">&times;</span>
-        <div style="font-size:50px;">💎</div>
-        <h2 style="color:var(--accent); margin-top:10px;">Elite Membership</h2>
-        <div class="modal-body" style="text-align:left; font-size:0.9rem; margin:20px 0;">
+        <div class="icon-large">💎</div>
+        <h2>Elite Membership</h2>
+        <div class="modal-body">
             <p>✅ Unlock all Professional Tools</p>
             <p>✅ Ad-Free Experience</p>
             <p>✅ Access Scam Alerts & SOS Hub</p>
         </div>
-        <div style="font-size:1.4rem; color:var(--gold); font-weight:bold; margin-bottom:20px;">4,90€ / mo</div>
+        <div class="price">4,90€ / mo</div>
         <button class="main-cta" onclick="buyPremium()">UPGRADE NOW</button>
     </div>
 </div>
