@@ -29,16 +29,16 @@
         <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
         <h1>Stay Safe Elite</h1>
         <div class="lang-grid">
-            <div class="lang-btn" onclick="initApp('en')">🇺🇸 English</div>
-            <div class="lang-btn" onclick="initApp('el')">🇬🇷 Greek</div>
-            <div class="lang-btn" onclick="initApp('de')">🇩🇪 German</div>
-            <div class="lang-btn" onclick="initApp('fr')">🇫🇷 French</div>
-            <div class="lang-btn" onclick="initApp('es')">🇪🇸 Spanish</div>
-            <div class="lang-btn" onclick="initApp('it')">🇮🇹 Italian</div>
-            <div class="lang-btn" onclick="initApp('pt')">🇵🇹 Portuguese</div>
-            <div class="lang-btn" onclick="initApp('ru')">🇷🇺 Russian</div>
-            <div class="lang-btn" onclick="initApp('zh')">🇨🇳 Chinese</div>
-            <div class="lang-btn" onclick="initApp('hi')">🇮🇳 Hindi</div>
+            <div class="lang-btn" onclick="selectLang('en')">🇺🇸 English</div>
+            <div class="lang-btn" onclick="selectLang('el')">🇬🇷 Greek</div>
+            <div class="lang-btn" onclick="selectLang('de')">🇩🇪 German</div>
+            <div class="lang-btn" onclick="selectLang('fr')">🇫🇷 French</div>
+            <div class="lang-btn" onclick="selectLang('es')">🇪🇸 Spanish</div>
+            <div class="lang-btn" onclick="selectLang('it')">🇮🇹 Italian</div>
+            <div class="lang-btn" onclick="selectLang('pt')">🇵🇹 Portuguese</div>
+            <div class="lang-btn" onclick="selectLang('ru')">🇷🇺 Russian</div>
+            <div class="lang-btn" onclick="selectLang('zh')">🇨🇳 Chinese</div>
+            <div class="lang-btn" onclick="selectLang('hi')">🇮🇳 Hindi</div>
         </div>
     </div>
 </section>
@@ -93,8 +93,8 @@
                 <div class="tools-grid">
                     <div class="tool-card" onclick="runCheckup()"><i>🔍</i><small>CHECKUP</small></div>
                     <div class="tool-card" onclick="sendSOS()"><i>🚨</i><small>SOS HUB</small></div>
-                    <div class="tool-card"><i>⚠️</i><small>ALERTS</small></div>
-                    <div class="tool-card"><i>⚡</i><small>DOJO</small></div>
+                    <div class="tool-card" onclick="loadScamAlerts()"><i>⚠️</i><small>ALERTS</small></div>
+                    <div class="tool-card" onclick="startDojo()"><i>⚡</i><small>DOJO</small></div>
                 </div>
 
                 <div class="glass-card" style="margin-top:20px; border: 1px solid var(--danger);">
