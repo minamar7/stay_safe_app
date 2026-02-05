@@ -1,53 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#38bdf8">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta charset="UTF-8">
-<title>Stay Safe Elite</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#38bdf8">
+    <meta charset="UTF-8">
+    <title>Stay Safe Elite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#38bdf8">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
 
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js');
-  });
-}
-</script>
+    <script>
+    // Διόρθωση Service Worker: αν το έχεις ονομάσει sw.js ή service-worker.js στο src
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        // Αν το αρχείο σου είναι στο src/sw.js βάλε "src/sw.js"
+        navigator.serviceWorker.register('src/sw.js').catch(err => console.log("SW error", err));
+      });
+    }
+    </script>
 </head>
 
 <body>
 
-<!-- Onboarding / Language Selector -->
 <section id="onboarding" class="overlay">
   <div>
     <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
     <h1>Stay Safe Elite</h1>
 
     <div class="lang-grid">
-      <div class="lang-btn" onclick="initApp('en')">🇺🇸 English</div>
-      <div class="lang-btn" onclick="initApp('el')">🇬🇷 Greek</div>
-      <div class="lang-btn" onclick="initApp('de')">🇩🇪 German</div>
-      <div class="lang-btn" onclick="initApp('fr')">🇫🇷 French</div>
-      <div class="lang-btn" onclick="initApp('es')">🇪🇸 Spanish</div>
-      <div class="lang-btn" onclick="initApp('it')">🇮🇹 Italian</div>
-      <div class="lang-btn" onclick="initApp('pt')">🇵🇹 Portuguese</div>
-      <div class="lang-btn" onclick="initApp('ru')">🇷🇺 Russian</div>
-      <div class="lang-btn" onclick="initApp('zh')">🇨🇳 Chinese</div>
-      <div class="lang-btn" onclick="initApp('hi')">🇮🇳 Hindi</div>
+      <div class="lang-btn" onclick="App.init('en')">🇺🇸 English</div>
+      <div class="lang-btn" onclick="App.init('el')">🇬🇷 Greek</div>
+      <div class="lang-btn" onclick="App.init('de')">🇩🇪 German</div>
+      <div class="lang-btn" onclick="App.init('fr')">🇫🇷 French</div>
+      <div class="lang-btn" onclick="App.init('es')">🇪🇸 Spanish</div>
+      <div class="lang-btn" onclick="App.init('it')">🇮🇹 Italian</div>
+      <div class="lang-btn" onclick="App.init('pt')">🇵🇹 Portuguese</div>
+      <div class="lang-btn" onclick="App.init('ru')">🇷🇺 Russian</div>
+      <div class="lang-btn" onclick="App.init('zh')">🇨🇳 Chinese</div>
+      <div class="lang-btn" onclick="App.init('hi')">🇮🇳 Hindi</div>
     </div>
   </div>
 </section>
 
-<!-- Main App -->
 <div id="main_app" class="hidden">
 
 <header class="app-header">
@@ -70,7 +69,6 @@ if ('serviceWorker' in navigator) {
   ADVERTISEMENT - ELITE TO REMOVE
 </div>
 
-<!-- HOME -->
 <section id="screen_home">
   <div class="glass-card" id="quiz_container">
     <h2 id="txt_daily">🛡️ Daily Training</h2>
@@ -78,7 +76,7 @@ if ('serviceWorker' in navigator) {
       Ready for today's challenge?
     </p>
     <div id="quiz_options"></div>
-    <button class="main-cta" id="quiz_btn" onclick="startQuiz()">START QUIZ</button>
+    <button class="main-cta" id="quiz_btn" onclick="App.startQuiz()">START QUIZ</button>
   </div>
 
   <h3 id="txt_achievements">🏆 Achievements</h3>
@@ -88,7 +86,7 @@ if ('serviceWorker' in navigator) {
     <div id="badge2" class="badge">🛡️</div>
     <div id="badge3" class="badge">💎</div>
 
-    <div class="premium-btn-inline" onclick="openModal()">
+    <div class="premium-btn-inline" onclick="App.openPremiumModal()">
       <div>🔒</div>
       <span>4,90€</span>
     </div>
@@ -102,12 +100,11 @@ if ('serviceWorker' in navigator) {
   </div>
 </section>
 
-<!-- PREMIUM -->
 <section id="screen_premium" class="hidden">
   <div id="prem_locked" class="glass-card" style="border:2px solid var(--gold); text-align:center;">
     <h2 style="color:var(--gold);">Elite Access</h2>
     <p id="txt_prem_desc">Unlock all security tools.</p>
-    <button class="main-cta" style="background:var(--gold); color:black;" onclick="openModal()">
+    <button class="main-cta" style="background:var(--gold); color:black;" onclick="App.openPremiumModal()">
       UNLOCK NOW (4.90€)
     </button>
   </div>
@@ -145,21 +142,20 @@ if ('serviceWorker' in navigator) {
 
 </main>
 
-<!-- NAV -->
 <nav class="nav-tabs">
   <button class="nav-tab active" onclick="nav('home',this)">🏠</button>
   <button class="nav-tab" onclick="nav('premium',this)">💎</button>
 </nav>
 
-<!-- PREMIUM MODAL -->
 <div id="premiumModal" class="modal hidden">
   <div class="modal-content">
-    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <span class="close-modal" onclick="App.closePremiumModal()">&times;</span>
     <h2>Elite Membership</h2>
-    <button class="main-cta" onclick="buyPremium()">BUY NOW</button>
+    <button class="main-cta" onclick="App.buyPremium()">BUY NOW</button>
   </div>
 </div>
 
-<script src="app.js"></script>
+<script src="src/app.js"></script>
+
 </body>
 </html>
