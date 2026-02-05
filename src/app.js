@@ -1,133 +1,146 @@
 // app.js
 
+// ====== GLOBAL VARIABLES ======
 let currentLang = 'en';
 let currentLevel = 1;
-let currentStreak = 1;
+let streak = 1;
 let xp = 0;
-let maxDailyQuestions = 5;
 
-let dailyQuestions = {
+let quizData = {
     1: [
-        { q: "What is the safest way to protect your passwords?", a: ["Use a password manager", "Write them on paper", "Share with friends"], correct: 0 },
-        { q: "You receive an unknown email link. What do you do?", a: ["Click it", "Ignore or check sender", "Forward to friend"], correct: 1 },
-        { q: "Public Wi-Fi is safe for banking?", a: ["Yes", "No", "Sometimes"], correct: 1 },
-        { q: "Do you update software regularly?", a: ["Yes", "No", "Only when needed"], correct: 0 },
-        { q: "Use same password everywhere?", a: ["Yes", "No", "Only for trusted sites"], correct: 1 }
+        {q: "What's the first thing to do in a fire?", options:["Call 100","Hide","Evacuate"], answer: 2},
+        {q: "Best way to secure your password?", options:["123456","Use strong unique password","Password123"], answer: 1},
+        {q: "Check emails carefully to avoid?", options:["Spam","Phishing","Downloads"], answer: 1},
+        {q: "Which is safer online?", options:["Public WiFi","VPN"], answer: 1},
+        {q: "Keep software updated?", options:["Yes","No"], answer: 0}
     ],
     2: [
-        { q: "Two-factor authentication increases security?", a: ["Yes", "No", "Depends"], correct: 0 },
-        { q: "You find a USB in office parking. What do you do?", a: ["Plug it in", "Give to IT", "Ignore"], correct: 1 },
-        { q: "Strong password should be?", a: ["Short & simple", "Long & complex", "Birthday"], correct: 1 },
-        { q: "Regular backups are important?", a: ["Yes", "No", "Only once a year"], correct: 0 },
-        { q: "Public charging stations are safe?", a: ["Yes", "No", "Sometimes"], correct: 1 }
+        {q: "You find unattended bag in public?", options:["Ignore","Report to security","Take it"], answer: 1},
+        {q: "What is two-factor authentication?", options:["Extra login step","Ignore it","Password only"], answer: 0},
+        {q: "Best way to exit suspicious website?", options:["Close tab","Click links","Download"], answer: 0},
+        {q: "Securely sharing files?", options:["Encrypted cloud","Email public link","USB random"], answer: 0},
+        {q: "Suspicious email with link?", options:["Click","Delete"], answer: 1}
+    ],
+    3: [
+        {q: "Emergency number for fire?", options:["199","112","100"], answer: 0},
+        {q: "Suspicious phone call?", options:["Give info","Hang up"], answer: 1},
+        {q: "Public charging stations?", options:["Safe","Potential risk"], answer: 1},
+        {q: "Strong password includes?", options:["Numbers, letters, symbols","Name only"], answer: 0},
+        {q: "When in doubt online?", options:["Verify sources","Click anything"], answer: 0}
     ]
-    // Μπορείς να προσθέσεις περισσότερα levels
 };
 
+let currentQuiz = [];
 let currentQuestionIndex = 0;
-let selectedQuiz = 'daily'; // 'daily' ή 'scenario'
 
-// ----- LANGUAGE -----
+// ====== SELECT LANGUAGE ======
 function selectLang(lang) {
     currentLang = lang;
-
-    // Κρύβουμε onboarding
     document.getElementById('onboarding').classList.add('hidden');
-
-    // Εμφανίζουμε main app
     document.getElementById('main_app').classList.remove('hidden');
-
-    // Επιλέγουμε default tab
-    nav('home', document.getElementById('nav_home'));
-
-    // Φορτώνουμε daily quiz
-    loadDailyQuiz();
+    loadUI();
 }
 
-// ----- NAVIGATION -----
-function nav(screen, btn) {
-    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    if(screen === 'home') {
-        document.getElementById('screen_home').classList.remove('hidden');
-        document.getElementById('screen_premium').classList.add('hidden');
-    } else {
-        document.getElementById('screen_home').classList.add('hidden');
-        document.getElementById('screen_premium').classList.remove('hidden');
-    }
+// ====== LOAD UI ======
+function loadUI() {
+    document.getElementById('streak_val').textContent = streak;
+    document.getElementById('level_val').textContent = currentLevel;
+    document.getElementById('xp_fill').style.width = xp + "%";
 }
 
-// ----- QUIZ -----
-function loadDailyQuiz() {
+// ====== QUIZ LOGIC ======
+function startQuiz() {
+    currentQuiz = quizData[currentLevel] || quizData[1];
     currentQuestionIndex = 0;
-    selectedQuiz = 'daily';
     showQuestion();
 }
 
 function showQuestion() {
-    const qContainer = document.getElementById('quiz_container');
-    const quizText = document.getElementById('quiz_text');
-    const quizOptions = document.getElementById('quiz_options');
-    const questions = dailyQuestions[currentLevel];
-
-    if(currentQuestionIndex >= maxDailyQuestions || currentQuestionIndex >= questions.length){
-        quizText.textContent = "✅ Daily Quiz Complete!";
-        quizOptions.innerHTML = '';
-        document.getElementById('quiz_btn').style.display = 'none';
+    if (currentQuestionIndex >= currentQuiz.length) {
+        endQuiz();
         return;
     }
 
-    const q = questions[currentQuestionIndex];
+    const q = currentQuiz[currentQuestionIndex];
+    const quizText = document.getElementById('quiz_text');
+    const quizOptions = document.getElementById('quiz_options');
     quizText.textContent = q.q;
     quizOptions.innerHTML = '';
 
-    q.a.forEach((opt, i) => {
+    q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
-        btn.className = 'quiz-option';
         btn.textContent = opt;
+        btn.className = 'quiz-option';
         btn.onclick = () => checkAnswer(i);
         quizOptions.appendChild(btn);
     });
 }
 
 function checkAnswer(selected) {
-    const questions = dailyQuestions[currentLevel];
-    const correct = questions[currentQuestionIndex].correct;
-    const options = document.querySelectorAll('.quiz-option');
+    const q = currentQuiz[currentQuestionIndex];
+    const buttons = document.querySelectorAll('.quiz-option');
 
-    options.forEach((btn, i) => {
-        if(i === correct) btn.style.backgroundColor = '#16a34a'; // πράσινο σωστό
-        else if(i === selected) btn.style.backgroundColor = '#dc2626'; // κόκκινο λάθος
+    buttons.forEach((btn, i) => {
         btn.disabled = true;
+        if (i === q.answer) {
+            btn.style.backgroundColor = '#22c55e'; // green
+            btn.style.color = '#fff';
+        } else if (i === selected) {
+            btn.style.backgroundColor = '#ef4444'; // red
+            btn.style.color = '#fff';
+        }
     });
 
-    // Update XP / streak
-    if(selected === correct) {
-        xp += 10;
-        currentStreak++;
-        document.getElementById('streak_val').textContent = currentStreak;
-        document.getElementById('xp_fill').style.width = Math.min(xp,100) + '%';
-    } else {
-        currentStreak = 1;
-        document.getElementById('streak_val').textContent = currentStreak;
+    if (selected === q.answer) {
+        xp += 20;
     }
 
-    currentQuestionIndex++;
-    setTimeout(showQuestion, 1000);
+    setTimeout(() => {
+        currentQuestionIndex++;
+        showQuestion();
+        loadUI();
+    }, 1000);
 }
 
-// ----- PREMIUM MODAL -----
-function openModal() { document.getElementById('premiumModal').style.display = 'block'; }
-function closeModal() { document.getElementById('premiumModal').style.display = 'none'; }
+function endQuiz() {
+    alert("Quiz completed! 🎉");
+    streak++;
+    xp += 10;
+    if (xp >= 100) {
+        currentLevel++;
+        xp = 0;
+    }
+    loadUI();
+}
+
+// ====== NAVIGATION ======
+function nav(screen, btn) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.getElementById('screen_home').classList.add('hidden');
+    document.getElementById('screen_premium').classList.add('hidden');
+
+    if (screen === 'home') document.getElementById('screen_home').classList.remove('hidden');
+    else if (screen === 'premium') document.getElementById('screen_premium').classList.remove('hidden');
+}
+
+// ====== PREMIUM MODAL ======
+function openModal() {
+    document.getElementById('premiumModal').style.display = 'flex';
+}
+function closeModal() {
+    document.getElementById('premiumModal').style.display = 'none';
+}
 function buyPremium() {
-    alert('Premium unlocked!'); 
+    alert("Premium unlocked! 💎");
+    closeModal();
     document.getElementById('prem_locked').classList.add('hidden');
     document.getElementById('prem_unlocked').classList.remove('hidden');
 }
 
-// ----- TOOLS (PLACEHOLDERS) -----
-function runCheckup(){ alert('Running security checkup...'); }
-function sendSOS(){ alert('Sending SOS alert...'); }
-function loadScamAlerts(){ alert('Loading scam alerts...'); }
-function startDojo(){ alert('Starting Dojo training...'); }
+// ====== EMERGENCY FUNCTIONS ======
+function runCheckup() { alert("Running security checkup..."); }
+function sendSOS() { alert("Sending SOS..."); }
+function loadScamAlerts() { alert("Loading scam alerts..."); }
+function startDojo() { alert("Starting Dojo training..."); }
