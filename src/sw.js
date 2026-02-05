@@ -1,5 +1,10 @@
+// ==========================================
+// Stay Safe Elite - Service Worker (sw.js)
+// Strategy: Cache First, Network Fallback
+// ==========================================
+
 const CACHE_NAME = "safee-v3-elite";
-const urlsToCache = [
+const URLS_TO_CACHE = [
   "./",
   "./index.html",
   "./src/app.js",
@@ -11,26 +16,27 @@ const urlsToCache = [
   "./quizzes/questions_premium_el.json"
 ];
 
-// Install Event
-self.addEventListener("install", (e) => {
-  self.skipWaiting();
-  e.waitUntil(
+// --- Install Event ---
+self.addEventListener("install", (event) => {
+  self.skipWaiting(); 
+  event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      // Χρησιμοποιούμε addAll αλλά με catch για να μη σταματήσει αν λείπει ένα αρχείο
-      return cache.addAll(urlsToCache).catch(err => console.warn("Cache addAll warning:", err));
+      console.log("Installing Cache: " + CACHE_NAME);
+      return cache.addAll(URLS_TO_CACHE).catch(err => console.warn("Caching warning:", err));
     })
   );
 });
 
-// Activate Event
-self.addEventListener("activate", (e) => {
-  e.waitUntil(
+// --- Activate Event ---
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
     Promise.all([
-      self.clients.claim(), // Παίρνει τον έλεγχο αμέσως
+      self.clients.claim(),
       caches.keys().then((keyList) => {
         return Promise.all(
           keyList.map((key) => {
             if (key !== CACHE_NAME) {
+              console.log("Removing old cache:", key);
               return caches.delete(key);
             }
           })
@@ -40,28 +46,32 @@ self.addEventListener("activate", (e) => {
   );
 });
 
-// Fetch Event
-self.addEventListener("fetch", (e) => {
-  // Στρατηγική: Cache First, falling back to Network
-  // Ιδανικό για Super Apps γιατί το app ανοίγει ακαριαία
-  e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
+// --- Fetch Event ---
+self.addEventListener("fetch", (event) => {
+  // Παράκαμψη για μη-GET αιτήματα (π.χ. POST) ή εξωτερικά APIs αν χρειαστεί
+  if (event.request.method !== 'GET') return;
 
-      return fetch(e.request).then((networkResponse) => {
-        // Αν η κλήση είναι επιτυχής, την αποθηκεύουμε για μελλοντική offline χρήση
-        if (networkResponse && networkResponse.status === 200) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(e.request, responseToCache);
-          });
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      // 1. Επιστροφή από το Cache αν υπάρχει
+      if (cachedResponse) return cachedResponse;
+
+      // 2. Διαφορετικά, αίτημα στο Δίκτυο
+      return fetch(event.request).then((networkResponse) => {
+        // Έλεγχος εγκυρότητας απάντησης πριν το caching
+        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+          return networkResponse;
         }
+
+        const responseToCache = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseToCache);
+        });
+
         return networkResponse;
       }).catch(() => {
-        // Εδώ μπορείς να επιστρέψεις ένα custom offline μήνυμα αν θες
-        console.log("App is offline and resource not in cache.");
+        // Offline Fallback (προαιρετικά επιστρέφεις μια σελίδα offline.html)
+        console.log("Resource not available offline:", event.request.url);
       });
     })
   );
