@@ -1,66 +1,60 @@
-const CACHE_NAME = "stay-safe-cache-v1";
+ const CACHE_NAME = "stay-safe-cache-v1";
 const urlsToCache = [
   "/",
   "/index.html",
-  "/App.css",
-  "/App.js",
-  "/questions.json",
   "/favicon.ico",
-  "/logo192.png",
-  "/logo512.png"
+  "/manifest.json",
+  "/static/js/bundle.js",
+  "/static/js/main.chunk.js",
+  "/static/js/0.chunk.js",
+  "/static/css/main.chunk.css",
+  "/App.css",
+  "/questions.json"
 ];
 
-// Εγκατάσταση Service Worker και caching βασικών assets
+// Install event: cache all app shell files
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Caching app shell...");
+      console.log("Opened cache");
       return cache.addAll(urlsToCache);
     })
   );
-  self.skipWaiting();
 });
 
-// Ενεργοποίηση και καθαρισμός παλιών caches
+// Activate event: clean old caches
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((name) => {
-          if (name !== CACHE_NAME) {
-            console.log("Deleting old cache:", name);
-            return caches.delete(name);
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            console.log("Deleting old cache:", cache);
+            return caches.delete(cache);
           }
         })
-      );
-    })
+      )
+    )
   );
-  self.clients.claim();
 });
 
-// Fetch handler για offline λειτουργία
+// Fetch event: respond with cached resources first
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse; // Επιστρέφει cached έκδοση αν υπάρχει
+    caches.match(event.request).then((response) => {
+      if (response) {
+        return response; // return cached file
       }
-
       return fetch(event.request)
-        .then((response) => {
-          if (!response || response.status !== 200 || response.type !== "basic") {
-            return response;
-          }
-
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
+        .then((res) => {
+          // optionally cache new requests
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, res.clone());
+            return res;
           });
-
-          return response;
         })
         .catch(() => {
-          // Αν δεν υπάρχει σύνδεση, μπορούμε να εμφανίσουμε fallback
+          // fallback if offline and resource not cached
           if (event.request.destination === "document") {
             return caches.match("/index.html");
           }
