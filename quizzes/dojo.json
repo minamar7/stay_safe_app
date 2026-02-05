@@ -1,0 +1,42 @@
+[
+  {
+    "id": "d1",
+    "category": "PHYSICAL DEFENSE",
+    "question": "If an attacker grabs your wrist, what is the most effective way to break the grip?",
+    "options": ["Pull back with force", "Rotate your wrist towards the attacker's thumb", "Push deeper into the grip", "Kick their shins"],
+    "correct": 1,
+    "explanation": "The thumb is the weakest point of any grip. Rotating towards it allows for the easiest escape."
+  },
+  {
+    "id": "d2",
+    "category": "SITUATIONAL AWARENESS",
+    "question": "What is the 'OODA Loop' in tactical security?",
+    "options": ["Open, Order, Deliver, Act", "Observe, Orient, Decide, Act", "Only One Direct Action", "Outsmart, Outrun, Defend, Attack"],
+    "correct": 1,
+    "explanation": "Developed by military strategists, OODA is the standard cycle for reacting to unexpected threats."
+  },
+  {
+    "id": "d3",
+    "category": "URBAN SURVIVAL",
+    "question": "You are in a crowded area and a panic starts. What is your best course of action?",
+    "options": ["Run against the crowd", "Lie down on the floor", "Move diagonally with the crowd towards the edges", "Stay in the center"],
+    "correct": 2,
+    "explanation": "Moving diagonally allows you to exit the flow without being trampled or trapped in the middle."
+  },
+  {
+    "id": "d4",
+    "category": "CYBER NINJA",
+    "question": "What is a 'Tailgating' attack in physical security?",
+    "options": ["Following a car too closely", "Entering a secure building behind someone with a badge", "Hacking a Wi-Fi from the parking lot", "Stealing a phone from a back pocket"],
+    "correct": 1,
+    "explanation": "Tailgating is a social engineering tactic where an unauthorized person follows an authorized one into a restricted area."
+  },
+  {
+    "id": "d5",
+    "category": "PERSONAL SAFETY",
+    "question": "When walking alone at night, what is the safest way to carry your keys?",
+    "options": ["Deep in your bag", "Between your fingers as a weapon", "Ready in your hand to enter your home/car", "Attached to your belt"],
+    "correct": 2,
+    "explanation": "Having your keys ready reduces the time you are vulnerable at your doorstep, which is a high-risk zone."
+  }
+]
