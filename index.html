@@ -29,16 +29,16 @@
         <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
         <h1>Stay Safe Elite</h1>
         <div class="lang-grid">
-            <div class="lang-btn" onclick="App.init('en')">🇺🇸 English</div>
-            <div class="lang-btn" onclick="App.init('el')">🇬🇷 Greek</div>
-            <div class="lang-btn" onclick="App.init('de')">🇩🇪 German</div>
-            <div class="lang-btn" onclick="App.init('fr')">🇫🇷 French</div>
-            <div class="lang-btn" onclick="App.init('es')">🇪🇸 Spanish</div>
-            <div class="lang-btn" onclick="App.init('it')">🇮🇹 Italian</div>
-            <div class="lang-btn" onclick="App.init('pt')">🇵🇹 Portuguese</div>
-            <div class="lang-btn" onclick="App.init('ru')">🇷🇺 Russian</div>
-            <div class="lang-btn" onclick="App.init('zh')">🇨🇳 Chinese</div>
-            <div class="lang-btn" onclick="App.init('hi')">🇮🇳 Hindi</div>
+            <div class="lang-btn" onclick="initApp('en')">🇺🇸 English</div>
+            <div class="lang-btn" onclick="initApp('el')">🇬🇷 Greek</div>
+            <div class="lang-btn" onclick="initApp('de')">🇩🇪 German</div>
+            <div class="lang-btn" onclick="initApp('fr')">🇫🇷 French</div>
+            <div class="lang-btn" onclick="initApp('es')">🇪🇸 Spanish</div>
+            <div class="lang-btn" onclick="initApp('it')">🇮🇹 Italian</div>
+            <div class="lang-btn" onclick="initApp('pt')">🇵🇹 Portuguese</div>
+            <div class="lang-btn" onclick="initApp('ru')">🇷🇺 Russian</div>
+            <div class="lang-btn" onclick="initApp('zh')">🇨🇳 Chinese</div>
+            <div class="lang-btn" onclick="initApp('hi')">🇮🇳 Hindi</div>
         </div>
     </div>
 </section>
@@ -60,7 +60,7 @@
                 <h2 style="margin:0;" id="txt_daily">🛡️ Daily Training</h2>
                 <p id="quiz_text" style="color:var(--muted); font-size:0.9rem;">Are you ready for today's challenges?</p>
                 <div id="quiz_options"></div>
-                <button class="main-cta" id="quiz_btn" onclick="App.startQuiz()">START QUIZ</button>
+                <button class="main-cta" id="quiz_btn" onclick="startQuiz()">START QUIZ</button>
             </div>
 
             <h3 style="font-size:1rem; margin-bottom:10px;" id="txt_achievements">🏆 Achievements</h3>
@@ -68,7 +68,7 @@
                 <div id="badge1" class="badge">🎖️</div>
                 <div id="badge2" class="badge">🛡️</div>
                 <div id="badge3" class="badge">💎</div>
-                <div class="premium-btn-inline" onclick="App.openModal()">
+                <div class="premium-btn-inline" onclick="openModal()">
                     <div style="font-size: 16px;">🔒</div>
                     <span>4,90€</span>
                 </div>
@@ -86,15 +86,15 @@
             <div id="prem_locked" class="glass-card" style="border:2px solid var(--gold); text-align:center;">
                 <h2 style="color:var(--gold);">Elite Access</h2>
                 <p style="font-size:0.9rem;" id="txt_prem_desc">Unlock all security tools and Emergency Hub.</p>
-                <button class="main-cta" style="background:var(--gold); color:black;" onclick="App.openModal()">UNLOCK NOW (4.90€)</button>
+                <button class="main-cta" style="background:var(--gold); color:black;" onclick="openModal()">UNLOCK NOW (4.90€)</button>
             </div>
 
             <div id="prem_unlocked" class="hidden">
                 <div class="tools-grid">
-                    <div class="tool-card" onclick="location.href='checkup.html'"><i>🔍</i><small>CHECKUP</small></div>
-                    <div class="tool-card" onclick="location.href='sos_hub.html'"><i>🚨</i><small>SOS HUB</small></div>
-                    <div class="tool-card" onclick="location.href='scam-alerts.html'"><i>⚠️</i><small>ALERTS</small></div>
-                    <div class="tool-card" onclick="location.href='dojo.html'"><i>⚡</i><small>DOJO</small></div>
+                    <div class="tool-card" onclick="runCheckup()"><i>🔍</i><small>CHECKUP</small></div>
+                    <div class="tool-card" onclick="sendSOS()"><i>🚨</i><small>SOS HUB</small></div>
+                    <div class="tool-card"><i>⚠️</i><small>ALERTS</small></div>
+                    <div class="tool-card"><i>⚡</i><small>DOJO</small></div>
                 </div>
 
                 <div class="glass-card" style="margin-top:20px; border: 1px solid var(--danger);">
@@ -111,14 +111,14 @@
     </main>
 
     <nav class="nav-tabs">
-        <button class="nav-tab active" id="nav_home" onclick="App.nav('home', this)">🏠</button>
-        <button class="nav-tab" id="nav_premium" onclick="App.nav('premium', this)">💎</button>
+        <button class="nav-tab active" id="nav_home" onclick="nav('home', this)">🏠</button>
+        <button class="nav-tab" id="nav_premium" onclick="nav('premium', this)">💎</button>
     </nav>
 </div>
 
 <div id="premiumModal" class="modal">
     <div class="modal-content">
-        <span class="close-modal" onclick="App.closeModal()">&times;</span>
+        <span class="close-modal" onclick="closeModal()">&times;</span>
         <div style="font-size:50px;">💎</div>
         <h2 style="color:var(--accent); margin-top:10px;">Elite Membership</h2>
         <div class="modal-body" style="text-align:left; font-size:0.9rem; margin:20px 0;">
@@ -127,7 +127,7 @@
             <p>✅ Access Scam Alerts & SOS Hub</p>
         </div>
         <div style="font-size:1.4rem; color:var(--gold); font-weight:bold; margin-bottom:20px;">4,90€ / mo</div>
-        <button class="main-cta" onclick="App.buyPremium()">UPGRADE NOW</button>
+        <button class="main-cta" onclick="buyPremium()">UPGRADE NOW</button>
     </div>
 </div>
 
