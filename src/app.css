@@ -209,4 +209,4 @@ button.wrong {
 @media (max-width: 500px) {
   .app-container { padding: 12px; }
   .answer-section button, .score-section button { font-size: 0.95rem; padding: 10px 15px; }
-}
+} 
