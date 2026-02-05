@@ -41,12 +41,17 @@ async function initApp(lang = 'en') {
   set('txt_map', t.map);
   set('txt_prem_desc', t.prem_desc);
 
-  document.getElementById('onboarding')?.classList.add('hidden');
-  document.getElementById('main_app')?.classList.remove('hidden');
-
+  // Δεν κρύβουμε το onboarding αυτόματα εδώ για να προλαβαίνεις να διαλέξεις
   await loadQuizzes(lang);
   updateUI();
   if (isElite) loadScamAlerts();
+}
+
+// Νέα συνάρτηση για την επιλογή γλώσσας από τις σημαίες
+function selectLang(lang) {
+  initApp(lang);
+  document.getElementById('onboarding')?.classList.add('hidden');
+  document.getElementById('main_app')?.classList.remove('hidden');
 }
 
 // =========================
@@ -58,7 +63,6 @@ async function loadQuizzes(lang) {
     const response = await fetch(`./quizzes/questions_${fileSuffix}_${lang}.json`);
     const data = await response.json();
     
-    // Δομή: { "en": { "levels": { "1": [...], "2": [...] } } }
     if (data && data[lang]) {
       currentQuizData = data[lang].levels;
     }
@@ -102,10 +106,8 @@ function startQuiz() {
   const level = Math.floor(xp / 100) + 1;
   const t = translations[currentLang] || translations['en'];
 
-  // Level Lock (Level 7+)
   if (level >= 7 && !isElite) { openModal(); return; }
 
-  // Daily Limit Check (5 questions per day for free users)
   if (questionsDoneToday >= 5 && !isElite) {
     alert(t.limit);
     return;
@@ -128,30 +130,32 @@ function renderQuestion() {
   if (currentIndex >= activeQuestions.length) { finishQuiz(); return; }
   
   const q = activeQuestions[currentIndex];
-  quizText.innerHTML = `<b>Q:</b> ${q.q}`;
+  quizText.innerHTML = `<b>Q:</b> ${q.q || q.question}`;
   optionsDiv.innerHTML = "";
   
-  q.o.forEach((opt, i) => {
+  const options = q.o || q.options;
+  const correctIdx = q.a !== undefined ? q.a : q.correct;
+
+  options.forEach((opt, i) => {
     const btn = document.createElement('button');
     btn.className = 'main-cta';
     btn.style.cssText = "background:#1e293b; color:white; margin-bottom:10px; border:1px solid rgba(255,255,255,0.1);";
     btn.textContent = opt;
-    btn.onclick = () => checkAnswer(i);
+    btn.onclick = () => checkAnswer(i, correctIdx);
     optionsDiv.appendChild(btn);
   });
 }
 
-function checkAnswer(selected) {
-  const q = activeQuestions[currentIndex];
+function checkAnswer(selected, correct) {
   const buttons = document.querySelectorAll('#quiz_options button');
   
   buttons.forEach((btn, i) => {
     btn.disabled = true;
-    if (i === q.a) btn.style.background = 'var(--success)';
+    if (i === correct) btn.style.background = 'var(--success)';
     else if (i === selected) btn.style.background = 'var(--danger)';
   });
 
-  if (selected === q.a) { 
+  if (selected === correct) { 
     xp += 20;
     localStorage.setItem('xp', xp); 
     confetti({ particleCount: 40, spread: 30, origin: { y: 0.8 } }); 
@@ -224,10 +228,30 @@ function runCheckup() {
   }, 2000);
 }
 
-function startDojo() {
-  alert("⚡ DOJO MODE: Unlimited practice initiated!");
-  isElite = true; // Temporary boost to allow training
-  startQuiz();
+// ΕΝΕΡΓΟΠΟΙΗΣΗ DOJO ΜΕ ΑΓΓΛΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ
+async function startDojo() {
+  if(!isElite) { openModal(); return; }
+  
+  try {
+    const response = await fetch('./quizzes/dojo.json');
+    const data = await response.json();
+    
+    document.getElementById('quiz_btn')?.classList.add('hidden');
+    currentIndex = 0;
+    // Φορτώνουμε τυχαία 5 ερωτήσεις από το Dojo
+    activeQuestions = data.sort(() => 0.5 - Math.random()).slice(0, 5);
+    
+    const qText = document.getElementById('quiz_text');
+    qText.style.color = "var(--gold)";
+    qText.innerHTML = "⚡ ELITE DOJO TRAINING ⚡<br><small>Tactical & Physical Security</small>";
+    
+    setTimeout(() => {
+      renderQuestion();
+    }, 1500);
+    
+  } catch (err) {
+    alert("Dojo training data not found.");
+  }
 }
 
 // =========================
