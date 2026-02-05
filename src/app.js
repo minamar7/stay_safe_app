@@ -1,146 +1,189 @@
-// app.js
+// ==========================
+// STAY SAFE ELITE APP.JS
+// ==========================
 
-// ====== GLOBAL VARIABLES ======
+/************* LANGUAGES *************/
 let currentLang = 'en';
-let currentLevel = 1;
-let streak = 1;
-let xp = 0;
-
-let quizData = {
-    1: [
-        {q: "What's the first thing to do in a fire?", options:["Call 100","Hide","Evacuate"], answer: 2},
-        {q: "Best way to secure your password?", options:["123456","Use strong unique password","Password123"], answer: 1},
-        {q: "Check emails carefully to avoid?", options:["Spam","Phishing","Downloads"], answer: 1},
-        {q: "Which is safer online?", options:["Public WiFi","VPN"], answer: 1},
-        {q: "Keep software updated?", options:["Yes","No"], answer: 0}
-    ],
-    2: [
-        {q: "You find unattended bag in public?", options:["Ignore","Report to security","Take it"], answer: 1},
-        {q: "What is two-factor authentication?", options:["Extra login step","Ignore it","Password only"], answer: 0},
-        {q: "Best way to exit suspicious website?", options:["Close tab","Click links","Download"], answer: 0},
-        {q: "Securely sharing files?", options:["Encrypted cloud","Email public link","USB random"], answer: 0},
-        {q: "Suspicious email with link?", options:["Click","Delete"], answer: 1}
-    ],
-    3: [
-        {q: "Emergency number for fire?", options:["199","112","100"], answer: 0},
-        {q: "Suspicious phone call?", options:["Give info","Hang up"], answer: 1},
-        {q: "Public charging stations?", options:["Safe","Potential risk"], answer: 1},
-        {q: "Strong password includes?", options:["Numbers, letters, symbols","Name only"], answer: 0},
-        {q: "When in doubt online?", options:["Verify sources","Click anything"], answer: 0}
-    ]
-};
-
-let currentQuiz = [];
-let currentQuestionIndex = 0;
-
-// ====== SELECT LANGUAGE ======
 function selectLang(lang) {
     currentLang = lang;
     document.getElementById('onboarding').classList.add('hidden');
     document.getElementById('main_app').classList.remove('hidden');
-    loadUI();
 }
 
-// ====== LOAD UI ======
-function loadUI() {
-    document.getElementById('streak_val').textContent = streak;
-    document.getElementById('level_val').textContent = currentLevel;
-    document.getElementById('xp_fill').style.width = xp + "%";
-}
-
-// ====== QUIZ LOGIC ======
-function startQuiz() {
-    currentQuiz = quizData[currentLevel] || quizData[1];
-    currentQuestionIndex = 0;
-    showQuestion();
-}
-
-function showQuestion() {
-    if (currentQuestionIndex >= currentQuiz.length) {
-        endQuiz();
-        return;
-    }
-
-    const q = currentQuiz[currentQuestionIndex];
-    const quizText = document.getElementById('quiz_text');
-    const quizOptions = document.getElementById('quiz_options');
-    quizText.textContent = q.q;
-    quizOptions.innerHTML = '';
-
-    q.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.textContent = opt;
-        btn.className = 'quiz-option';
-        btn.onclick = () => checkAnswer(i);
-        quizOptions.appendChild(btn);
-    });
-}
-
-function checkAnswer(selected) {
-    const q = currentQuiz[currentQuestionIndex];
-    const buttons = document.querySelectorAll('.quiz-option');
-
-    buttons.forEach((btn, i) => {
-        btn.disabled = true;
-        if (i === q.answer) {
-            btn.style.backgroundColor = '#22c55e'; // green
-            btn.style.color = '#fff';
-        } else if (i === selected) {
-            btn.style.backgroundColor = '#ef4444'; // red
-            btn.style.color = '#fff';
-        }
-    });
-
-    if (selected === q.answer) {
-        xp += 20;
-    }
-
-    setTimeout(() => {
-        currentQuestionIndex++;
-        showQuestion();
-        loadUI();
-    }, 1000);
-}
-
-function endQuiz() {
-    alert("Quiz completed! 🎉");
-    streak++;
-    xp += 10;
-    if (xp >= 100) {
-        currentLevel++;
-        xp = 0;
-    }
-    loadUI();
-}
-
-// ====== NAVIGATION ======
+/************* NAVIGATION *************/
 function nav(screen, btn) {
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
-    document.getElementById('screen_home').classList.add('hidden');
-    document.getElementById('screen_premium').classList.add('hidden');
-
-    if (screen === 'home') document.getElementById('screen_home').classList.remove('hidden');
-    else if (screen === 'premium') document.getElementById('screen_premium').classList.remove('hidden');
+    document.getElementById('screen_home').classList.toggle('hidden', screen !== 'home');
+    document.getElementById('screen_premium').classList.toggle('hidden', screen !== 'premium');
 }
 
-// ====== PREMIUM MODAL ======
-function openModal() {
-    document.getElementById('premiumModal').style.display = 'flex';
-}
-function closeModal() {
-    document.getElementById('premiumModal').style.display = 'none';
-}
-function buyPremium() {
-    alert("Premium unlocked! 💎");
-    closeModal();
-    document.getElementById('prem_locked').classList.add('hidden');
-    document.getElementById('prem_unlocked').classList.remove('hidden');
+/************* MODAL *************/
+function openModal() { document.getElementById('premiumModal').style.display = 'flex'; }
+function closeModal() { document.getElementById('premiumModal').style.display = 'none'; }
+function buyPremium() { alert("Thank you for upgrading!"); closeModal(); }
+
+/************* CONFETTI *************/
+function confetti() { window.confetti && window.confetti(); }
+
+/************* DAILY QUIZ (FREE 1-6) *************/
+const dailyQuestions = [
+    { q: "Lock your phone when unattended?", options: ["Yes","No"], answer:0 },
+    { q: "Use public Wi-Fi without VPN?", options: ["Yes","No"], answer:1 },
+    { q: "Share passwords with colleagues?", options: ["Yes","No"], answer:1 },
+    { q: "Report suspicious email?", options: ["Yes","No"], answer:0 },
+    { q: "Click unknown links?", options: ["Yes","No"], answer:1 },
+    { q: "Use 2FA where possible?", options: ["Yes","No"], answer:0 },
+    { q: "Leave doors unlocked?", options: ["Yes","No"], answer:1 },
+    { q: "Update software regularly?", options: ["Yes","No"], answer:0 },
+    { q: "Use strong passwords?", options: ["Yes","No"], answer:0 },
+    { q: "Ignore security alerts?", options: ["Yes","No"], answer:1 },
+    { q: "Keep backups?", options: ["Yes","No"], answer:0 },
+    { q: "Share personal info online?", options: ["Yes","No"], answer:1 },
+    { q: "Check emergency exits?", options: ["Yes","No"], answer:0 },
+    { q: "Trust strangers with info?", options: ["Yes","No"], answer:1 },
+    { q: "Report lost badge?", options: ["Yes","No"], answer:0 },
+    { q: "Leave PC unlocked?", options: ["Yes","No"], answer:1 },
+    { q: "Encrypt sensitive files?", options: ["Yes","No"], answer:0 },
+    { q: "Use same password everywhere?", options: ["Yes","No"], answer:1 },
+    { q: "Verify sender emails?", options: ["Yes","No"], answer:0 },
+    { q: "Ignore system updates?", options: ["Yes","No"], answer:1 },
+    { q: "Log out after work?", options: ["Yes","No"], answer:0 },
+    { q: "Click pop-up ads?", options: ["Yes","No"], answer:1 },
+    { q: "Use antivirus software?", options: ["Yes","No"], answer:0 },
+    { q: "Use default admin password?", options: ["Yes","No"], answer:1 },
+    { q: "Store sensitive info securely?", options: ["Yes","No"], answer:0 },
+    { q: "Ignore phishing training?", options: ["Yes","No"], answer:1 },
+    { q: "Lock workstation screen?", options: ["Yes","No"], answer:0 },
+    { q: "Share USB sticks freely?", options: ["Yes","No"], answer:1 },
+    { q: "Use strong Wi-Fi password?", options: ["Yes","No"], answer:0 },
+    { q: "Write passwords on sticky notes?", options: ["Yes","No"], answer:1 }
+];
+
+let dailyLevel = 1;
+let dailyQIndex = 0;
+let dailyScore = 0;
+
+function startQuiz() {
+    dailyQIndex = 0;
+    dailyScore = 0;
+    showDailyQuestion();
 }
 
-// ====== EMERGENCY FUNCTIONS ======
-function runCheckup() { alert("Running security checkup..."); }
-function sendSOS() { alert("Sending SOS..."); }
-function loadScamAlerts() { alert("Loading scam alerts..."); }
-function startDojo() { alert("Starting Dojo training..."); }
+function showDailyQuestion() {
+    const levelQuestions = dailyQuestions.slice((dailyLevel-1)*5, dailyLevel*5);
+    const qObj = levelQuestions[dailyQIndex];
+    const quizContainer = document.getElementById("quiz_container");
+    quizContainer.innerHTML = `
+        <h2 style="margin:0;">🛡️ Daily Training</h2>
+        <p style="color:var(--muted); font-size:0.9rem;">${qObj.q}</p>
+        <div id="quiz_options">
+            ${qObj.options.map((opt,i)=>`<button class="option-btn" onclick="answerDaily(${i})">${opt}</button>`).join('')}
+        </div>
+    `;
+}
+
+function answerDaily(selected) {
+    const levelQuestions = dailyQuestions.slice((dailyLevel-1)*5, dailyLevel*5);
+    const correct = levelQuestions[dailyQIndex].answer;
+    const options = document.querySelectorAll(".option-btn");
+
+    options.forEach((btn,i)=>{
+        if(i===correct) btn.style.backgroundColor="green";
+        else if(i===selected) btn.style.backgroundColor="red";
+        btn.disabled=true;
+    });
+
+    if(selected===correct) dailyScore++;
+
+    setTimeout(()=>{
+        dailyQIndex++;
+        if(dailyQIndex<levelQuestions.length) showDailyQuestion();
+        else endDailyLevel();
+    },800);
+}
+
+function endDailyLevel() {
+    confetti();
+    alert(`Level ${dailyLevel} complete! Score: ${dailyScore}/5`);
+    // Video Ad
+    const adBox = document.getElementById("ad_box");
+    adBox.innerHTML = `<video width="100%" controls autoplay><source src="daily-ad.mp4" type="video/mp4"></video>`;
+    if(dailyLevel<6) dailyLevel++;
+}
+
+/************* PREMIUM SCENARIOS 7-10 *************/
+const scenarioQuestions = [
+    { q:"Traveling abroad, find suspicious package. Action?", options:["Ignore","Report to authorities"], answer:1 },
+    { q:"Public Wi-Fi asks password. Action?", options:["Connect freely","Use VPN"], answer:1 },
+    { q:"Stranger requests sensitive info. Action?", options:["Share","Decline"], answer:1 },
+    { q:"Email from unknown bank. Action?", options:["Click link","Verify email"], answer:1 },
+    { q:"Suspicious phone call about account. Action?", options:["Give info","Hang up"], answer:1 },
+    { q:"Lost luggage. Sensitive docs inside. Action?", options:["Ignore","Report immediately"], answer:1 },
+    { q:"USB found on ground at airport. Action?", options:["Plug in","Report"], answer:1 },
+    { q:"Emergency exit blocked. Action?", options:["Ignore","Report"], answer:1 },
+    { q:"Fire alarm triggered. Action?", options:["Run","Follow instructions"], answer:1 },
+    { q:"Hotel asks for extra info. Action?", options:["Give freely","Check legitimacy"], answer:1 },
+    { q:"Cyber attack detected. Action?", options:["Ignore","Inform IT"], answer:1 },
+    { q:"Suspicious app installed. Action?", options:["Delete","Keep"], answer:0 },
+    { q:"Phishing link clicked. Action?", options:["Ignore","Report"], answer:1 },
+    { q:"Lost badge at work. Action?", options:["Ignore","Report"], answer:1 },
+    { q:"Emergency number received. Action?", options:["Ignore","Call if needed"], answer:1 },
+    { q:"Suspicious vehicle outside. Action?", options:["Ignore","Report"], answer:1 },
+    { q:"Unknown friend request. Action?", options:["Accept","Ignore"], answer:1 },
+    { q:"Malware alert. Action?", options:["Ignore","Run antivirus"], answer:1 },
+    { q:"Travel advisory issued. Action?", options:["Ignore","Follow instructions"], answer:1 },
+    { q:"Overhearing confidential info. Action?", options:["Ignore","Report"], answer:1 }
+];
+
+const premiumLevels = {7:[0,1,2,3,4],8:[5,6,7,8,9],9:[10,11,12,13,14],10:[15,16,17,18,19]};
+let currentPremiumLevel = 7;
+let premiumQIndex = 0;
+let premiumScore = 0;
+
+function startPremiumScenario() {
+    premiumQIndex=0;
+    premiumScore=0;
+    showPremiumQuestion();
+}
+
+function showPremiumQuestion() {
+    const qIndex = premiumLevels[currentPremiumLevel][premiumQIndex];
+    const qObj = scenarioQuestions[qIndex];
+    const quizContainer = document.getElementById("quiz_container");
+    quizContainer.innerHTML = `
+        <h2 style="margin:0;">🛡️ Premium Scenario</h2>
+        <p style="color:var(--muted); font-size:0.9rem;">${qObj.q}</p>
+        <div id="quiz_options">
+            ${qObj.options.map((opt,i)=>`<button class="option-btn" onclick="answerPremium(${i})">${opt}</button>`).join('')}
+        </div>
+    `;
+}
+
+function answerPremium(selected) {
+    const qIndex = premiumLevels[currentPremiumLevel][premiumQIndex];
+    const correct = scenarioQuestions[qIndex].answer;
+    const options = document.querySelectorAll(".option-btn");
+
+    options.forEach((btn,i)=>{
+        if(i===correct) btn.style.backgroundColor="green";
+        else if(i===selected) btn.style.backgroundColor="red";
+        btn.disabled=true;
+    });
+
+    if(selected===correct) premiumScore++;
+
+    setTimeout(()=>{
+        premiumQIndex++;
+        if(premiumQIndex<premiumLevels[currentPremiumLevel].length) showPremiumQuestion();
+        else endPremiumLevel();
+    },800);
+}
+
+function endPremiumLevel() {
+    confetti();
+    alert(`Premium Level ${currentPremiumLevel} complete! Score: ${premiumScore}/5`);
+    const adBox = document.getElementById("ad_box");
+    adBox.innerHTML = `<video width="100%" controls autoplay><source src="premium-ad.mp4" type="video/mp4"></video>`;
+    if(currentPremiumLevel<10) currentPremiumLevel++;
+}
