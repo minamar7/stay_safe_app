@@ -1,102 +1,193 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<title>AI Threat Analyzer – Stay Safe Elite</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"/>
-<meta name="theme-color" content="#020617"/>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<title>Travel Hub — Stay Safe Elite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020617">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
 <style>
 :root {
-  --bg: #020917;
-  --accent: #38bdf8;
-  --danger: #ef4444;
-  --safe: #22c55e;
-  --warn: #f59e0b;
-  --panel: rgba(15, 23, 42, 0.9);
-}*{box-sizing:border-box;margin:0;padding:0} body{ background:var(--bg); color:#fff; font-family:Rajdhani,sans-serif; min-height:100vh; }
+    --bg: #020617;
+    --card: rgba(15,23,42,0.9);
+    --accent: #38bdf8;
+    --travel: #0ea5e9;
+    --travel-dark: #0369a1;
+    --gold: #facc15;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --premium: #f59e0b;
+}
+* { box-sizing: border-box; font-family: -apple-system, system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+.hidden { display: none !important; }
 
-.bg-grid{ position:fixed;inset:0;z-index:0; background-image:linear-gradient(rgba(56,189,248,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,0.03) 1px,transparent 1px); background-size:40px 40px; }
+/* ── HEADER ── */
+.app-header {
+    padding: 50px 20px 15px;
+    background: rgba(15,23,42,0.85);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(14,165,233,0.25);
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 12px;
+}
+.back-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(14,165,233,0.12);
+    border: 1px solid rgba(14,165,233,0.3);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+    color: var(--accent); font-size: 18px;
+}
+.header-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.35rem; font-weight: 700;
+    color: #fff; letter-spacing: 1px;
+}
 
-.shell{position:relative;z-index:2;max-width:480px;margin:auto;padding:20px 20px 100px;display:flex;flex-direction:column;gap:16px}
+/* ── TOOL CARDS ── */
+.section-label { font-family: 'Rajdhani', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 2.5px; color: var(--muted); text-transform: uppercase; padding: 18px 20px 8px; }
+.tools-list { padding: 0 14px; display: flex; flex-direction: column; gap: 12px; }
+.tool-row { background: var(--card); border-radius: 22px; border: 1px solid rgba(255,255,255,0.07); padding: 18px; display: flex; align-items: center; gap: 14px; cursor: pointer; position: relative; }
+.tool-icon-box { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.3); font-size: 24px; }
+.tool-row-info h3 { margin: 0; font-size: 0.95rem; font-weight: 800; font-family: 'Rajdhani', sans-serif; }
+.tool-row-info p { margin: 0; font-size: 0.7rem; color: var(--muted); }
+.premium-badge { position: absolute; top: 10px; right: 12px; background: var(--premium); color: #000; font-size: 0.46rem; font-weight: 900; padding: 2px 7px; border-radius: 5px; font-family: 'Rajdhani', sans-serif; }
 
-.nav-header{display:flex} .btn-back{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:12px;color:#94a3b8;text-decoration:none;font-family:Orbitron}
+/* ── PANELS ── */
+.tool-panel { position: fixed; inset: 0; background: var(--bg); z-index: 500; display: flex; flex-direction: column; }
+.panel-body { flex: 1; overflow-y: auto; padding: 20px; }
 
-.header-badge{background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 12px;border-radius:20px;font-size:12px;color:var(--accent);width:max-content}
-
-h1{font-family:Orbitron;font-size:1.6rem} h1 span{color:var(--accent)}
-
-.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px} .scenario-btn{background:var(--panel);border:1px solid rgba(255,255,255,0.08);padding:14px;border-radius:14px;cursor:pointer;text-align:center} .scenario-btn.active{border-color:var(--accent)} .icon{font-size:1.8rem}
-
-textarea{width:100%;min-height:120px;background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px;color:#fff}
-
-button.main{ width:100%;padding:16px;background:linear-gradient(135deg,#0ea5e9,#0284c7); border:none;border-radius:14px;color:#fff;font-family:Orbitron;font-weight:700 }
-
-.card{display:none;margin-top:10px;background:var(--panel);border-radius:16px;overflow:hidden} .card.show{display:block} .header{display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid rgba(255,255,255,0.08)} .score{font-size:2rem;font-family:Orbitron} .content{padding:14px;font-size:14px;line-height:1.6}
-
-.travel-box{margin-top:10px;padding:12px;background:rgba(56,189,248,0.08);border-radius:12px;border:1px solid rgba(56,189,248,0.2)} .travel-title{color:var(--accent);font-weight:700;margin-bottom:6px} </style>
-
+/* ── FLIGHT MAP SPECIFIC ── */
+#map_wrap { flex: 1; position: relative; background: #020e1f; overflow: hidden; }
+#flight_canvas { width: 100%; height: 100%; display: block; }
+</style>
 </head>
 <body>
-<div class="bg-grid"></div><div class="shell">  <div class="nav-header">
-    <a class="btn-back" href="index.html">← BACK</a>
-  </div>  <div class="header-badge">AI ANALYZER v3 ENTERPRISE</div>
-  <h1>🤖 <span>ELITE</span> ANALYSIS</h1>  <div class="scenario-grid">
-    <div class="scenario-btn active" onclick="setMode('personal',this)"><div class="icon">🛡️</div>Personal</div>
-    <div class="scenario-btn" onclick="setMode('cyber',this)"><div class="icon">🔐</div>Cyber</div>
-    <div class="scenario-btn" onclick="setMode('emergency',this)"><div class="icon">🆘</div>Emergency</div>
-    <div class="scenario-btn" onclick="setMode('travel',this)"><div class="icon">🌍</div>Travel</div>
-  </div>  <textarea id="input" placeholder="Describe situation or country..."></textarea><button class="main" onclick="runAI()">START SCAN</button>
 
-  <div class="card" id="card">
-    <div class="header">
-      <div id="level">—</div>
-      <div class="score" id="score">—</div>
+<div id="main_page">
+    <header class="app-header">
+        <div class="back-btn" onclick="window.history.back()">‹</div>
+        <div class="header-title">✈ <span>Travel Hub</span></div>
+    </header>
+
+    <div class="section-label">AI SECURITY & TRACKING</div>
+    <div class="tools-list">
+        <div class="tool-row" onclick="openPanel('panel_flight')">
+            <div class="tool-icon-box">✈️</div>
+            <div class="premium-badge">LIVE API</div>
+            <div class="tool-row-info">
+                <h3>Flight Tracker</h3>
+                <p>Real-time Aviation API tracking</p>
+            </div>
+        </div>
+
+        <div class="tool-row" onclick="openPanel('panel_threat')">
+            <div class="tool-icon-box">🤖</div>
+            <div class="premium-badge">AI THREAT</div>
+            <div class="tool-row-info">
+                <h3>Travel AI Threat</h3>
+                <p>Intelligence, safety score & risks</p>
+            </div>
+        </div>
     </div>
-    <div class="content" id="output"></div>
-  </div></div><script>
-let mode='personal';
+</div>
 
-function setMode(m,el){
-  mode=m;
-  document.querySelectorAll('.scenario-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
+<div id="panel_flight" class="tool-panel hidden">
+    <header class="app-header">
+        <div class="back-btn" onclick="closePanel('panel_flight')">‹</div>
+        <div class="header-title">Live Flight Map</div>
+    </header>
+    <div style="padding:15px; display:flex; gap:10px; background:rgba(15,23,42,0.9);">
+        <input id="fl_num" style="flex:1; background:rgba(255,255,255,0.05); border:1px solid var(--accent); border-radius:12px; padding:12px; color:#fff;" placeholder="Flight No (e.g. AEE601)">
+        <button onclick="trackAviationFlight()" style="background:var(--travel); border:none; border-radius:12px; padding:0 20px; color:#fff; font-weight:bold;">TRACK</button>
+    </div>
+    <div id="map_wrap">
+        <canvas id="flight_canvas"></canvas>
+    </div>
+</div>
+
+<div id="panel_threat" class="tool-panel hidden">
+    <header class="app-header">
+        <div class="back-btn" onclick="closePanel('panel_threat')">‹</div>
+        <div class="header-title">AI Threat Intelligence</div>
+    </header>
+    <div class="panel-body">
+        <div style="display:flex; gap:10px; margin-bottom:20px;">
+            <input id="ai_country" style="flex:1; background:rgba(255,255,255,0.05); border:1px solid var(--accent); border-radius:12px; padding:12px; color:#fff;" placeholder="Enter Country (e.g. Japan)">
+            <button onclick="fetchAiThreat()" style="background:var(--premium); border:none; border-radius:12px; padding:0 20px; color:#000; font-weight:bold;">ANALYZE</button>
+        </div>
+        <div id="ai_results" class="hidden">
+            </div>
+    </div>
+</div>
+
+<script>
+const AVIATION_API_KEY = "YOUR_AVIATION_API_KEY"; // Το κλειδί σου
+
+function openPanel(id) { document.getElementById(id).classList.remove('hidden'); if(id==='panel_flight') initMap(); }
+function closePanel(id) { document.getElementById(id).classList.add('hidden'); }
+
+// --- 1. AVIATION FLIGHT TRACKER ---
+let canvas, ctx;
+function initMap() {
+    canvas = document.getElementById('flight_canvas');
+    ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    drawBaseMap();
 }
 
-function renderTravel(data){
-  if(!data?.travel_data) return '';
-  const t=data.travel_data;
-
-  return `
-  <div class="travel-box">
-    <div class="travel-title">🌍 Travel Intelligence</div>
-    <div><b>Country:</b> ${t.country_detected||'-'}</div>
-    <div><b>Weather:</b> ${t.weather||'-'}</div>
-    <div><b>Risks:</b> ${JSON.stringify(t.risks||{})}</div>
-    <div><b>Packing:</b> ${(t.packing_list||[]).join(', ')}</div>
-    <div><b>Vaccines:</b> ${(t.vaccines||[]).join(', ')}</div>
-  </div>
-  `;
+function drawBaseMap() {
+    ctx.fillStyle = "#020e1f"; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle = "rgba(56,189,248,0.2)"; ctx.strokeRect(50,50,canvas.width-100,canvas.height-100);
 }
 
-async function runAI(){
-  const input=document.getElementById('input').value;
-
-  const res=await fetch('https://stay-safe-tips.vercel.app/api/analyze',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({situation:input,scenario:mode})
-  });
-
-  const data=await res.json();
-
-  document.getElementById('card').classList.add('show');
-  document.getElementById('level').innerText=data.level||'-';
-  document.getElementById('score').innerText=(data.score||0)+'%';
-
-  let html=`<div>${data.summary||data.assessment||''}</div>`;
-  html+=renderTravel(data);
-
-  document.getElementById('output').innerHTML=html;
+async function trackAviationFlight() {
+    const flight = document.getElementById('fl_num').value;
+    // Εδώ καλείται το Aviation API
+    // fetch(`https://api.aviationstack.com/v1/flights?access_key=${AVIATION_API_KEY}&flight_iata=${flight}`)
+    alert("Tracking Flight: " + flight + " via Aviation API...");
 }
-</script></body>
+
+// --- 2. TRAVEL AI THREAT ---
+async function fetchAiThreat() {
+    const country = document.getElementById('ai_country').value;
+    const resDiv = document.getElementById('ai_results');
+    
+    resDiv.innerHTML = "<p style='color:var(--accent)'>Consulting Gemini-1.5-Flash...</p>";
+    resDiv.classList.remove('hidden');
+
+    try {
+        const response = await fetch('/api/ai-threat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ country: country })
+        });
+        const data = await response.json();
+        
+        resDiv.innerHTML = `
+            <div style="background:var(--card); border:1px solid var(--accent); border-radius:18px; padding:20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <h2 style="margin:0; font-family:'Rajdhani'; color:var(--accent);">${country.toUpperCase()}</h2>
+                    <div style="background:var(--premium); color:#000; padding:5px 12px; border-radius:10px; font-weight:900;">SCORE: ${data.safety_score || 'N/A'}/10</div>
+                </div>
+                <p>🌦️ <b>Weather:</b> ${data.weather || 'Clear'}</p>
+                <p>💉 <b>Vaccines:</b> ${data.vaccines || 'None required'}</p>
+                <p>⚠️ <b>Risks:</b> ${data.threats || 'Low risk'}</p>
+                <p>🎒 <b>Packing:</b> ${data.packing || 'Normal travel gear'}</p>
+                <p>🏛️ <b>Top Sight:</b> ${data.sights || 'Downtown'}</p>
+            </div>
+        `;
+    } catch (e) {
+        resDiv.innerHTML = "<p style='color:var(--danger)'>Error connecting to Travel_Ai_Threat API.</p>";
+    }
+}
+</script>
+</body>
 </html>
