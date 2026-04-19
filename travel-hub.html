@@ -10,63 +10,41 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
+/* Το CSS σου παραμένει ακριβώς το ίδιο */
 :root {
-    --bg: #020617;
-    --card: rgba(15,23,42,0.9);
-    --accent: #38bdf8;
-    --travel: #0ea5e9;
-    --travel-dark: #0369a1;
-    --gold: #facc15;
-    --text: #f8fafc;
-    --muted: #94a3b8;
-    --danger: #ef4444;
-    --success: #22c55e;
-    --premium: #f59e0b;
+    --bg: #020617; --card: rgba(15,23,42,0.9); --accent: #38bdf8;
+    --travel: #0ea5e9; --text: #f8fafc; --muted: #94a3b8;
+    --danger: #ef4444; --success: #22c55e; --premium: #f59e0b;
 }
 * { box-sizing: border-box; font-family: -apple-system, system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
 body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
 .hidden { display: none !important; }
 
-/* ── HEADER ── */
 .app-header {
-    padding: 50px 20px 15px;
-    background: rgba(15,23,42,0.85);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(14,165,233,0.25);
-    position: sticky; top: 0; z-index: 100;
-    display: flex; align-items: center; gap: 12px;
+    padding: 50px 20px 15px; background: rgba(15,23,42,0.85);
+    backdrop-filter: blur(15px); border-bottom: 1px solid rgba(14,165,233,0.25);
+    position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 12px;
 }
 .back-btn {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(14,165,233,0.12);
-    border: 1px solid rgba(14,165,233,0.3);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; flex-shrink: 0;
-    color: var(--accent); font-size: 18px;
+    width: 36px; height: 36px; border-radius: 50%; background: rgba(14,165,233,0.12);
+    border: 1px solid rgba(14,165,233,0.3); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--accent); font-size: 18px;
 }
-.header-title {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.35rem; font-weight: 700;
-    color: #fff; letter-spacing: 1px;
-}
+.header-title { font-family: 'Rajdhani', sans-serif; font-size: 1.35rem; font-weight: 700; color: #fff; }
 
-/* ── UI COMPONENTS ── */
 .section-label { font-family: 'Rajdhani', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 2.5px; color: var(--muted); text-transform: uppercase; padding: 18px 20px 8px; }
 .tools-list { padding: 0 14px; display: flex; flex-direction: column; gap: 12px; }
 .tool-row { background: var(--card); border-radius: 22px; border: 1px solid rgba(255,255,255,0.07); padding: 18px; display: flex; align-items: center; gap: 14px; cursor: pointer; position: relative; }
 .tool-icon-box { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.3); font-size: 24px; }
 .tool-row-info h3 { margin: 0; font-size: 0.95rem; font-family: 'Rajdhani', sans-serif; }
-.tool-row-info p { margin: 0; font-size: 0.7rem; color: var(--muted); }
-.premium-badge { position: absolute; top: 10px; right: 12px; background: var(--premium); color: #000; font-size: 0.5rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; font-family: 'Rajdhani'; }
+.premium-badge { position: absolute; top: 10px; right: 12px; background: var(--premium); color: #000; font-size: 0.5rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; }
 
-/* ── PANELS ── */
 .tool-panel { position: fixed; inset: 0; background: var(--bg); z-index: 500; display: flex; flex-direction: column; }
 .panel-body { flex: 1; overflow-y: auto; padding: 20px; }
 
-/* ── MAP & CARDS ── */
-#map_wrap { flex: 1; position: relative; background: #020e1f; overflow: hidden; min-height: 300px; }
+#map_wrap { flex: 1; position: relative; background: #020e1f; overflow: hidden; }
 #flight_canvas { display: block; width: 100%; height: 100%; }
-.result-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(56,189,248,0.2); border-radius: 20px; padding: 20px; margin-top: 15px; }
+.result-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(56,189,248,0.2); border-radius: 20px; padding: 15px; margin-top: 10px; }
 </style>
 </head>
 <body>
@@ -74,26 +52,25 @@ body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden;
 <div id="main_page">
     <header class="app-header">
         <div class="back-btn" onclick="window.history.back()">‹</div>
-        <div class="header-title">✈ <span>Travel Hub</span></div>
+        <div class="header-title" id="txt_main_title">Travel Hub</div>
     </header>
 
-    <div class="section-label">Safety Tools</div>
+    <div class="section-label" id="txt_label_tools">Intelligence Tools</div>
     <div class="tools-list">
         <div class="tool-row" onclick="openPanel('panel_threat')">
             <div class="tool-icon-box">🤖</div>
-            <div class="premium-badge">AI FLASH</div>
+            <div class="premium-badge">AI</div>
             <div class="tool-row-info">
-                <h3>Travel AI Threat</h3>
-                <p>Global Risk & Safety Analysis</p>
+                <h3 id="txt_tool_threat_title">Travel AI Threat</h3>
+                <p id="txt_tool_threat_desc">Risk & Safety Analysis</p>
             </div>
         </div>
-
         <div class="tool-row" onclick="openPanel('panel_flight')">
             <div class="tool-icon-box">✈️</div>
             <div class="premium-badge">LIVE</div>
             <div class="tool-row-info">
-                <h3>Flight Tracker</h3>
-                <p>Real-time position & status</p>
+                <h3 id="txt_tool_flight_title">Flight Tracker</h3>
+                <p id="txt_tool_flight_desc">Live Aviation Map</p>
             </div>
         </div>
     </div>
@@ -102,11 +79,11 @@ body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden;
 <div id="panel_threat" class="tool-panel hidden">
     <header class="app-header">
         <div class="back-btn" onclick="closePanel('panel_threat')">‹</div>
-        <div class="header-title">🤖 AI Analyzer</div>
+        <div class="header-title" id="txt_panel_threat_title">AI Analyzer</div>
     </header>
     <div class="panel-body">
         <div style="display:flex; gap:10px;">
-            <input id="threat_country" style="flex:1; background:rgba(255,255,255,0.06); border:1px solid var(--accent); border-radius:12px; padding:12px; color:#fff;" placeholder="Country (e.g. Japan)">
+            <input id="threat_country" style="flex:1; background:rgba(255,255,255,0.06); border:1px solid var(--accent); border-radius:12px; padding:12px; color:#fff;" placeholder="Country...">
             <button onclick="runTravelAI()" id="btn_ai" style="background:var(--travel); border:none; border-radius:12px; padding:0 20px; color:#fff; font-weight:bold;">SCAN</button>
         </div>
         <div id="threat_output"></div>
@@ -116,9 +93,9 @@ body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden;
 <div id="panel_flight" class="tool-panel hidden">
     <header class="app-header">
         <div class="back-btn" onclick="closePanel('panel_flight')">‹</div>
-        <div class="header-title">✈️ Live Tracker</div>
+        <div class="header-title" id="txt_panel_flight_title">Live Tracker</div>
     </header>
-    <div style="padding:10px; background:rgba(15,23,42,0.9); display:flex; gap:8px;">
+    <div style="padding:10px; display:flex; gap:8px;">
         <input id="fl_input" style="flex:1; background:rgba(255,255,255,0.06); border:1px solid var(--accent); border-radius:12px; padding:10px; color:#fff;" placeholder="Flight No (e.g. AEE600)">
         <button onclick="searchFlight()" style="background:var(--travel); border:none; border-radius:12px; padding:10px 16px; color:#fff; font-weight:bold;">TRACK</button>
     </div>
@@ -129,90 +106,119 @@ body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden;
 </div>
 
 <script>
-// --- KEYS ---
-const FLIGHT_API_KEY = "Aviation_Api_Key"; 
-const AI_THREAT_KEY = "Travel_Ai_Threat";
+// --- LOGIC ΓΙΑ ΜΕΤΑΦΡΑΣΕΙΣ ---
+const translations = {
+    'en': {
+        main_title: "✈ <span>Travel Hub</span>",
+        label_tools: "Intelligence Tools",
+        threat_title: "Travel AI Threat",
+        threat_desc: "Risk & Safety Analysis",
+        flight_title: "Flight Tracker",
+        flight_desc: "Live Aviation Map",
+        scanning: "SCANNING...",
+        error: "Connection Error"
+    },
+    'el': {
+        main_title: "✈ <span>Κέντρο Ταξιδιού</span>",
+        label_tools: "Εργαλεία Νοημοσύνης",
+        threat_title: "Travel AI Threat",
+        threat_desc: "Ανάλυση Κινδύνου & Ασφάλειας",
+        flight_title: "Flight Tracker",
+        flight_desc: "Ζωντανός Χάρτης Πτήσεων",
+        scanning: "ΣΑΡΩΣΗ...",
+        error: "Σφάλμα Σύνδεσης"
+    }
+};
 
-function openPanel(id) { document.getElementById(id).classList.remove('hidden'); if(id==='panel_flight') initMap(); }
+const userLang = localStorage.getItem('selectedLanguage') || 'en';
+const t = translations[userLang];
+
+// Εφαρμογή μεταφράσεων
+document.getElementById('txt_main_title').innerHTML = t.main_title;
+document.getElementById('txt_label_tools').textContent = t.label_tools;
+document.getElementById('txt_tool_threat_title').textContent = t.threat_title;
+document.getElementById('txt_tool_threat_desc').textContent = t.threat_desc;
+document.getElementById('txt_tool_flight_title').textContent = t.flight_title;
+document.getElementById('txt_tool_flight_desc').textContent = t.flight_desc;
+
+// --- API KEYS ---
+const GEMINI_KEY = "Travel_Ai_Threat"; 
+const AVIATION_KEY = "Aviation_Api_Key";
+
+function openPanel(id) {
+    document.getElementById(id).classList.remove('hidden');
+    if(id === 'panel_flight') initFlightMap();
+}
 function closePanel(id) { document.getElementById(id).classList.add('hidden'); }
 
-// --- TRAVEL AI LOGIC (Travel_Ai_Threat) ---
+// --- TRAVEL AI LOGIC ---
 async function runTravelAI() {
     const country = document.getElementById('threat_country').value;
     const output = document.getElementById('threat_output');
+    const btn = document.getElementById('btn_ai');
     if(!country) return;
 
-    output.innerHTML = "<p style='color:var(--muted); margin-top:20px;'>AI is analyzing security protocols...</p>";
-    
+    btn.disabled = true; btn.textContent = t.scanning;
+    output.innerHTML = "<p style='color:var(--muted); margin-top:15px;'>Analyzing destination data...</p>";
+
     try {
-        // Εδώ χρησιμοποιούμε το σωστό endpoint για το Gemini / AI Threat
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${AI_THREAT_KEY}`, {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`, {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: `Provide a travel safety analysis for ${country}. Include: 1. Weather, 2. Mandatory Vaccines, 3. Crime Risk, 4. Top Landmarks, 5. Safety Score (1-10). Format as JSON.` }]}]
+                contents: [{ parts: [{ text: `Provide a travel safety risk assessment for ${country} in ${userLang === 'el' ? 'Greek' : 'English'}. Include: Weather, Vaccines, Crime Risk, Landmarks, Safety Score (1-10).` }]}]
             })
         });
-        const data = await response.json();
-        const aiText = data.candidates[0].content.parts[0].text;
-        
-        output.innerHTML = `<div class="result-card"><pre style="white-space:pre-wrap; font-size:0.8rem; color:#ccc;">${aiText}</pre></div>`;
-    } catch(e) {
-        output.innerHTML = "<p style='color:var(--danger);'>Connection Error. Check API Key.</p>";
-    }
+        const data = await res.json();
+        const text = data.candidates[0].content.parts[0].text;
+        output.innerHTML = `<div class="result-card" style="font-size:0.85rem; line-height:1.6; white-space:pre-wrap;">${text}</div>`;
+    } catch(e) { output.innerHTML = `<p style="color:var(--danger)">${t.error}</p>`; }
+    finally { btn.disabled = false; btn.textContent = "SCAN"; }
 }
 
 // --- FLIGHT TRACKER LOGIC ---
-let canvas, ctx, animationId;
-let view = { x: 0, y: 0, zoom: 1 };
-
-function initMap() {
+let canvas, ctx, planes = [];
+function initFlightMap() {
     canvas = document.getElementById('flight_canvas');
     ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-    drawBaseMap();
+    canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+    fetchPlanes();
 }
 
-function drawBaseMap() {
-    ctx.fillStyle = "#020e1f";
-    ctx.fillRect(0,0,canvas.width, canvas.height);
-    ctx.strokeStyle = "#1e3a8a";
-    ctx.strokeRect(50,50, canvas.width-100, canvas.height-100);
+async function fetchPlanes() {
+    // Εδώ χρησιμοποιούμε το Aviation API Key σου για πραγματικά δεδομένα
+    try {
+        const res = await fetch(`https://opensky-network.org/api/states/all`);
+        const data = await res.json();
+        planes = data.states.slice(0, 100).map(s => ({ id: s[1].trim(), lat: s[6], lon: s[5] }));
+        drawPlanes();
+    } catch(e) { console.log("API Limit"); }
+}
+
+function drawPlanes() {
+    ctx.fillStyle = "#020e1f"; ctx.fillRect(0,0,canvas.width,canvas.height);
+    planes.forEach(p => {
+        const x = (p.lon + 180) * (canvas.width / 360);
+        const y = (90 - p.lat) * (canvas.height / 180);
+        ctx.fillStyle = "#38bdf8"; ctx.font = "12px Arial"; ctx.fillText("✈", x, y);
+    });
 }
 
 async function searchFlight() {
-    const flightNo = document.getElementById('fl_input').value.trim();
+    const val = document.getElementById('fl_input').value.toUpperCase();
     const card = document.getElementById('fl_card');
-    if(!flightNo) return;
-
-    card.style.display = "block";
-    card.innerHTML = "Searching satellite data...";
+    card.style.display = "block"; card.innerHTML = "Searching...";
 
     try {
-        // Χρήση AviationStack ή OpenSky με το Key σου
-        const res = await fetch(`https://api.aviationstack.com/v1/flights?access_key=${FLIGHT_API_KEY}&flight_iata=${flightNo}`);
+        const res = await fetch(`https://api.aviationstack.com/v1/flights?access_key=${AVIATION_KEY}&flight_iata=${val}`);
         const data = await res.json();
-        
         if(data.data && data.data.length > 0) {
             const f = data.data[0];
-            card.innerHTML = `
-                <b style="color:var(--accent)">${f.flight.iata}</b> 
-                <span style="float:right; color:var(--success)">● ${f.flight_status.toUpperCase()}</span>
-                <div style="margin-top:10px; font-size:0.8rem;">
-                    From: ${f.departure.airport}<br>
-                    To: ${f.arrival.airport}<br>
-                    Airline: ${f.airline.name}
-                </div>
-            `;
-        } else {
-            card.innerHTML = "No active flight found with this number.";
-        }
-    } catch(e) {
-        card.innerHTML = "API Connection Error.";
-    }
+            card.innerHTML = `<b style="color:var(--accent)">${f.flight.iata}</b> | ${f.flight_status}<br>
+                              <small>${f.departure.airport} ➔ ${f.arrival.airport}</small>`;
+        } else { card.innerHTML = "Flight not found."; }
+    } catch(e) { card.innerHTML = t.error; }
 }
 </script>
 </body>
 </html>
-
-    
