@@ -1,0 +1,6 @@
+{
+  "functions": {
+    "api/flight.js": { "maxDuration": 10 },
+    "api/ai-threat.js": { "maxDuration": 15 }
+  }
+}
