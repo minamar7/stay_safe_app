@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Travel Hub — Stay Safe Elite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020617">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #020617;
+    --card: rgba(15,23,42,0.9);
+    --accent: #38bdf8;
+    --travel: #0ea5e9;
+    --travel-dark: #0369a1;
+    --gold: #facc15;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --premium: #f59e0b;
+}
+* { box-sizing: border-box; font-family: -apple-system, system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+.hidden { display: none !important; }
+
+/* ── HEADER ── */
+.app-header {
+    padding: 50px 20px 15px;
+    background: rgba(15,23,42,0.85);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(14,165,233,0.25);
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 12px;
+}
+.back-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(14,165,233,0.12);
+    border: 1px solid rgba(14,165,233,0.3);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+    color: var(--accent); font-size: 18px;
+    transition: background 0.2s;
+}
+.back-btn:active { background: rgba(14,165,233,0.25); }
+.header-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.35rem; font-weight: 700;
+    color: #fff; letter-spacing: 1px;
+    display: flex; align-items: center; gap: 8px;
+}
+.header-title span { color: var(--accent); }
+
+/* ── HERO STRIP ── */
+.travel-hero {
+    background: linear-gradient(135deg, rgba(3,105,161,0.4), rgba(2,6,23,0.8));
+    border-bottom: 1px solid rgba(14,165,233,0.15);
+    padding: 18px 20px;
+    display: flex; align-items: center; gap: 14px;
+}
+.hero-globe {
+    width: 52px; height: 52px; flex-shrink: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 16px rgba(14,165,233,0.5);
+}
+.hero-text h2 {
+    margin: 0 0 3px; font-size: 1rem; font-weight: 800;
+    font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px;
+}
+.hero-text p { margin: 0; font-size: 0.72rem; color: var(--muted); }
+
+/* ── SECTION LABEL ── */
+.section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 2.5px; color: var(--muted);
+    text-transform: uppercase;
+    padding: 18px 20px 8px;
+}
+
+/* ── TOOL CARDS ── */
+.tools-list { padding: 0 14px; display: flex; flex-direction: column; gap: 12px; }
+
+.tool-row {
+    background: var(--card);
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 18px;
+    display: flex; align-items: center; gap: 14px;
+    cursor: pointer;
+    position: relative; overflow: hidden;
+    transition: transform 0.15s, border-color 0.2s;
+}
+.tool-row:active { transform: scale(0.97); }
+
+.tool-icon-box {
+    width: 52px; height: 52px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 24px;
+}
+.tool-row-info { flex: 1; min-width: 0; }
+.tool-row-info h3 {
+    margin: 0 0 3px;
+    font-size: 0.95rem; font-weight: 800;
+    font-family: 'Rajdhani', sans-serif; letter-spacing: 0.3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.tool-row-info p { margin: 0; font-size: 0.7rem; color: var(--muted); line-height: 1.4; }
+.tool-arrow { color: var(--muted); font-size: 18px; flex-shrink: 0; }
+
+/* free tools — travel blue */
+.tool-free { border-color: rgba(14,165,233,0.2); }
+.tool-free .tool-icon-box { background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.3); box-shadow: 0 0 14px rgba(14,165,233,0.15); }
+.tool-free:active { border-color: rgba(14,165,233,0.4); }
+
+/* premium tools — gold */
+.tool-premium { border-color: rgba(245,158,11,0.2); }
+.tool-premium .tool-icon-box { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.28); box-shadow: 0 0 14px rgba(245,158,11,0.12); }
+.premium-badge {
+    position: absolute; top: 10px; right: 12px;
+    background: var(--premium); color: #000;
+    font-size: 0.46rem; font-weight: 900;
+    padding: 2px 7px; border-radius: 5px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+/* ── BOTTOM PADDING ── */
+.bottom-pad { height: 40px; }
+
+/* ══════════════════════════════════
+   TOOL PANELS (full-screen overlays)
+══════════════════════════════════ */
+.tool-panel {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    z-index: 500;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+}
+.panel-header {
+    padding: 50px 20px 14px;
+    background: rgba(15,23,42,0.9);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(14,165,233,0.2);
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+}
+.panel-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem; font-weight: 700; color: #fff;
+    letter-spacing: 0.5px;
+}
+.panel-body { flex: 1; overflow-y: auto; padding: 20px; }
+
+/* search bar */
+.search-bar {
+    display: flex; gap: 10px; margin-bottom: 18px;
+}
+.search-input {
+    flex: 1; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px; padding: 12px 16px;
+    color: var(--text); font-size: 0.9rem; outline: none;
+}
+.search-input::placeholder { color: var(--muted); }
+.search-input:focus { border-color: rgba(14,165,233,0.4); }
+.search-btn {
+    background: var(--travel); border: none;
+    border-radius: 14px; padding: 12px 18px;
+    color: #fff; font-weight: 800; cursor: pointer;
+    font-size: 0.85rem; white-space: nowrap;
+}
+
+/* result cards inside panels */
+.result-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px; padding: 16px; margin-bottom: 12px;
+}
+.result-card h4 { margin: 0 0 6px; font-size: 1rem; color: #fff; }
+.result-card p  { margin: 0; font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+.result-card .tag {
+    display: inline-block; margin-top: 8px;
+    background: rgba(14,165,233,0.15);
+    border: 1px solid rgba(14,165,233,0.3);
+    color: var(--accent); font-size: 0.65rem; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+    letter-spacing: 1px; text-transform: uppercase;
+    font-family: 'Rajdhani', sans-serif;
+}
+.result-card .tag.danger { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.3); color: #ef4444; }
+.result-card .tag.success { background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.3); color: #22c55e; }
+.result-card .tag.gold { background: rgba(250,204,21,0.1); border-color: rgba(250,204,21,0.3); color: var(--gold); }
+
+/* number rows */
+.num-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.num-row:last-child { border-bottom: none; }
+.num-label { font-size: 0.8rem; color: var(--muted); }
+.num-value {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem; font-weight: 700; color: var(--accent);
+    cursor: pointer;
+}
+
+/* phrase rows */
+.phrase-row {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.phrase-row:last-child { border-bottom: none; }
+.phrase-en { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.phrase-local { font-size: 1rem; color: #fff; font-weight: 600; }
+.phrase-phonetic { font-size: 0.72rem; color: var(--accent); font-style: italic; }
+
+/* currency rows */
+.currency-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.currency-row:last-child { border-bottom: none; }
+.currency-name { font-size: 0.85rem; color: var(--text); }
+.currency-rate {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.05rem; font-weight: 700; color: var(--gold);
+}
+
+/* scam alert rows */
+.scam-item {
+    background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.15);
+    border-radius: 16px; padding: 14px; margin-bottom: 10px;
+}
+.scam-item h4 { margin: 0 0 5px; font-size: 0.9rem; color: #fff; }
+.scam-item p  { margin: 0; font-size: 0.75rem; color: var(--muted); line-height: 1.45; }
+.scam-level {
+    display: inline-block; margin-top: 8px;
+    font-size: 0.62rem; font-weight: 900; padding: 2px 9px;
+    border-radius: 20px; letter-spacing: 1px; text-transform: uppercase;
+    font-family: 'Rajdhani', sans-serif;
+}
+.scam-level.high   { background: rgba(239,68,68,0.2);  color: #ef4444; }
+.scam-level.medium { background: rgba(245,158,11,0.2); color: #f59e0b; }
+.scam-level.low    { background: rgba(34,197,94,0.2);  color: #22c55e; }
+
+/* premium lock screen */
+.premium-lock {
+    text-align: center; padding: 40px 20px;
+}
+.premium-lock .lock-icon { font-size: 52px; margin-bottom: 16px; }
+.premium-lock h3 { margin: 0 0 10px; font-size: 1.2rem; }
+.premium-lock p  { color: var(--muted); font-size: 0.85rem; line-height: 1.6; margin: 0 0 24px; }
+.unlock-btn {
+    background: linear-gradient(135deg, var(--gold), #f59e0b);
+    border: none; border-radius: 18px; padding: 16px 36px;
+    color: #020617; font-size: 1rem; font-weight: 900;
+    cursor: pointer; font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 1px; text-transform: uppercase;
+}
+
+/* safety score gauge */
+.safety-gauge {
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; padding: 24px 0;
+}
+.gauge-circle {
+    width: 120px; height: 120px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    border: 5px solid;
+    margin-bottom: 12px;
+}
+.gauge-score { font-size: 2.2rem; font-weight: 900; font-family: 'Rajdhani', sans-serif; }
+.gauge-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.gauge-verdict { font-size: 0.9rem; font-weight: 700; margin-top: 4px; }
+
+/* flight status */
+.flight-card {
+    background: rgba(14,165,233,0.08);
+    border: 1px solid rgba(14,165,233,0.25);
+    border-radius: 20px; padding: 18px; margin-bottom: 14px;
+}
+.flight-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.flight-num { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+.flight-status-badge {
+    font-size: 0.65rem; font-weight: 900; padding: 4px 12px;
+    border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
+    font-family: 'Rajdhani', sans-serif;
+}
+.status-ontime  { background: rgba(34,197,94,0.2);  color: #22c55e; }
+.status-delayed { background: rgba(239,68,68,0.2);  color: #ef4444; }
+.status-boarding{ background: rgba(250,204,21,0.2); color: var(--gold); }
+.flight-route {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+}
+.airport-info { text-align: center; }
+.airport-code { font-family: 'Rajdhani', sans-serif; font-size: 1.6rem; font-weight: 700; color: #fff; }
+.airport-time { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.flight-line {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    position: relative;
+}
+.flight-line::before {
+    content: ''; display: block; height: 1px;
+    background: rgba(14,165,233,0.3); width: 100%;
+}
+.flight-line span { position: absolute; font-size: 18px; }
+
+/* info tip box */
+.info-tip {
+    background: rgba(14,165,233,0.08);
+    border: 1px solid rgba(14,165,233,0.2);
+    border-radius: 14px; padding: 12px 16px; margin-bottom: 14px;
+    font-size: 0.76rem; color: var(--muted); line-height: 1.5;
+}
+.info-tip strong { color: var(--accent); }
+
+/* loading state */
+.loading {
+    text-align: center; padding: 40px 20px; color: var(--muted);
+    font-size: 0.85rem;
+}
+.loading-spinner {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 3px solid rgba(14,165,233,0.2);
+    border-top-color: var(--accent);
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 14px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* tab strip */
+.tab-strip {
+    display: flex; gap: 8px; margin-bottom: 18px;
+    overflow-x: auto; padding-bottom: 4px;
+}
+.tab-strip::-webkit-scrollbar { display: none; }
+.tab-pill {
+    flex-shrink: 0; background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 7px 16px;
+    font-size: 0.72rem; font-weight: 700; color: var(--muted);
+    cursor: pointer; transition: 0.2s;
+    font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; text-transform: uppercase;
+}
+.tab-pill.active {
+    background: rgba(14,165,233,0.15);
+    border-color: rgba(14,165,233,0.4); color: var(--accent);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══ MAIN PAGE ══ -->
+<div id="main_page">
+
+    <header class="app-header">
+        <div class="back-btn" onclick="window.history.back()">‹</div>
+        <div class="header-title">✈ <span id="txt_hub_title">Travel Hub</span></div>
+    </header>
+
+    <!-- Hero -->
+    <div class="travel-hero">
+        <svg class="hero-globe" width="52" height="52" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <radialGradient id="hOcean" cx="38%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#2e8fcc"/>
+                    <stop offset="55%" stop-color="#1a6aaa"/>
+                    <stop offset="100%" stop-color="#0d3d6e"/>
+                </radialGradient>
+                <clipPath id="hClip"><circle cx="100" cy="100" r="98"/></clipPath>
+            </defs>
+            <circle cx="100" cy="100" r="98" fill="url(#hOcean)"/>
+            <g clip-path="url(#hClip)" fill="#2d8a4e" opacity="0.92">
+                <path d="M55 28 L62 24 L72 22 L84 26 L90 32 L88 40 L82 46 L76 52 L72 60 L68 68 L62 74 L54 78 L46 76 L40 70 L38 62 L42 52 L48 42 L52 34Z"/>
+                <path d="M62 74 L68 78 L66 88 L60 92 L55 86 L54 78Z"/>
+                <path d="M90 18 L100 14 L110 18 L112 28 L106 34 L96 32 L88 26Z"/>
+                <path d="M66 96 L76 92 L84 96 L88 108 L88 122 L84 136 L78 148 L70 154 L62 150 L58 138 L58 122 L60 108Z"/>
+                <path d="M100 34 L108 30 L116 32 L120 40 L116 48 L110 52 L104 50 L100 44Z"/>
+                <path d="M106 56 L118 52 L128 58 L134 70 L136 86 L134 102 L128 116 L120 126 L112 130 L104 126 L98 114 L96 100 L98 84 L102 68Z"/>
+                <path d="M122 28 L136 24 L152 26 L164 32 L172 42 L174 56 L170 68 L160 76 L148 80 L136 78 L126 72 L120 62 L118 50 L120 38Z"/>
+                <path d="M138 80 L146 78 L150 92 L144 104 L138 100 L134 88Z"/>
+                <path d="M158 110 L174 106 L184 114 L186 128 L180 140 L168 144 L156 140 L150 128 L152 116Z"/>
+            </g>
+            <circle cx="100" cy="100" r="98" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+        </svg>
+        <div class="hero-text">
+            <h2 id="txt_hero_title">Your Travel Safety Command Center</h2>
+            <p id="txt_hero_sub">Stay protected wherever you fly</p>
+        </div>
+    </div>
+
+    <!-- FREE TOOLS -->
+    <div class="section-label" id="txt_free_label">Free Tools</div>
+    <div class="tools-list">
+
+        <!-- Emergency Numbers -->
+        <div class="tool-row tool-free" onclick="openPanel('panel_emergency')">
+            <div class="tool-icon-box">🆘</div>
+            <div class="tool-row-info">
+                <h3 id="txt_t_emergency">Local Emergency Numbers</h3>
+                <p id="txt_t_emergency_sub">Police, ambulance, fire — worldwide</p>
+            </div>
+            <div class="tool-arrow">›</div>
+        </div>
+
+        <!-- Emergency Phrases -->
+        <div class="tool-row tool-free" onclick="openPanel('panel_phrases')">
+            <div class="tool-icon-box">💬</div>
+            <div class="tool-row-info">
+                <h3 id="txt_t_phrases">Emergency Phrases</h3>
+                <p id="txt_t_phrases_sub">SOS phrases in 20+ languages</p>
+            </div>
+            <div class="tool-arrow">›</div>
+        </div>
+
+        <!-- Scam Alerts -->
+        <div class="tool-row tool-free" onclick="openPanel('panel_scams')">
+            <div class="tool-icon-box">🌐</div>
+            <div class="tool-row-info">
+                <h3 id="txt_t_scams">Scam Alerts by Country</h3>
+                <p id="txt_t_scams_sub">Top tourist scams, country by country</p>
+            </div>
+            <div class="tool-arrow">›</div>
+        </div>
+
+        <!-- Travel AI Threat -->
+        <div class="tool-row tool-free" onclick="openPanel('panel_ai_threat')" style="border-color:rgba(168,85,247,0.25);">
+            <div class="tool-icon-box" style="background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.3);box-shadow:0 0 14px rgba(168,85,247,0.15);">🤖</div>
+            <div class="tool-row-info">
+                <h3 id="txt_t_ai_threat">Travel AI Safety Advisor</h3>
+                <p id="txt_t_ai_threat_sub">Ask about any country — AI security briefing</p>
+            </div>
+            <div class="tool-arrow">›</div>
+        </div>
+
+    </div>
+
+    <!-- PREMIUM TOOLS -->
+    <div class="section-label" id="txt_premium_label">Premium Tools</div>
+    <div class="tools-list">
+
+        <!-- Flight Tracker (Real API) -->
+        <div class="tool-row tool-premium" onclick="openPanel('panel_flight')">
+            <div class="tool-icon-box">✈️</div>
+            <div class="premium-badge" id="txt_premium_badge">PREMIUM</div>
+            <div class="tool-row-info">
+                <h3 id="txt_t_flight">Flight Tracker</h3>
+                <p id="txt_t_flight_sub">Live status, gate, delays</p>
+            </div>
+            <div class="tool-arrow">›</div>
+        </div>
+
+        <!-- Travel Safety Score -->
+        <div class="tool-row tool-premium" onclick="openPanel('panel_safety')">
+            <div class="tool-icon-box">🌍</div>
+            <div class="premium-badge" id="txt_premium_badge2">PREMIUM</div>
+            <div class="tool-row-info">
+                <h3 id="txt_t_safety">Travel Safety Score</h3>
+                <p id="txt_t_safety_sub">Risk level, crime, health, stability</p>
+            </div>
+            <div class="tool-arrow">›</div>
+        </div>
+
+        <!-- Currency & Card Safety -->
+        <div class="tool-row tool-premium" onclick="openPanel('panel_currency')">
+            <div class="tool-icon-box">💰</div>
+            <div class="premium-badge" id="txt_premium_badge3">PREMIUM</div>
+            <div class="tool-row-info">
+                <h3 id="txt_t_currency">Currency & Card Safety</h3>
+                <p id="txt_t_currency_sub">Exchange rates + skimming tips</p>
+            </div>
+            <div class="tool-arrow">›</div>
+        </div>
+
+    </div>
+
+    <div class="bottom-pad"></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 1: EMERGENCY NUMBERS
+══════════════════════════════════ -->
+<div id="panel_emergency" class="tool-panel hidden">
+    <div class="panel-header">
+        <div class="back-btn" onclick="closePanel('panel_emergency')">‹</div>
+        <div class="panel-title">🆘 <span id="txt_p_emergency">Local Emergency Numbers</span></div>
+    </div>
+    <div class="panel-body">
+        <div class="search-bar">
+            <input class="search-input" id="em_search" placeholder="Country name..." oninput="filterEmergency()"/>
+        </div>
+        <div class="info-tip"><strong>Tip:</strong> <span id="txt_em_tip">Save these before you travel — they work even without signal in most countries.</span></div>
+        <div id="em_results"></div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 2: EMERGENCY PHRASES
+══════════════════════════════════ -->
+<div id="panel_phrases" class="tool-panel hidden">
+    <div class="panel-header">
+        <div class="back-btn" onclick="closePanel('panel_phrases')">‹</div>
+        <div class="panel-title">💬 <span id="txt_p_phrases">Emergency Phrases</span></div>
+    </div>
+    <div class="panel-body">
+        <div class="tab-strip" id="phrases_tabs"></div>
+        <div class="info-tip"><strong id="txt_ph_tip_label">Pro tip:</strong> <span id="txt_ph_tip">Tap any phrase to copy it. Show the screen to locals if you can't speak.</span></div>
+        <div id="phrases_list"></div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 3: SCAM ALERTS
+══════════════════════════════════ -->
+<div id="panel_scams" class="tool-panel hidden">
+    <div class="panel-header">
+        <div class="back-btn" onclick="closePanel('panel_scams')">‹</div>
+        <div class="panel-title">🌐 <span id="txt_p_scams">Scam Alerts</span></div>
+    </div>
+    <div class="panel-body">
+        <div class="search-bar">
+            <input class="search-input" id="sc_search" placeholder="Country or city..." oninput="filterScams()"/>
+        </div>
+        <div id="scam_results"></div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 4: FLIGHT TRACKER (PREMIUM)
+══════════════════════════════════ -->
+<div id="panel_flight" class="tool-panel hidden">
+    <div class="panel-header">
+        <div class="back-btn" onclick="closePanel('panel_flight')">‹</div>
+        <div class="panel-title">✈️ <span id="txt_p_flight">Flight Tracker</span></div>
+    </div>
+    <div class="panel-body" id="flight_body"></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 5: TRAVEL SAFETY SCORE (PREMIUM)
+══════════════════════════════════ -->
+<div id="panel_safety" class="tool-panel hidden">
+    <div class="panel-header">
+        <div class="back-btn" onclick="closePanel('panel_safety')">‹</div>
+        <div class="panel-title">🌍 <span id="txt_p_safety">Travel Safety Score</span></div>
+    </div>
+    <div class="panel-body" id="safety_body"></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 6: CURRENCY (PREMIUM)
+══════════════════════════════════ -->
+<div id="panel_currency" class="tool-panel hidden">
+    <div class="panel-header">
+        <div class="back-btn" onclick="closePanel('panel_currency')">‹</div>
+        <div class="panel-title">💰 <span id="txt_p_currency">Currency & Card Safety</span></div>
+    </div>
+    <div class="panel-body" id="currency_body"></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 7: TRAVEL AI THREAT ADVISOR
+══════════════════════════════════ -->
+<div id="panel_ai_threat" class="tool-panel hidden">
+    <div class="panel-header">
+        <div class="back-btn" onclick="closePanel('panel_ai_threat')">‹</div>
+        <div class="panel-title">🤖 Travel AI Safety Advisor</div>
+    </div>
+    <div class="panel-body" style="display:flex;flex-direction:column;padding:0;">
+        <!-- Chat messages area -->
+        <div id="ai_chat_messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
+            <!-- Welcome bubble -->
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+                <div style="width:34px;height:34px;border-radius:50%;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🤖</div>
+                <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:0 16px 16px 16px;padding:12px 14px;max-width:85%;">
+                    <p style="margin:0;font-size:0.82rem;color:var(--text);line-height:1.55;">Hello! I'm your <strong style="color:#c084fc;">Travel AI Safety Advisor</strong>. Ask me about any country or destination — I'll give you a security briefing covering threats, scams, health risks, and safety tips.</p>
+                    <p style="margin:8px 0 0;font-size:0.72rem;color:var(--muted);">Try: <em>"Is Thailand safe?"</em> · <em>"Safety tips for Morocco"</em> · <em>"Crime in Mexico City"</em></p>
+                </div>
+            </div>
+        </div>
+        <!-- Input bar -->
+        <div style="padding:12px 14px;border-top:1px solid rgba(255,255,255,0.07);background:rgba(15,23,42,0.9);backdrop-filter:blur(12px);display:flex;gap:10px;align-items:flex-end;">
+            <textarea id="ai_input" placeholder="Ask about any country or city..." rows="1"
+                style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(168,85,247,0.25);border-radius:14px;padding:11px 14px;color:var(--text);font-size:0.88rem;outline:none;resize:none;font-family:inherit;line-height:1.4;max-height:120px;overflow-y:auto;"
+                oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px';"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAiThreat();}"
+            ></textarea>
+            <button onclick="sendAiThreat()" id="ai_send_btn"
+                style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#9333ea,#6366f1);border:none;color:#fff;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:opacity 0.2s;">➤</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+// ═══════════════════════════════════════
+// TRANSLATIONS
+// ═══════════════════════════════════════
+const T = {
+    en: {
+        hub_title:'Travel Hub', hero_title:'Your Travel Safety Command Center', hero_sub:'Stay protected wherever you fly',
+        free_label:'FREE TOOLS', premium_label:'PREMIUM TOOLS', premium_badge:'PREMIUM',
+        t_emergency:'Local Emergency Numbers', t_emergency_sub:'Police, ambulance, fire — worldwide',
+        t_phrases:'Emergency Phrases', t_phrases_sub:'SOS phrases in 20+ languages',
+        t_scams:'Scam Alerts by Country', t_scams_sub:'Top tourist scams, country by country',
+        t_flight:'Flight Tracker', t_flight_sub:'Live status, gate, delays',
+        t_safety:'Travel Safety Score', t_safety_sub:'Risk level, crime, health, stability',
+        t_currency:'Currency & Card Safety', t_currency_sub:'Exchange rates + skimming tips',
+        p_emergency:'Local Emergency Numbers', p_phrases:'Emergency Phrases',
+        p_scams:'Scam Alerts', p_flight:'Flight Tracker',
+        p_safety:'Travel Safety Score', p_currency:'Currency & Card Safety',
+        em_tip:'Save these before you travel — they work even without signal in most countries.',
+        ph_tip_label:'Pro tip:', ph_tip:'Tap any phrase to copy it. Show the screen to locals if you can\'t speak.',
+        flight_num_placeholder:'Flight number (e.g. BA206)',
+        flight_search:'TRACK', unlock_title:'Premium Feature',
+        unlock_desc:'Unlock Flight Tracker, Travel Safety Score and Currency tools with Premium.',
+        unlock_btn:'UNLOCK PREMIUM',
+        safety_placeholder:'Country (e.g. Greece)',
+        currency_from:'Amount in EUR',
+        card_safety_title:'Card Safety Tips',
+    },
+    el: {
+        hub_title:'Travel Hub', hero_title:'Κέντρο Ασφάλειας Ταξιδιών', hero_sub:'Προστατευμένος σε κάθε πτήση',
+        free_label:'ΔΩΡΕΑΝ ΕΡΓΑΛΕΙΑ', premium_label:'PREMIUM ΕΡΓΑΛΕΙΑ', premium_badge:'PREMIUM',
+        t_emergency:'Τοπικοί Αριθμοί Έκτακτης Ανάγκης', t_emergency_sub:'Αστυνομία, ασθενοφόρο, πυροσβεστική',
+        t_phrases:'Φράσεις Έκτακτης Ανάγκης', t_phrases_sub:'SOS φράσεις σε 20+ γλώσσες',
+        t_scams:'Απάτες ανά Χώρα', t_scams_sub:'Κορυφαίες τουριστικές απάτες',
+        t_flight:'Παρακολούθηση Πτήσης', t_flight_sub:'Live κατάσταση, gate, καθυστερήσεις',
+        t_safety:'Βαθμός Ασφάλειας Προορισμού', t_safety_sub:'Κίνδυνος, εγκληματικότητα, υγεία',
+        t_currency:'Συνάλλαγμα & Ασφάλεια Κάρτας', t_currency_sub:'Ισοτιμίες + προστασία από skimming',
+        p_emergency:'Αριθμοί Έκτακτης Ανάγκης', p_phrases:'Φράσεις Έκτακτης Ανάγκης',
+        p_scams:'Απάτες', p_flight:'Παρακολούθηση Πτήσης',
+        p_safety:'Βαθμός Ασφάλειας', p_currency:'Συνάλλαγμα & Κάρτα',
+        em_tip:'Αποθήκευσε τους αριθμούς πριν ταξιδέψεις — λειτουργούν ακόμα και χωρίς σήμα.',
+        ph_tip_label:'Συμβουλή:', ph_tip:'Πάτησε σε μια φράση για αντιγραφή. Δείξε την οθόνη σε ντόπιους.',
+        flight_num_placeholder:'Αριθμός πτήσης (π.χ. A3600)',
+        flight_search:'ΑΝΑΖΗΤΗΣΗ', unlock_title:'Premium Λειτουργία',
+        unlock_desc:'Ξεκλείδωσε Flight Tracker, Βαθμό Ασφάλειας και Συνάλλαγμα με Premium.',
+        unlock_btn:'ΑΠΟΚΤΗΣΕ PREMIUM',
+        safety_placeholder:'Χώρα (π.χ. Ελλάδα)',
+        currency_from:'Ποσό σε EUR',
+        card_safety_title:'Συμβουλές Ασφάλειας Κάρτας',
+    },
+    de: {
+        hub_title:'Travel Hub', hero_title:'Ihr Reisesicherheitszentrum', hero_sub:'Überall sicher unterwegs',
+        free_label:'KOSTENLOSE TOOLS', premium_label:'PREMIUM TOOLS', premium_badge:'PREMIUM',
+        t_emergency:'Notfallnummern', t_emergency_sub:'Polizei, Krankenwagen, Feuerwehr',
+        t_phrases:'Notfallphrasen', t_phrases_sub:'SOS-Phrasen in 20+ Sprachen',
+        t_scams:'Betrug nach Land', t_scams_sub:'Häufige Touristenbetrügereien',
+        t_flight:'Flugverfolgung', t_flight_sub:'Live-Status, Gate, Verspätungen',
+        t_safety:'Reisesicherheitswert', t_safety_sub:'Risiko, Kriminalität, Gesundheit',
+        t_currency:'Währung & Kartensicherheit', t_currency_sub:'Kurse + Skimming-Schutz',
+        p_emergency:'Notfallnummern', p_phrases:'Notfallphrasen',
+        p_scams:'Betrugsalarme', p_flight:'Flugverfolgung',
+        p_safety:'Sicherheitswert', p_currency:'Währung & Karte',
+        em_tip:'Speichere die Nummern vor der Reise — sie funktionieren oft ohne Signal.',
+        ph_tip_label:'Tipp:', ph_tip:'Tippe auf einen Satz zum Kopieren.',
+        flight_num_placeholder:'Flugnummer (z.B. LH400)',
+        flight_search:'SUCHEN', unlock_title:'Premium-Funktion',
+        unlock_desc:'Schalte Flugverfolgung, Sicherheitsbewertung und Währungstools mit Premium frei.',
+        unlock_btn:'PREMIUM FREISCHALTEN',
+        safety_placeholder:'Land (z.B. Deutschland)',
+        currency_from:'Betrag in EUR',
+        card_safety_title:'Kartensicherheitstipps',
+    },
+    fr: {
+        hub_title:'Travel Hub', hero_title:'Votre Centre de Sécurité Voyage', hero_sub:'Protégé partout où vous volez',
+        free_label:'OUTILS GRATUITS', premium_label:'OUTILS PREMIUM', premium_badge:'PREMIUM',
+        t_emergency:'Numéros d\'Urgence Locaux', t_emergency_sub:'Police, ambulance, pompiers',
+        t_phrases:'Phrases d\'Urgence', t_phrases_sub:'Phrases SOS en 20+ langues',
+        t_scams:'Arnaques par Pays', t_scams_sub:'Arnaques touristiques fréquentes',
+        t_flight:'Suivi de Vol', t_flight_sub:'Statut en direct, gate, retards',
+        t_safety:'Score de Sécurité', t_safety_sub:'Risque, criminalité, santé',
+        t_currency:'Monnaie & Sécurité CB', t_currency_sub:'Taux de change + protection skimming',
+        p_emergency:'Numéros d\'Urgence', p_phrases:'Phrases d\'Urgence',
+        p_scams:'Alertes Arnaques', p_flight:'Suivi de Vol',
+        p_safety:'Score Sécurité', p_currency:'Monnaie & Carte',
+        em_tip:'Enregistrez ces numéros avant de voyager.',
+        ph_tip_label:'Astuce:', ph_tip:'Appuyez sur une phrase pour la copier.',
+        flight_num_placeholder:'Numéro de vol (ex. AF007)',
+        flight_search:'CHERCHER', unlock_title:'Fonctionnalité Premium',
+        unlock_desc:'Débloquez le Suivi de Vol, Score Sécurité et Monnaie avec Premium.',
+        unlock_btn:'DÉBLOQUER PREMIUM',
+        safety_placeholder:'Pays (ex. France)',
+        currency_from:'Montant en EUR',
+        card_safety_title:'Conseils Sécurité Carte',
+    },
+    es: {
+        hub_title:'Travel Hub', hero_title:'Tu Centro de Seguridad de Viaje', hero_sub:'Protegido donde vueles',
+        free_label:'HERRAMIENTAS GRATIS', premium_label:'HERRAMIENTAS PREMIUM', premium_badge:'PREMIUM',
+        t_emergency:'Números de Emergencia', t_emergency_sub:'Policía, ambulancia, bomberos',
+        t_phrases:'Frases de Emergencia', t_phrases_sub:'Frases SOS en 20+ idiomas',
+        t_scams:'Estafas por País', t_scams_sub:'Estafas turísticas comunes',
+        t_flight:'Rastreador de Vuelos', t_flight_sub:'Estado en vivo, puerta, retrasos',
+        t_safety:'Puntuación de Seguridad', t_safety_sub:'Riesgo, crimen, salud',
+        t_currency:'Moneda & Seguridad Tarjeta', t_currency_sub:'Tipos de cambio + protección skimming',
+        p_emergency:'Números de Emergencia', p_phrases:'Frases de Emergencia',
+        p_scams:'Alertas Estafas', p_flight:'Rastreador de Vuelos',
+        p_safety:'Puntuación Seguridad', p_currency:'Moneda & Tarjeta',
+        em_tip:'Guarda estos números antes de viajar.',
+        ph_tip_label:'Consejo:', ph_tip:'Toca una frase para copiarla.',
+        flight_num_placeholder:'Número de vuelo (ej. IB6250)',
+        flight_search:'BUSCAR', unlock_title:'Función Premium',
+        unlock_desc:'Desbloquea Rastreador, Puntuación y Moneda con Premium.',
+        unlock_btn:'DESBLOQUEAR PREMIUM',
+        safety_placeholder:'País (ej. España)',
+        currency_from:'Cantidad en EUR',
+        card_safety_title:'Consejos de Seguridad',
+    },
+    it: {
+        hub_title:'Travel Hub', hero_title:'Il Tuo Centro di Sicurezza Viaggio', hero_sub:'Protetto ovunque tu vada',
+        free_label:'STRUMENTI GRATUITI', premium_label:'STRUMENTI PREMIUM', premium_badge:'PREMIUM',
+        t_emergency:'Numeri di Emergenza', t_emergency_sub:'Polizia, ambulanza, vigili del fuoco',
+        t_phrases:'Frasi di Emergenza', t_phrases_sub:'Frasi SOS in 20+ lingue',
+        t_scams:'Truffe per Paese', t_scams_sub:'Truffe turistiche comuni',
+        t_flight:'Tracker Voli', t_flight_sub:'Stato in tempo reale, gate, ritardi',
+        t_safety:'Punteggio Sicurezza', t_safety_sub:'Rischio, criminalità, salute',
+        t_currency:'Valuta & Sicurezza Carta', t_currency_sub:'Tassi di cambio + protezione skimming',
+        p_emergency:'Numeri di Emergenza', p_phrases:'Frasi di Emergenza',
+        p_scams:'Alerte Truffe', p_flight:'Tracker Voli',
+        p_safety:'Punteggio Sicurezza', p_currency:'Valuta & Carta',
+        em_tip:'Salva questi numeri prima di partire.',
+        ph_tip_label:'Suggerimento:', ph_tip:'Tocca una frase per copiarla.',
+        flight_num_placeholder:'Numero volo (es. AZ610)',
+        flight_search:'CERCA', unlock_title:'Funzione Premium',
+        unlock_desc:'Sblocca Tracker Voli, Punteggio e Valuta con Premium.',
+        unlock_btn:'SBLOCCA PREMIUM',
+        safety_placeholder:'Paese (es. Italia)',
+        currency_from:'Importo in EUR',
+        card_safety_title:'Consigli Sicurezza Carta',
+    },
+    pt: {
+        hub_title:'Travel Hub', hero_title:'Seu Centro de Segurança de Viagem', hero_sub:'Protegido onde quer que voe',
+        free_label:'FERRAMENTAS GRÁTIS', premium_label:'FERRAMENTAS PREMIUM', premium_badge:'PREMIUM',
+        t_emergency:'Números de Emergência', t_emergency_sub:'Polícia, ambulância, bombeiros',
+        t_phrases:'Frases de Emergência', t_phrases_sub:'Frases SOS em 20+ idiomas',
+        t_scams:'Fraudes por País', t_scams_sub:'Golpes turísticos comuns',
+        t_flight:'Rastreador de Voos', t_flight_sub:'Status ao vivo, portão, atrasos',
+        t_safety:'Pontuação de Segurança', t_safety_sub:'Risco, crime, saúde',
+        t_currency:'Moeda & Segurança Cartão', t_currency_sub:'Taxas de câmbio + proteção skimming',
+        p_emergency:'Números de Emergência', p_phrases:'Frases de Emergência',
+        p_scams:'Alertas Fraudes', p_flight:'Rastreador de Voos',
+        p_safety:'Pontuação Segurança', p_currency:'Moeda & Cartão',
+        em_tip:'Salve esses números antes de viajar.',
+        ph_tip_label:'Dica:', ph_tip:'Toque em uma frase para copiar.',
+        flight_num_placeholder:'Número do voo (ex. TP745)',
+        flight_search:'BUSCAR', unlock_title:'Recurso Premium',
+        unlock_desc:'Desbloqueie Rastreador, Pontuação e Moeda com Premium.',
+        unlock_btn:'DESBLOQUEAR PREMIUM',
+        safety_placeholder:'País (ex. Portugal)',
+        currency_from:'Valor em EUR',
+        card_safety_title:'Dicas de Segurança do Cartão',
+    },
+    ru: {
+        hub_title:'Travel Hub', hero_title:'Центр Безопасности Путешествий', hero_sub:'Защита в любой точке мира',
+        free_label:'БЕСПЛАТНЫЕ ИНСТРУМЕНТЫ', premium_label:'PREMIUM ИНСТРУМЕНТЫ', premium_badge:'PREMIUM',
+        t_emergency:'Местные Номера Экстренных Служб', t_emergency_sub:'Полиция, скорая, пожарная',
+        t_phrases:'Фразы Экстренной Помощи', t_phrases_sub:'SOS-фразы на 20+ языках',
+        t_scams:'Мошенничество по Странам', t_scams_sub:'Популярные туристические мошенничества',
+        t_flight:'Отслеживание Рейсов', t_flight_sub:'Статус, выход, задержки',
+        t_safety:'Оценка Безопасности', t_safety_sub:'Риск, преступность, здоровье',
+        t_currency:'Валюта & Безопасность Карты', t_currency_sub:'Курсы + защита от скимминга',
+        p_emergency:'Экстренные Номера', p_phrases:'Фразы SOS',
+        p_scams:'Мошенничество', p_flight:'Рейсы',
+        p_safety:'Безопасность', p_currency:'Валюта',
+        em_tip:'Сохраните номера до поездки — они работают даже без сигнала.',
+        ph_tip_label:'Совет:', ph_tip:'Нажмите на фразу для копирования.',
+        flight_num_placeholder:'Номер рейса (напр. SU270)',
+        flight_search:'ПОИСК', unlock_title:'Функция Premium',
+        unlock_desc:'Разблокируйте Рейсы, Оценку и Валюту с Premium.',
+        unlock_btn:'РАЗБЛОКИРОВАТЬ PREMIUM',
+        safety_placeholder:'Страна (напр. Россия)',
+        currency_from:'Сумма в EUR',
+        card_safety_title:'Советы по Безопасности Карты',
+    },
+    zh: {
+        hub_title:'旅行中心', hero_title:'您的旅行安全指挥中心', hero_sub:'无论飞往何处都保持安全',
+        free_label:'免费工具', premium_label:'高级工具', premium_badge:'高级',
+        t_emergency:'当地紧急号码', t_emergency_sub:'警察、救护车、消防',
+        t_phrases:'紧急用语', t_phrases_sub:'20多种语言的SOS短语',
+        t_scams:'各国诈骗警报', t_scams_sub:'常见旅游诈骗',
+        t_flight:'航班追踪', t_flight_sub:'实时状态、登机口、延误',
+        t_safety:'旅行安全评分', t_safety_sub:'风险、犯罪、健康',
+        t_currency:'货币和卡片安全', t_currency_sub:'汇率和防盗刷提示',
+        p_emergency:'紧急号码', p_phrases:'紧急用语',
+        p_scams:'诈骗警报', p_flight:'航班追踪',
+        p_safety:'安全评分', p_currency:'货币和卡片',
+        em_tip:'出发前保存这些号码——在大多数国家即使没有信号也能使用。',
+        ph_tip_label:'提示：', ph_tip:'点击短语复制。向当地人展示屏幕。',
+        flight_num_placeholder:'航班号（如CA981）',
+        flight_search:'搜索', unlock_title:'高级功能',
+        unlock_desc:'使用高级版解锁航班追踪、安全评分和货币工具。',
+        unlock_btn:'解锁高级版',
+        safety_placeholder:'国家（如中国）',
+        currency_from:'欧元金额',
+        card_safety_title:'卡片安全提示',
+    },
+    hi: {
+        hub_title:'ट्रैवल हब', hero_title:'आपका यात्रा सुरक्षा केंद्र', hero_sub:'जहां भी उड़ें, सुरक्षित रहें',
+        free_label:'मुफ्त टूल्स', premium_label:'प्रीमियम टूल्स', premium_badge:'प्रीमियम',
+        t_emergency:'स्थानीय आपातकालीन नंबर', t_emergency_sub:'पुलिस, एम्बुलेंस, दमकल',
+        t_phrases:'आपातकालीन वाक्यांश', t_phrases_sub:'20+ भाषाओं में SOS वाक्यांश',
+        t_scams:'देश अनुसार धोखाधड़ी', t_scams_sub:'सामान्य पर्यटक धोखाधड़ी',
+        t_flight:'फ्लाइट ट्रैकर', t_flight_sub:'लाइव स्टेटस, गेट, देरी',
+        t_safety:'यात्रा सुरक्षा स्कोर', t_safety_sub:'जोखिम, अपराध, स्वास्थ्य',
+        t_currency:'मुद्रा और कार्ड सुरक्षा', t_currency_sub:'विनिमय दर + स्किमिंग सुरक्षा',
+        p_emergency:'आपातकालीन नंबर', p_phrases:'आपातकालीन वाक्यांश',
+        p_scams:'धोखाधड़ी अलर्ट', p_flight:'फ्लाइट ट्रैकर',
+        p_safety:'सुरक्षा स्कोर', p_currency:'मुद्रा और कार्ड',
+        em_tip:'यात्रा से पहले ये नंबर सेव करें — बिना सिग्नल के भी काम करते हैं।',
+        ph_tip_label:'टिप:', ph_tip:'कॉपी करने के लिए किसी वाक्यांश पर टैप करें।',
+        flight_num_placeholder:'फ्लाइट नंबर (जैसे AI101)',
+        flight_search:'खोजें', unlock_title:'प्रीमियम सुविधा',
+        unlock_desc:'प्रीमियम के साथ फ्लाइट ट्रैकर, सुरक्षा स्कोर और मुद्रा टूल अनलॉक करें।',
+        unlock_btn:'प्रीमियम अनलॉक करें',
+        safety_placeholder:'देश (जैसे भारत)',
+        currency_from:'EUR में राशि',
+        card_safety_title:'कार्ड सुरक्षा टिप्स',
+    }
+};
+
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+
+const EMERGENCY_DATA = [
+    { country:'Greece 🇬🇷', police:'100', ambulance:'166', fire:'199', coast:'108', eu:'112' },
+    { country:'United Kingdom 🇬🇧', police:'999', ambulance:'999', fire:'999', coast:'999', eu:'112' },
+    { country:'Germany 🇩🇪', police:'110', ambulance:'112', fire:'112', coast:'124', eu:'112' },
+    { country:'France 🇫🇷', police:'17', ambulance:'15', fire:'18', coast:'1616', eu:'112' },
+    { country:'Spain 🇪🇸', police:'091', ambulance:'112', fire:'080', coast:'900 202 202', eu:'112' },
+    { country:'Italy 🇮🇹', police:'113', ambulance:'118', fire:'115', coast:'1530', eu:'112' },
+    { country:'Portugal 🇵🇹', police:'112', ambulance:'112', fire:'112', coast:'1520', eu:'112' },
+    { country:'USA 🇺🇸', police:'911', ambulance:'911', fire:'911', coast:'911', eu:'—' },
+    { country:'Australia 🇦🇺', police:'000', ambulance:'000', fire:'000', coast:'000', eu:'112' },
+    { country:'Japan 🇯🇵', police:'110', ambulance:'119', fire:'119', coast:'118', eu:'112' },
+    { country:'Thailand 🇹🇭', police:'191', ambulance:'1669', fire:'199', coast:'1196', eu:'—' },
+    { country:'Turkey 🇹🇷', police:'155', ambulance:'112', fire:'110', coast:'158', eu:'112' },
+    { country:'UAE 🇦🇪', police:'999', ambulance:'998', fire:'997', coast:'996', eu:'—' },
+    { country:'Morocco 🇲🇦', police:'190', ambulance:'150', fire:'150', coast:'177', eu:'—' },
+    { country:'Mexico 🇲🇽', police:'911', ambulance:'911', fire:'911', coast:'911', eu:'—' },
+    { country:'Brazil 🇧🇷', police:'190', ambulance:'192', fire:'193', coast:'185', eu:'—' },
+    { country:'India 🇮🇳', police:'100', ambulance:'108', fire:'101', coast:'1093', eu:'112' },
+    { country:'China 🇨🇳', police:'110', ambulance:'120', fire:'119', coast:'12395', eu:'—' },
+    { country:'Russia 🇷🇺', police:'102', ambulance:'103', fire:'101', coast:'112', eu:'112' },
+    { country:'Netherlands 🇳🇱', police:'112', ambulance:'112', fire:'112', coast:'112', eu:'112' },
+    { country:'Austria 🇦🇹', police:'133', ambulance:'144', fire:'122', coast:'—', eu:'112' },
+    { country:'Switzerland 🇨🇭', police:'117', ambulance:'144', fire:'118', coast:'—', eu:'112' },
+    { country:'Croatia 🇭🇷', police:'192', ambulance:'194', fire:'193', coast:'195', eu:'112' },
+    { country:'Cyprus 🇨🇾', police:'199', ambulance:'112', fire:'112', coast:'1800', eu:'112' },
+    { country:'Egypt 🇪🇬', police:'122', ambulance:'123', fire:'180', coast:'—', eu:'—' },
+    { country:'South Africa 🇿🇦', police:'10111', ambulance:'10177', fire:'10177', coast:'—', eu:'112' },
+    { country:'Canada 🇨🇦', police:'911', ambulance:'911', fire:'911', coast:'911', eu:'—' },
+    { country:'Indonesia 🇮🇩', police:'110', ambulance:'118', fire:'113', coast:'121', eu:'112' },
+    { country:'Philippines 🇵🇭', police:'911', ambulance:'911', fire:'911', coast:'911', eu:'—' },
+    { country:'Vietnam 🇻🇳', police:'113', ambulance:'115', fire:'114', coast:'1800599914', eu:'—' },
+];
+
+const PHRASES_DATA = {
+    Spanish:   { flag:'🇪🇸', phrases:[
+        { en:'Help!', local:'¡Ayuda!', ph:'ah-YOO-dah' },
+        { en:'Call the police', local:'Llame a la policía', ph:'YAH-meh ah la po-lee-SEE-ah' },
+        { en:'I need a doctor', local:'Necesito un médico', ph:'neh-seh-SEE-toh oon MEH-dee-koh' },
+        { en:'Fire!', local:'¡Fuego!', ph:'FWEH-goh' },
+        { en:'Thief!', local:'¡Ladrón!', ph:'lah-DRON' },
+        { en:'I am lost', local:'Estoy perdido/a', ph:'es-TOY pehr-DEE-doh' },
+        { en:'Where is the hospital?', local:'¿Dónde está el hospital?', ph:'DON-deh es-TAH el os-pee-TAL' },
+        { en:'I have been robbed', local:'Me han robado', ph:'meh an ro-BAH-doh' },
+    ]},
+    French:    { flag:'🇫🇷', phrases:[
+        { en:'Help!', local:'Au secours!', ph:'oh-SKOOR' },
+        { en:'Call the police', local:'Appelez la police', ph:'ah-play la po-LEES' },
+        { en:'I need a doctor', local:"J'ai besoin d'un médecin", ph:'zhay buh-ZWAN dun mehd-SAN' },
+        { en:'Fire!', local:'Au feu!', ph:'oh-FUH' },
+        { en:'Thief!', local:'Au voleur!', ph:'oh voh-LUR' },
+        { en:'I am lost', local:'Je suis perdu/e', ph:'zhuh swee pehr-DU' },
+        { en:'Where is the hospital?', local:"Où est l'hôpital?", ph:'oo-eh lo-pee-TAL' },
+        { en:'I have been robbed', local:"J'ai été volé/e", ph:'zhay eh-teh voh-LAY' },
+    ]},
+    German:    { flag:'🇩🇪', phrases:[
+        { en:'Help!', local:'Hilfe!', ph:'HIL-feh' },
+        { en:'Call the police', local:'Rufen Sie die Polizei', ph:'ROO-fen zee dee po-lee-TSAI' },
+        { en:'I need a doctor', local:'Ich brauche einen Arzt', ph:'ikh BROW-kheh AI-nen artst' },
+        { en:'Fire!', local:'Feuer!', ph:'FOY-er' },
+        { en:'Thief!', local:'Dieb!', ph:'DEEP' },
+        { en:'I am lost', local:'Ich habe mich verirrt', ph:'ikh HAH-beh mikh fer-ERT' },
+        { en:'Where is the hospital?', local:'Wo ist das Krankenhaus?', ph:'voh ist das KRAN-ken-hows' },
+        { en:'I have been robbed', local:'Ich wurde bestohlen', ph:'ikh VOOR-deh beh-SHTOH-len' },
+    ]},
+    Italian:   { flag:'🇮🇹', phrases:[
+        { en:'Help!', local:'Aiuto!', ph:'ah-YOO-toh' },
+        { en:'Call the police', local:'Chiamate la polizia', ph:'kyah-MAH-teh la po-lee-TSEE-ah' },
+        { en:'I need a doctor', local:'Ho bisogno di un medico', ph:'oh bee-ZON-yoh dee oon MEH-dee-koh' },
+        { en:'Fire!', local:'Fuoco!', ph:'FWOH-koh' },
+        { en:'Thief!', local:'Ladro!', ph:'LAH-droh' },
+        { en:'I am lost', local:'Mi sono perso/a', ph:'mee SO-noh PER-soh' },
+        { en:'Where is the hospital?', local:"Dov'è l'ospedale?", ph:'doh-VEH los-peh-DAH-leh' },
+        { en:'I have been robbed', local:'Mi hanno derubato', ph:'mee AN-noh deh-roo-BAH-toh' },
+    ]},
+    Japanese:  { flag:'🇯🇵', phrases:[
+        { en:'Help!', local:'助けて！', ph:'tah-SU-keh-teh' },
+        { en:'Call the police', local:'警察を呼んでください', ph:'KEI-sa-tsu wo YON-de ku-da-sai' },
+        { en:'I need a doctor', local:'医者が必要です', ph:'I-sha ga HI-tsu-you des' },
+        { en:'Fire!', local:'火事！', ph:'KA-ji' },
+        { en:'Thief!', local:'泥棒！', ph:'DO-ro-bou' },
+        { en:'I am lost', local:'迷子になりました', ph:'MA-go ni NA-ri-mash-ta' },
+        { en:'Where is the hospital?', local:'病院はどこですか？', ph:'BYOU-in wa DO-ko des-ka' },
+        { en:'I have been robbed', local:'盗まれました', ph:'nu-SU-ma-reh-mash-ta' },
+    ]},
+    Arabic:    { flag:'🇦🇪', phrases:[
+        { en:'Help!', local:'مساعدة!', ph:'mu-SAA-de-da' },
+        { en:'Call the police', local:'اتصل بالشرطة', ph:'et-ta-sel bil-SHUR-ta' },
+        { en:'I need a doctor', local:'أحتاج طبيب', ph:'ah-TA-je ta-BEEB' },
+        { en:'Fire!', local:'حريق!', ph:'ha-REEK' },
+        { en:'Thief!', local:'لص!', ph:'LESS' },
+        { en:'I am lost', local:'أنا ضائع', ph:'AH-na DA-e' },
+        { en:'Where is the hospital?', local:'أين المستشفى؟', ph:'AY-na al-mus-tash-FA' },
+        { en:'I have been robbed', local:'سُرق مني', ph:'su-ri-ka MIN-ni' },
+    ]},
+    Chinese:   { flag:'🇨🇳', phrases:[
+        { en:'Help!', local:'救命！', ph:'jiù mìng' },
+        { en:'Call the police', local:'打电话给警察', ph:'dǎ diànhuà gěi jǐngchá' },
+        { en:'I need a doctor', local:'我需要医生', ph:'wǒ xūyào yīshēng' },
+        { en:'Fire!', local:'着火了！', ph:'zháohuǒ le' },
+        { en:'Thief!', local:'小偷！', ph:'xiǎotōu' },
+        { en:'I am lost', local:'我迷路了', ph:'wǒ mílù le' },
+        { en:'Where is the hospital?', local:'医院在哪里？', ph:'yīyuàn zài nǎlǐ' },
+        { en:'I have been robbed', local:'我被抢劫了', ph:'wǒ bèi qiǎngjié le' },
+    ]},
+    Thai:      { flag:'🇹🇭', phrases:[
+        { en:'Help!', local:'ช่วยด้วย!', ph:'chuay duay' },
+        { en:'Call the police', local:'โทรเรียกตำรวจ', ph:'toh riak tam-ruat' },
+        { en:'I need a doctor', local:'ฉันต้องการหมอ', ph:'chan tong-gan mor' },
+        { en:'Fire!', local:'ไฟไหม้!', ph:'fai mai' },
+        { en:'Thief!', local:'ขโมย!', ph:'kha-moi' },
+        { en:'I am lost', local:'ฉันหลงทาง', ph:'chan long tang' },
+        { en:'Where is the hospital?', local:'โรงพยาบาลอยู่ที่ไหน?', ph:'rong-pa-ya-ban yu thi-nai' },
+        { en:'I have been robbed', local:'ฉันถูกปล้น', ph:'chan thuk plon' },
+    ]},
+};
+
+const SCAM_DATA = [
+    { country:'Greece 🇬🇷', scams:[
+        { name:'Athens Taxi Overcharge', desc:'Taxis from the airport charge flat rates. Insist on the meter inside the city or agree on price first.', level:'medium' },
+        { name:'Broken Meter', desc:'Driver claims meter is broken and quotes a high price. Always demand the meter or use a rideshare app.', level:'high' },
+        { name:'Island Bar Scam', desc:'Friendly strangers invite you to a bar and disappear when an enormous bill arrives.', level:'high' },
+        { name:'Fake Monk / Charity', desc:'People in robes offer gifts then demand money. You are not obligated.', level:'low' },
+    ]},
+    { country:'Italy 🇮🇹', scams:[
+        { name:'Bracelet / Friendship Scam', desc:'Someone ties a bracelet on your wrist then demands payment. Walk away firmly.', level:'medium' },
+        { name:'Trevi Coin Seller', desc:'Sellers hand you coins near Trevi Fountain then ask for a large fee.', level:'medium' },
+        { name:'Colosseum Fake Guide', desc:'Unofficial "guides" charge for tours. Only use licensed guides from booths.', level:'high' },
+        { name:'Restaurant Tourist Menus', desc:'Restaurants near landmarks add hidden cover charges. Check menus carefully.', level:'medium' },
+    ]},
+    { country:'Spain 🇪🇸', scams:[
+        { name:'La Rambla Pickpockets', desc:'Crowded tourist strips are hotspots. Keep bags in front and phones pocketed.', level:'high' },
+        { name:'Shell Game', desc:'Street gambling games are rigged. Never play.', level:'high' },
+        { name:'Fake Police Officer', desc:'Someone in plainclothes asks to check your wallet for counterfeit bills. Real police don\'t do this.', level:'high' },
+        { name:'Restaurant Overcharge', desc:'Always ask for an itemized receipt and check every line.', level:'low' },
+    ]},
+    { country:'France 🇫🇷', scams:[
+        { name:'Petition Scam', desc:'Someone asks you to sign a petition then demands money. Decline and walk on.', level:'medium' },
+        { name:'Ring Scam', desc:'Person "finds" a gold ring and offers it to you — then asks for cash.', level:'medium' },
+        { name:'Eiffel Tower Souvenir Pressure', desc:'Street sellers surround tourists and are very persistent. Ignore and keep walking.', level:'low' },
+        { name:'Taxi Airport Scam', desc:'Only use official G7 or Alpha taxis or pre-book. Avoid unmarked vehicles.', level:'high' },
+    ]},
+    { country:'Thailand 🇹🇭', scams:[
+        { name:'Tuk-Tuk Tour Scam', desc:'Driver offers a cheap tour but takes you only to gem/tailor shops where he gets commission.', level:'high' },
+        { name:'Grand Palace Closed', desc:'A stranger says your destination is closed today and offers to take you elsewhere. It\'s never closed.', level:'high' },
+        { name:'Gem Scam', desc:'You\'re invited to buy gems at "special government price." They are worthless.', level:'high' },
+        { name:'Jet Ski Damage Scam', desc:'Rental operators claim pre-existing damage. Photograph everything before renting.', level:'medium' },
+    ]},
+    { country:'Turkey 🇹🇷', scams:[
+        { name:'Shoe Shine Drop', desc:'A shoeshine drops his brush. When you return it, he insists on shining your shoes for a huge fee.', level:'medium' },
+        { name:'Friendly Local Scam', desc:'New "friend" takes you to his cousin\'s carpet shop. Strong pressure to buy.', level:'medium' },
+        { name:'Taxi Overcharge', desc:'Always agree on fare upfront or insist on the meter. Airport taxis have fixed rates.', level:'high' },
+        { name:'Currency Confusion', desc:'Sellers may give change in old (worthless) lira notes. Check all change carefully.', level:'medium' },
+    ]},
+    { country:'USA 🇺🇸', scams:[
+        { name:'Timeshare Presentations', desc:'Free gift offers require sitting through high-pressure sales. Extremely difficult to leave.', level:'medium' },
+        { name:'Fake WiFi Hotspots', desc:'Public WiFi named "FreeAirportWifi" etc. can steal data. Use VPN always.', level:'high' },
+        { name:'Overpriced "Tourist" Taxis', desc:'In some cities, unlicensed cabs charge 5x the normal rate. Use Uber/Lyft.', level:'medium' },
+        { name:'Rental Car Insurance Push', desc:'Companies push expensive insurance you may already have through your credit card.', level:'low' },
+    ]},
+    { country:'Morocco 🇲🇦', scams:[
+        { name:'Medina Guide Scam', desc:'Unofficial guides offer help navigating the medina then demand huge fees or lead you to shops.', level:'high' },
+        { name:'Henna Artist', desc:'Women apply henna without asking price first, then charge very high rates.', level:'medium' },
+        { name:'Snake Charmer Photo', desc:'Asking for a photo means paying. Agree on a price first.', level:'low' },
+        { name:'Wrong Change', desc:'Always count your change. Shortchanging tourists is common in busy souks.', level:'medium' },
+    ]},
+];
+
+const CURRENCY_DATA = [
+    { name:'EUR → USD 🇺🇸', rate:'1.08' },
+    { name:'EUR → GBP 🇬🇧', rate:'0.86' },
+    { name:'EUR → JPY 🇯🇵', rate:'162.4' },
+    { name:'EUR → TRY 🇹🇷', rate:'35.2' },
+    { name:'EUR → THB 🇹🇭', rate:'38.9' },
+    { name:'EUR → AED 🇦🇪', rate:'3.97' },
+    { name:'EUR → MAD 🇲🇦', rate:'10.9' },
+    { name:'EUR → CNY 🇨🇳', rate:'7.83' },
+    { name:'EUR → INR 🇮🇳', rate:'90.1' },
+    { name:'EUR → AUD 🇦🇺', rate:'1.64' },
+    { name:'EUR → CAD 🇨🇦', rate:'1.47' },
+    { name:'EUR → BRL 🇧🇷', rate:'5.41' },
+    { name:'EUR → MXN 🇲🇽', rate:'19.8' },
+    { name:'EUR → IDR 🇮🇩', rate:'17620' },
+    { name:'EUR → PHP 🇵🇭', rate:'61.4' },
+];
+
+const CARD_TIPS = [
+    { icon:'🔍', tip:'Always inspect ATMs for card skimmers — pull on the card slot before inserting.' },
+    { icon:'🏧', tip:'Use ATMs inside banks or secured lobbies, not standalone street machines.' },
+    { icon:'👁', tip:'Shield your PIN with your hand every single time.' },
+    { icon:'📱', tip:'Enable instant transaction notifications on your bank app.' },
+    { icon:'💳', tip:'Use a contactless card or Apple/Google Pay where possible — no skimming risk.' },
+    { icon:'🌐', tip:'Notify your bank before travelling to prevent card blocks.' },
+    { icon:'🔒', tip:'Never let your card out of your sight in restaurants — use tap-to-pay.' },
+    { icon:'🚫', tip:'Decline "dynamic currency conversion" — always pay in local currency.' },
+];
+
+const SAFETY_SCORES = {
+    'greece':    { score:74, verdict:'Moderate Safety', color:'#f59e0b', breakdown:{ crime:72, health:80, stability:78, scams:65 } },
+    'italy':     { score:72, verdict:'Moderate Safety', color:'#f59e0b', breakdown:{ crime:68, health:82, stability:75, scams:66 } },
+    'spain':     { score:76, verdict:'Good Safety',     color:'#22c55e', breakdown:{ crime:70, health:85, stability:80, scams:68 } },
+    'france':    { score:74, verdict:'Moderate Safety', color:'#f59e0b', breakdown:{ crime:65, health:88, stability:76, scams:72 } },
+    'germany':   { score:88, verdict:'Very Safe',       color:'#22c55e', breakdown:{ crime:85, health:92, stability:90, scams:85 } },
+    'uk':        { score:80, verdict:'Good Safety',     color:'#22c55e', breakdown:{ crime:75, health:88, stability:84, scams:78 } },
+    'japan':     { score:94, verdict:'Excellent Safety', color:'#22c55e', breakdown:{ crime:96, health:90, stability:95, scams:95 } },
+    'thailand':  { score:58, verdict:'Use Caution',     color:'#ef4444', breakdown:{ crime:55, health:65, stability:60, scams:42 } },
+    'turkey':    { score:62, verdict:'Use Caution',     color:'#f59e0b', breakdown:{ crime:60, health:70, stability:58, scams:55 } },
+    'usa':       { score:68, verdict:'Moderate Safety', color:'#f59e0b', breakdown:{ crime:58, health:72, stability:80, scams:70 } },
+    'morocco':   { score:54, verdict:'Use Caution',     color:'#ef4444', breakdown:{ crime:52, health:60, stability:56, scams:44 } },
+    'egypt':     { score:50, verdict:'High Risk',       color:'#ef4444', breakdown:{ crime:48, health:55, stability:50, scams:40 } },
+    'dubai':     { score:87, verdict:'Very Safe',       color:'#22c55e', breakdown:{ crime:90, health:85, stability:88, scams:82 } },
+    'australia': { score:91, verdict:'Excellent Safety', color:'#22c55e', breakdown:{ crime:88, health:92, stability:94, scams:90 } },
+    'singapore': { score:96, verdict:'Excellent Safety', color:'#22c55e', breakdown:{ crime:98, health:93, stability:96, scams:96 } },
+};
+
+const DEMO_FLIGHTS = {
+    'BA206':  { from:'LHR', to:'JFK', dep:'10:30', arr:'13:45', status:'ontime',   gate:'B32', airline:'British Airways' },
+    'A3600':  { from:'ATH', to:'LHR', dep:'07:15', arr:'09:40', status:'delayed',  gate:'A12', airline:'Aegean Airlines', delay:'+45 min' },
+    'LH400':  { from:'FRA', to:'JFK', dep:'15:20', arr:'18:05', status:'ontime',   gate:'Z60', airline:'Lufthansa' },
+    'AF007':  { from:'CDG', to:'JFK', dep:'11:10', arr:'13:25', status:'boarding', gate:'E22', airline:'Air France' },
+    'EK203':  { from:'DXB', to:'LHR', dep:'22:00', arr:'02:30', status:'ontime',   gate:'C14', airline:'Emirates' },
+    'FR1234': { from:'ATH', to:'BCN', dep:'06:40', arr:'09:10', status:'ontime',   gate:'B05', airline:'Ryanair' },
+};
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+let lang = localStorage.getItem('user_lang') || 'en';
+let t = T[lang] || T['en'];
+
+function applyTranslations() {
+    t = T[lang] || T['en'];
+    const map = {
+        'txt_hub_title':      t.hub_title,
+        'txt_hero_title':     t.hero_title,
+        'txt_hero_sub':       t.hero_sub,
+        'txt_free_label':     t.free_label,
+        'txt_premium_label':  t.premium_label,
+        'txt_premium_badge':  t.premium_badge,
+        'txt_premium_badge2': t.premium_badge,
+        'txt_premium_badge3': t.premium_badge,
+        'txt_t_emergency':    t.t_emergency,
+        'txt_t_emergency_sub':t.t_emergency_sub,
+        'txt_t_phrases':      t.t_phrases,
+        'txt_t_phrases_sub':  t.t_phrases_sub,
+        'txt_t_scams':        t.t_scams,
+        'txt_t_scams_sub':    t.t_scams_sub,
+        'txt_t_flight':       t.t_flight,
+        'txt_t_flight_sub':   t.t_flight_sub,
+        'txt_t_safety':       t.t_safety,
+        'txt_t_safety_sub':   t.t_safety_sub,
+        'txt_t_currency':     t.t_currency,
+        'txt_t_currency_sub': t.t_currency_sub,
+        'txt_p_emergency':    t.p_emergency,
+        'txt_p_phrases':      t.p_phrases,
+        'txt_p_scams':        t.p_scams,
+        'txt_p_flight':       t.p_flight,
+        'txt_p_safety':       t.p_safety,
+        'txt_p_currency':     t.p_currency,
+        'txt_em_tip':         t.em_tip,
+        'txt_ph_tip_label':   t.ph_tip_label,
+        'txt_ph_tip':         t.ph_tip,
+    };
+    for (let id in map) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = map[id];
+    }
+}
+
+// ═══════════════════════════════════════
+// PANEL OPEN / CLOSE
+// ═══════════════════════════════════════
+function openPanel(id) {
+    document.getElementById(id).classList.remove('hidden');
+    if (id === 'panel_emergency')  renderEmergency();
+    if (id === 'panel_phrases')    renderPhrases();
+    if (id === 'panel_scams')      renderScams();
+    if (id === 'panel_flight')     renderFlight();
+    if (id === 'panel_safety')     renderSafety();
+    if (id === 'panel_currency')   renderCurrency();
+    if (id === 'panel_ai_threat')  { /* chat panel — ready on open */ }
+}
+function closePanel(id) {
+    document.getElementById(id).classList.add('hidden');
+}
+
+function isPremium() { return localStorage.getItem('premium_user') === 'true'; }
+
+function premiumLockHTML() {
+    return `<div class="premium-lock">
+        <div class="lock-icon">🔒</div>
+        <h3>${t.unlock_title}</h3>
+        <p>${t.unlock_desc}</p>
+        <button class="unlock-btn" onclick="window.location.href='premium.html'">${t.unlock_btn}</button>
+    </div>`;
+}
+
+// ═══════════════════════════════════════
+// EMERGENCY NUMBERS
+// ═══════════════════════════════════════
+function renderEmergency(filter) {
+    const data = filter
+        ? EMERGENCY_DATA.filter(d => d.country.toLowerCase().includes(filter.toLowerCase()))
+        : EMERGENCY_DATA;
+    const el = document.getElementById('em_results');
+    if (!data.length) { el.innerHTML = `<div class="loading">No results found.</div>`; return; }
+    el.innerHTML = data.map(d => `
+        <div class="result-card">
+            <h4>${d.country}</h4>
+            <div class="num-row"><span class="num-label">🚔 Police</span><span class="num-value" onclick="callNumber('${d.police}')">${d.police}</span></div>
+            <div class="num-row"><span class="num-label">🚑 Ambulance</span><span class="num-value" onclick="callNumber('${d.ambulance}')">${d.ambulance}</span></div>
+            <div class="num-row"><span class="num-label">🚒 Fire</span><span class="num-value" onclick="callNumber('${d.fire}')">${d.fire}</span></div>
+            <div class="num-row"><span class="num-label">⚓ Coast Guard</span><span class="num-value" onclick="callNumber('${d.coast}')">${d.coast}</span></div>
+            ${d.eu !== '—' ? `<div class="num-row"><span class="num-label">🇪🇺 EU Universal</span><span class="num-value" onclick="callNumber('${d.eu}')">${d.eu}</span></div>` : ''}
+        </div>`).join('');
+}
+function filterEmergency() { renderEmergency(document.getElementById('em_search').value); }
+function callNumber(n) { if (n !== '—') window.location.href = `tel:${n}`; }
+
+// ═══════════════════════════════════════
+// EMERGENCY PHRASES
+// ═══════════════════════════════════════
+let activePhraseLang = Object.keys(PHRASES_DATA)[0];
+function renderPhrases() {
+    const tabs = document.getElementById('phrases_tabs');
+    tabs.innerHTML = Object.entries(PHRASES_DATA).map(([name, data]) =>
+        `<div class="tab-pill ${name===activePhraseLang?'active':''}" onclick="switchPhrase('${name}')">${data.flag} ${name}</div>`
+    ).join('');
+    renderPhraseList();
+}
+function switchPhrase(name) {
+    activePhraseLang = name;
+    renderPhrases();
+}
+function renderPhraseList() {
+    const data = PHRASES_DATA[activePhraseLang];
+    document.getElementById('phrases_list').innerHTML = data.phrases.map(p => `
+        <div class="phrase-row" onclick="copyPhrase('${p.local.replace(/'/g,"\\'")}')">
+            <div class="phrase-en">${p.en}</div>
+            <div class="phrase-local">${p.local}</div>
+            <div class="phrase-phonetic">${p.ph}</div>
+        </div>`).join('');
+}
+function copyPhrase(text) {
+    navigator.clipboard?.writeText(text).catch(()=>{});
+}
+
+// ═══════════════════════════════════════
+// SCAM ALERTS
+// ═══════════════════════════════════════
+function renderScams(filter) {
+    const data = filter
+        ? SCAM_DATA.filter(d => d.country.toLowerCase().includes(filter.toLowerCase()))
+        : SCAM_DATA;
+    const el = document.getElementById('scam_results');
+    if (!data.length) { el.innerHTML = `<div class="loading">No results found.</div>`; return; }
+    el.innerHTML = data.map(d => `
+        <div style="margin-bottom:18px;">
+            <div style="font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">${d.country}</div>
+            ${d.scams.map(s => `
+                <div class="scam-item">
+                    <h4>${s.name}</h4>
+                    <p>${s.desc}</p>
+                    <span class="scam-level ${s.level}">${s.level.toUpperCase()} RISK</span>
+                </div>`).join('')}
+        </div>`).join('');
+}
+function filterScams() { renderScams(document.getElementById('sc_search').value); }
+
+// ═══════════════════════════════════════
+// FLIGHT TRACKER — REAL API (PREMIUM)
+// ═══════════════════════════════════════
+function renderFlight() {
+    const body = document.getElementById('flight_body');
+    if (!isPremium()) { body.innerHTML = premiumLockHTML(); return; }
+    body.innerHTML = `
+        <div class="info-tip">Enter a flight number for <strong>live status</strong> via AviationStack. <strong>Try: BA206, A3600, LH400, AF007</strong></div>
+        <div class="search-bar">
+            <input class="search-input" id="fl_input" placeholder="${t.flight_num_placeholder}" style="text-transform:uppercase"/>
+            <button class="search-btn" onclick="searchFlight()">${t.flight_search}</button>
+        </div>
+        <div id="fl_result"></div>`;
+}
+
+async function searchFlight() {
+    const num = document.getElementById('fl_input').value.trim().toUpperCase();
+    const el = document.getElementById('fl_result');
+    if (!num) return;
+    el.innerHTML = `<div class="loading"><div class="loading-spinner"></div>Fetching live data...</div>`;
+    try {
+        // Vercel proxy — key stays safe on the server
+        const url = `/api/flight?num=${num}`;
+        const resp = await fetch(url);
+        const json = await resp.json();
+        const data = json.data && json.data[0];
+        if (!data) {
+            // Fallback to demo data
+            const f = DEMO_FLIGHTS[num];
+            if (!f) { el.innerHTML = `<div class="result-card"><p style="color:var(--muted);">No live data for <strong>${num}</strong>. Try BA206, A3600 or LH400.</p></div>`; return; }
+            renderFlightCard(el, num, { from: f.from, to: f.to, dep: f.dep, arr: f.arr, status: f.status, gate: f.gate, airline: f.airline, delay: f.delay, live: false });
+            return;
+        }
+        const dep = data.departure || {};
+        const arr = data.arrival || {};
+        const statusRaw = data.flight_status || 'scheduled';
+        const statusMap = { active:'ontime', scheduled:'ontime', landed:'ontime', cancelled:'delayed', diverted:'delayed', incident:'delayed', boarding:'boarding' };
+        const status = statusMap[statusRaw] || 'ontime';
+        const delay = dep.delay ? `+${dep.delay} min` : null;
+        renderFlightCard(el, num, {
+            from: dep.iata || '---',
+            to: arr.iata || '---',
+            dep: (dep.estimated || dep.scheduled || '').slice(11,16) || '—',
+            arr: (arr.estimated || arr.scheduled || '').slice(11,16) || '—',
+            status, gate: dep.gate || arr.gate || '—',
+            airline: (data.airline && data.airline.name) || num,
+            delay, live: true
+        });
+    } catch(e) {
+        // Fallback demo
+        const f = DEMO_FLIGHTS[num];
+        if (!f) { el.innerHTML = `<div class="result-card"><p style="color:var(--muted);">Connection error. Try: BA206, A3600, LH400.</p></div>`; return; }
+        renderFlightCard(el, num, { from:f.from, to:f.to, dep:f.dep, arr:f.arr, status:f.status, gate:f.gate, airline:f.airline, delay:f.delay, live:false });
+    }
+}
+
+function renderFlightCard(el, num, f) {
+    const statusClass = f.status === 'ontime' ? 'status-ontime' : f.status === 'delayed' ? 'status-delayed' : 'status-boarding';
+    const statusLabel = f.status === 'ontime' ? '✔ On Time' : f.status === 'delayed' ? `⚠ Delayed ${f.delay||''}` : '🔔 Boarding';
+    el.innerHTML = `
+        <div class="flight-card">
+            <div class="flight-header">
+                <div>
+                    <div class="flight-num">${num}</div>
+                    <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">${f.airline}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div class="flight-status-badge ${statusClass}">${statusLabel}</div>
+                    ${f.live ? '<div style="font-size:0.6rem;color:#22c55e;margin-top:4px;letter-spacing:0.5px;">● LIVE DATA</div>' : '<div style="font-size:0.6rem;color:var(--muted);margin-top:4px;">DEMO</div>'}
+                </div>
+            </div>
+            <div class="flight-route">
+                <div class="airport-info">
+                    <div class="airport-code">${f.from}</div>
+                    <div class="airport-time">${f.dep}</div>
+                </div>
+                <div class="flight-line"><span>✈</span></div>
+                <div class="airport-info">
+                    <div class="airport-code">${f.to}</div>
+                    <div class="airport-time">${f.arr}</div>
+                </div>
+            </div>
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:0.75rem;color:var(--muted);">Gate</span>
+                <span style="font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;color:var(--gold);">${f.gate}</span>
+            </div>
+        </div>`;
+}
+
+// ═══════════════════════════════════════
+// TRAVEL SAFETY SCORE (PREMIUM)
+// ═══════════════════════════════════════
+function renderSafety() {
+    const body = document.getElementById('safety_body');
+    if (!isPremium()) { body.innerHTML = premiumLockHTML(); return; }
+    body.innerHTML = `
+        <div class="info-tip">Enter a country to get its safety score based on crime, health and stability. <strong>Try: Greece, Japan, Thailand</strong></div>
+        <div class="search-bar">
+            <input class="search-input" id="sf_input" placeholder="${t.safety_placeholder}"/>
+            <button class="search-btn" onclick="searchSafety()">${t.flight_search}</button>
+        </div>
+        <div id="sf_result"></div>`;
+}
+function searchSafety() {
+    const query = document.getElementById('sf_input').value.trim().toLowerCase();
+    const el = document.getElementById('sf_result');
+    if (!query) return;
+    el.innerHTML = `<div class="loading"><div class="loading-spinner"></div>Analysing...</div>`;
+    setTimeout(() => {
+        const key = Object.keys(SAFETY_SCORES).find(k => query.includes(k) || k.includes(query));
+        const data = key ? SAFETY_SCORES[key] : null;
+        if (!data) {
+            el.innerHTML = `<div class="result-card"><p style="color:var(--muted);">No data found. Try: Greece, Japan, Thailand, Dubai, USA.</p></div>`;
+            return;
+        }
+        const b = data.breakdown;
+        el.innerHTML = `
+            <div class="safety-gauge">
+                <div class="gauge-circle" style="border-color:${data.color};box-shadow:0 0 24px ${data.color}44;">
+                    <div class="gauge-score" style="color:${data.color};">${data.score}</div>
+                    <div class="gauge-label">/ 100</div>
+                </div>
+                <div class="gauge-verdict" style="color:${data.color};">${data.verdict}</div>
+            </div>
+            <div class="result-card">
+                ${scoreRow('🔫 Crime Safety', b.crime)}
+                ${scoreRow('🏥 Health & Medical', b.health)}
+                ${scoreRow('🏛 Political Stability', b.stability)}
+                ${scoreRow('🎭 Scam Risk', b.scams)}
+            </div>`;
+    }, 1000);
+}
+function scoreRow(label, val) {
+    const color = val >= 80 ? '#22c55e' : val >= 60 ? '#f59e0b' : '#ef4444';
+    return `<div style="margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:0.8rem;color:var(--muted);">${label}</span>
+            <span style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${color};">${val}</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.07);border-radius:6px;height:6px;overflow:hidden;">
+            <div style="height:100%;width:${val}%;background:${color};border-radius:6px;transition:width 1s;"></div>
+        </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════
+// CURRENCY & CARD SAFETY (PREMIUM)
+// ═══════════════════════════════════════
+function renderCurrency() {
+    const body = document.getElementById('currency_body');
+    if (!isPremium()) { body.innerHTML = premiumLockHTML(); return; }
+    body.innerHTML = `
+        <div class="info-tip"><strong>Rates vs EUR</strong> — indicative rates, updated daily.</div>
+        <div class="search-bar">
+            <input class="search-input" id="cu_amount" type="number" placeholder="${t.currency_from}" value="100"/>
+        </div>
+        <div class="result-card" style="margin-bottom:18px;" id="cu_rates">
+            ${CURRENCY_DATA.map(c => `
+                <div class="currency-row">
+                    <span class="currency-name">${c.name}</span>
+                    <span class="currency-rate" id="rate_${c.name.replace(/[^a-z]/gi,'')}">${(100 * parseFloat(c.rate)).toFixed(2)}</span>
+                </div>`).join('')}
+        </div>
+        <div class="section-label" style="padding:0 0 10px;">${t.card_safety_title}</div>
+        ${CARD_TIPS.map(tip => `
+            <div class="result-card" style="display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;">
+                <div style="font-size:22px;flex-shrink:0;">${tip.icon}</div>
+                <p style="margin:0;font-size:0.78rem;color:var(--muted);line-height:1.5;">${tip.tip}</p>
+            </div>`).join('')}
+    `;
+    document.getElementById('cu_amount').addEventListener('input', updateRates);
+}
+function updateRates() {
+    const amount = parseFloat(document.getElementById('cu_amount').value) || 0;
+    CURRENCY_DATA.forEach(c => {
+        const key = 'rate_' + c.name.replace(/[^a-z]/gi,'');
+        const el = document.getElementById(key);
+        if (el) el.textContent = (amount * parseFloat(c.rate)).toFixed(2);
+    });
+}
+
+// ═══════════════════════════════════════
+// TRAVEL AI THREAT ADVISOR
+// ═══════════════════════════════════════
+// Key is stored in Vercel env — calls go through /api/ai-threat proxy
+const aiChatHistory = [];
+
+function appendAiMessage(role, html) {
+    const msgs = document.getElementById('ai_chat_messages');
+    if (!msgs) return;
+    const isUser = role === 'user';
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = `display:flex;gap:10px;align-items:flex-start;${isUser ? 'flex-direction:row-reverse;' : ''}`;
+    const avatar = document.createElement('div');
+    avatar.style.cssText = `width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;${isUser ? 'background:rgba(14,165,233,0.15);border:1px solid rgba(14,165,233,0.3);' : 'background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);'}`;
+    avatar.textContent = isUser ? '👤' : '🤖';
+    const bubble = document.createElement('div');
+    bubble.style.cssText = `padding:12px 14px;border-radius:${isUser ? '16px 0 16px 16px' : '0 16px 16px 16px'};max-width:85%;font-size:0.82rem;line-height:1.55;${isUser ? 'background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.2);color:var(--text);' : 'background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);color:var(--text);'}`;
+    bubble.innerHTML = html;
+    wrapper.appendChild(avatar);
+    wrapper.appendChild(bubble);
+    msgs.appendChild(wrapper);
+    msgs.scrollTop = msgs.scrollHeight;
+}
+
+function appendAiTyping() {
+    const msgs = document.getElementById('ai_chat_messages');
+    const wrapper = document.createElement('div');
+    wrapper.id = 'ai_typing';
+    wrapper.style.cssText = 'display:flex;gap:10px;align-items:flex-start;';
+    wrapper.innerHTML = `
+        <div style="width:34px;height:34px;border-radius:50%;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;">🤖</div>
+        <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:0 16px 16px 16px;padding:12px 18px;display:flex;gap:5px;align-items:center;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#c084fc;animation:aiDot 1.2s infinite 0s;display:inline-block;"></span>
+            <span style="width:7px;height:7px;border-radius:50%;background:#c084fc;animation:aiDot 1.2s infinite 0.2s;display:inline-block;"></span>
+            <span style="width:7px;height:7px;border-radius:50%;background:#c084fc;animation:aiDot 1.2s infinite 0.4s;display:inline-block;"></span>
+        </div>`;
+    msgs.appendChild(wrapper);
+    msgs.scrollTop = msgs.scrollHeight;
+}
+
+async function sendAiThreat() {
+    const input = document.getElementById('ai_input');
+    const btn = document.getElementById('ai_send_btn');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = ''; input.style.height = 'auto';
+    btn.disabled = true; btn.style.opacity = '0.5';
+    appendAiMessage('user', text);
+    aiChatHistory.push({ role: 'user', content: text });
+    appendAiTyping();
+    try {
+        // Vercel proxy — key stays safe on the server
+        const resp = await fetch('/api/ai-threat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: aiChatHistory })
+        });
+        const data = await resp.json();
+        const reply = data.content && data.content[0] && data.content[0].text || 'Sorry, I could not get a response. Please try again.';
+        document.getElementById('ai_typing')?.remove();
+        // Convert markdown-ish to HTML
+        const html = reply
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n/g, '<br>');
+        appendAiMessage('assistant', html);
+        aiChatHistory.push({ role: 'assistant', content: reply });
+    } catch(e) {
+        document.getElementById('ai_typing')?.remove();
+        appendAiMessage('assistant', '⚠️ Could not connect to AI service. Please check your connection and try again.');
+    }
+    btn.disabled = false; btn.style.opacity = '1';
+}
+
+// Inject keyframe for typing dots
+const aiStyle = document.createElement('style');
+aiStyle.textContent = `@keyframes aiDot { 0%,80%,100%{opacity:0.2;transform:scale(0.8)} 40%{opacity:1;transform:scale(1)} }`;
+document.head.appendChild(aiStyle);
+
+// ═══════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════
+applyTranslations();
+</script>
+</body>
+</html>
