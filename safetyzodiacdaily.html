@@ -14,8 +14,8 @@
         body { background: var(--bg); color: #fff; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         .app-container { width: 100%; max-width: 450px; }
         
-        /* ELITE HEADER */
-        .header { text-align: center; padding: 20px 0; border-bottom: 1px solid #1a222d; position: relative; }
+        /* HEADER */
+        .header { text-align: center; padding: 20px 0; border-bottom: 1px solid #1a222d; }
         .logo-text { font-size: 24px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
         .logo-text span { color: var(--blue); }
         .tagline { color: var(--gold); font-size: 10px; font-weight: bold; margin-top: 5px; text-transform: uppercase; letter-spacing: 2px; }
@@ -23,25 +23,22 @@
         /* ADMOB CONTAINERS */
         .ad-container { width: 100%; display: flex; justify-content: center; margin: 15px 0; background: rgba(255,255,255,0.02); border-radius: 12px; min-height: 50px; overflow: hidden; }
 
-        /* HORIZONTAL ZODIAC SELECTOR */
+        /* HORIZONTAL SELECTOR */
         .zodiac-selector { display: flex; overflow-x: auto; gap: 12px; padding: 20px 0; scrollbar-width: none; }
         .zodiac-selector::-webkit-scrollbar { display: none; }
         .zodiac-item { flex: 0 0 auto; text-align: center; padding: 12px; border: 1px solid #1a222d; border-radius: 18px; min-width: 65px; background: #0d121a; cursor: pointer; transition: 0.3s; }
         .zodiac-item.active { border-color: var(--gold); background: rgba(197, 160, 89, 0.1); transform: scale(1.1); }
         .zodiac-item .icon { font-size: 24px; display: block; }
         .zodiac-item .name { font-size: 9px; text-transform: uppercase; color: #666; margin-top: 5px; font-weight: bold; }
-        .zodiac-item.active .name { color: var(--blue); }
 
-        /* ZODIAC CARD */
+        /* MAIN CARD */
         .zodiac-card { background: linear-gradient(145deg, #141b26, #0d121a); border: 1px solid var(--gold); border-radius: 25px; padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); position: relative; }
-        .share-btn { position: absolute; top: 20px; right: 20px; background: rgba(79, 172, 254, 0.15); border: none; border-radius: 50%; width: 42px; height: 42px; color: var(--blue); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: 0.2s; }
-        .share-btn:active { transform: scale(0.9); background: var(--blue); color: #000; }
+        .share-btn { position: absolute; top: 20px; right: 20px; background: rgba(79, 172, 254, 0.15); border: none; border-radius: 50%; width: 42px; height: 42px; color: var(--blue); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; }
         
         .forecast { font-size: 16px; line-height: 1.6; color: #e0e0e0; font-style: italic; margin: 20px 0; border-left: 3px solid var(--gold); padding-left: 15px; }
         .protocol { background: rgba(79, 172, 254, 0.08); border-radius: 15px; padding: 15px; border: 1px solid rgba(79, 172, 254, 0.2); }
         .protocol-lbl { color: var(--blue); font-size: 11px; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 5px; }
         
-        /* ACTION BUTTON */
         .btn-elite { background: linear-gradient(to right, #4facfe, #00f2fe); color: #000; border: none; width: 100%; padding: 20px; border-radius: 50px; font-weight: 900; text-transform: uppercase; cursor: pointer; margin-top: 25px; box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4); }
     </style>
 </head>
@@ -65,14 +62,14 @@
     <div class="zodiac-selector" id="selector"></div>
 
     <div class="zodiac-card" id="card">
-        <button class="share-btn" onclick="shareZodiac()" title="Share Forecast">
-            <span style="transform: rotate(-45deg); display: inline-block; margin-bottom: 3px; margin-right: 2px;">✈</span>
+        <button class="share-btn" onclick="shareZodiac()">
+            <span style="transform: rotate(-45deg); display: inline-block; margin-bottom: 3px;">✈</span>
         </button>
-        <h2 id="z-name" style="color: var(--blue); margin-top:0; text-transform: uppercase; letter-spacing: 1px;">Select Sign</h2>
-        <p id="z-forecast" class="forecast">Your cosmic security briefing is being decrypted. Please select your zodiac sign.</p>
+        <h2 id="z-name" style="color: var(--blue); margin-top:0; text-transform: uppercase;">Select Sign</h2>
+        <p id="z-forecast" class="forecast">Choose your sign to reveal your cosmic security briefing.</p>
         <div class="protocol">
             <span id="ui-protocol-lbl" class="protocol-lbl">Security Protocol</span>
-            <p id="z-protocol" style="font-size:14px; margin:0; color: #fff;">Awaiting data...</p>
+            <p id="z-protocol" style="font-size:14px; margin:0; color: #fff;">Awaiting input...</p>
         </div>
     </div>
 
@@ -88,24 +85,21 @@
 
     <button id="ui-btn" class="btn-elite" onclick="celebrate()">Start Elite Training</button>
 
-    <footer style="text-align:center; padding: 40px 0; opacity: 0.3; font-size: 9px; letter-spacing: 1px; text-transform: uppercase;">
-        Stay Safe Elite © 2026 | Global Protection AI
-    </footer>
+    <footer style="text-align:center; padding: 40px 0; opacity: 0.3; font-size: 9px; text-transform: uppercase;">Stay Safe Elite © 2026</footer>
 </div>
 
 <script>
-    // Detecting User Language
+    /**
+     * API_NAME: safety_zodiac_daily
+     * Description: This script handles the daily security forecasts.
+     */
     const userLang = (navigator.language || navigator.userLanguage).split('-')[0];
-    
-    // Translation Engine
     const translations = {
         en: { tagline: "Daily Threat Intelligence", protocol: "Security Protocol", btn: "Start Elite Training", shareMsg: "My Daily Safety Zodiac! 🛡️", signs: ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"] },
-        el: { tagline: "Ημερήσια Ανάλυση Απειλών", protocol: "Πρωτόκολλο Ασφαλείας", btn: "Έναρξη Elite Εκπαίδευσης", shareMsg: "Το Ζώδιο Ασφαλείας μου για σήμερα! 🛡️", signs: ["Κριός", "Ταύρος", "Δίδυμοι", "Καρκίνος", "Λέων", "Παρθένος", "Ζυγός", "Σκορπιός", "Τοξότης", "Αιγόκερως", "Υδροχόος", "Ιχθύες"] }
+        el: { tagline: "Ημερήσια Ανάλυση Απειλών", protocol: "Πρωτόκολλο Ασφαλείας", btn: "Έναρξη Elite Εκπαίδευσης", shareMsg: "Το Ζώδιο Ασφαλείας μου! 🛡️", signs: ["Κριός", "Ταύρος", "Δίδυμοι", "Καρκίνος", "Λέων", "Παρθένος", "Ζυγός", "Σκορπιός", "Τοξότης", "Αιγόκερως", "Υδροχόος", "Ιχθύες"] }
     };
 
     const ui = translations[userLang] || translations.en;
-
-    // Apply translations to UI
     document.getElementById('ui-tagline').innerText = ui.tagline;
     document.getElementById('ui-protocol-lbl').innerText = ui.protocol;
     document.getElementById('ui-btn').innerText = ui.btn;
@@ -113,7 +107,6 @@
     const zodiacIcons = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
     const selector = document.getElementById('selector');
 
-    // Build the selector
     zodiacIcons.forEach((icon, i) => {
         const div = document.createElement('div');
         div.className = 'zodiac-item';
@@ -127,38 +120,22 @@
     });
 
     function updateCard(i) {
+        // Here the app will inject data from safety_zodiac_daily API
         const name = ui.signs[i];
         document.getElementById('z-name').innerText = name;
-        // This content will be populated by your Gemini AI daily JSON
-        document.getElementById('z-forecast').innerText = "The digital stars align for " + name + ". Your firewall is your shield today. Beware of unexpected direct messages.";
-        document.getElementById('z-protocol').innerText = "Run a Scam Radar scan immediately.";
+        document.getElementById('z-forecast').innerText = "The digital stars align for " + name + ". Your firewall is your shield today. Watch out for unknown direct messages.";
+        document.getElementById('z-protocol').innerText = "Activate Scam Radar now.";
     }
 
-    // Viral Share Function
     function shareZodiac() {
-        const name = document.getElementById('z-name').innerText;
-        const forecast = document.getElementById('z-forecast').innerText;
-        const text = `${ui.shareMsg}\n\n✨ ${name}: ${forecast}\n\nStay Safe with Stay Safe Elite!`;
-        
-        if (navigator.share) {
-            navigator.share({ title: 'Safety Zodiac Daily', text: text, url: 'https://staysafeelite.com' });
-        } else {
-            navigator.clipboard.writeText(text);
-            alert("Copied to clipboard! Share it with your friends.");
-        }
+        const text = `${ui.shareMsg}\n\n✨ ${document.getElementById('z-name').innerText}: ${document.getElementById('z-forecast').innerText}\n\nStay protected with Stay Safe Elite!`;
+        if (navigator.share) navigator.share({ title: 'Safety Zodiac', text: text, url: 'https://staysafeelite.com' });
+        else { navigator.clipboard.writeText(text); alert("Copied!"); }
     }
 
-    // Celebration Function (Πίμπολα)
     function celebrate() {
-        confetti({ 
-            particleCount: 200, 
-            spread: 70, 
-            origin: { y: 0.6 }, 
-            colors: ['#4facfe', '#c5a059', '#ffffff'],
-            disableForReducedMotion: true
-        });
+        confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 }, colors: ['#4facfe', '#c5a059', '#ffffff'] });
     }
 </script>
-
 </body>
 </html>
