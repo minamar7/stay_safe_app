@@ -4,200 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Safety Zodiac Daily - Stay Safe Elite</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-4545564564564564" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
-        /* ELITE DARK THEME */
-        body {
-            background-color: #0a0e14;
-            color: #ffffff;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        :root { --blue: #4facfe; --gold: #c5a059; --bg: #0a0e14; }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .app-container { width: 100%; max-width: 450px; }
+        
+        /* ELITE HEADER */
+        .header { text-align: center; padding: 20px 0; border-bottom: 1px solid #1a222d; position: relative; }
+        .logo-text { font-size: 24px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+        .logo-text span { color: var(--blue); }
+        .tagline { color: var(--gold); font-size: 10px; font-weight: bold; margin-top: 5px; text-transform: uppercase; letter-spacing: 2px; }
 
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-        }
+        /* ADMOB CONTAINERS */
+        .ad-container { width: 100%; display: flex; justify-content: center; margin: 15px 0; background: rgba(255,255,255,0.02); border-radius: 12px; min-height: 50px; overflow: hidden; }
 
-        /* HEADER SECTION */
-        .header {
-            text-align: center;
-            padding: 30px 0;
-            border-bottom: 1px solid #1a222d;
-        }
+        /* HORIZONTAL ZODIAC SELECTOR */
+        .zodiac-selector { display: flex; overflow-x: auto; gap: 12px; padding: 20px 0; scrollbar-width: none; }
+        .zodiac-selector::-webkit-scrollbar { display: none; }
+        .zodiac-item { flex: 0 0 auto; text-align: center; padding: 12px; border: 1px solid #1a222d; border-radius: 18px; min-width: 65px; background: #0d121a; cursor: pointer; transition: 0.3s; }
+        .zodiac-item.active { border-color: var(--gold); background: rgba(197, 160, 89, 0.1); transform: scale(1.1); }
+        .zodiac-item .icon { font-size: 24px; display: block; }
+        .zodiac-item .name { font-size: 9px; text-transform: uppercase; color: #666; margin-top: 5px; font-weight: bold; }
+        .zodiac-item.active .name { color: var(--blue); }
 
-        .logo-text {
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin: 0;
-        }
-
-        .logo-text span {
-            color: #4facfe; /* Elite Blue */
-        }
-
-        .tagline {
-            color: #c5a059; /* Gold Accent */
-            font-size: 11px;
-            font-weight: bold;
-            margin-top: 5px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* AD UNITS (ADMOB READY) */
-        .ad-unit {
-            background: #141b26;
-            border: 1px dashed #333;
-            border-radius: 12px;
-            height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px 0;
-            color: #444;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* ZODIAC CARD DESIGN */
-        .zodiac-card {
-            background: linear-gradient(145deg, #141b26, #0d121a);
-            border: 1px solid #c5a059;
-            border-radius: 25px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        }
-
-        .zodiac-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .zodiac-icon {
-            font-size: 40px;
-            margin-right: 15px;
-            filter: drop-shadow(0 0 5px #4facfe);
-        }
-
-        .zodiac-name {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4facfe;
-            text-transform: uppercase;
-        }
-
-        /* HUMOROUS CONTENT */
-        .forecast-text {
-            font-size: 17px;
-            line-height: 1.6;
-            color: #e0e0e0;
-            font-style: italic;
-            margin-bottom: 25px;
-            border-left: 3px solid #c5a059;
-            padding-left: 15px;
-        }
-
-        .protocol-box {
-            background: rgba(79, 172, 254, 0.1);
-            border-radius: 15px;
-            padding: 18px;
-        }
-
-        .protocol-label {
-            color: #4facfe;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .protocol-text {
-            font-size: 15px;
-            color: #ffffff;
-            margin: 0;
-        }
-
-        /* PREMIUM CTA BUTTON */
-        .action-button {
-            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-            color: #000000;
-            border: none;
-            width: 100%;
-            padding: 20px;
-            border-radius: 50px;
-            font-weight: 900;
-            font-size: 16px;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
-            margin-top: 10px;
-        }
-
-        .footer-info {
-            text-align: center;
-            padding: 40px 0;
-        }
-
-        .footer-info p {
-            font-size: 10px;
-            color: #444;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        /* ZODIAC CARD */
+        .zodiac-card { background: linear-gradient(145deg, #141b26, #0d121a); border: 1px solid var(--gold); border-radius: 25px; padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); position: relative; }
+        .share-btn { position: absolute; top: 20px; right: 20px; background: rgba(79, 172, 254, 0.15); border: none; border-radius: 50%; width: 42px; height: 42px; color: var(--blue); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: 0.2s; }
+        .share-btn:active { transform: scale(0.9); background: var(--blue); color: #000; }
+        
+        .forecast { font-size: 16px; line-height: 1.6; color: #e0e0e0; font-style: italic; margin: 20px 0; border-left: 3px solid var(--gold); padding-left: 15px; }
+        .protocol { background: rgba(79, 172, 254, 0.08); border-radius: 15px; padding: 15px; border: 1px solid rgba(79, 172, 254, 0.2); }
+        .protocol-lbl { color: var(--blue); font-size: 11px; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 5px; }
+        
+        /* ACTION BUTTON */
+        .btn-elite { background: linear-gradient(to right, #4facfe, #00f2fe); color: #000; border: none; width: 100%; padding: 20px; border-radius: 50px; font-weight: 900; text-transform: uppercase; cursor: pointer; margin-top: 25px; box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4); }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-
-    <div class="ad-unit">
-        [ SECURE AD STREAM - AD_UNIT_TOP ]
+    
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:320px;height:50px"
+             data-ad-client="ca-app-pub-4545564564564564"
+             data-ad-slot="4546456456"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
     <div class="header">
         <h1 class="logo-text">SAFETY <span>ZODIAC</span></h1>
-        <p class="tagline">Daily Celestial Protection</p>
+        <p id="ui-tagline" class="tagline">Daily Threat Intelligence</p>
     </div>
 
-    <div style="margin-top: 30px;">
-        <div class="zodiac-card">
-            <div class="zodiac-header">
-                <span class="zodiac-icon">♌</span>
-                <span class="zodiac-name">Leo</span>
-            </div>
-            
-            <p class="forecast-text">
-                "Leo, your desire for the spotlight is glowing today, but so is your risk of oversharing. Just because your lunch looks like art doesn't mean your location tag needs to be public. Don't let your ego leak your privacy!"
-            </p>
+    <div class="zodiac-selector" id="selector"></div>
 
-            <div class="protocol-box">
-                <span class="protocol-label">Security Protocol</span>
-                <p class="protocol-text">Audit your Social Media privacy settings. High visibility attracts unwanted attention. Stay invisible, stay safe.</p>
-            </div>
+    <div class="zodiac-card" id="card">
+        <button class="share-btn" onclick="shareZodiac()" title="Share Forecast">
+            <span style="transform: rotate(-45deg); display: inline-block; margin-bottom: 3px; margin-right: 2px;">✈</span>
+        </button>
+        <h2 id="z-name" style="color: var(--blue); margin-top:0; text-transform: uppercase; letter-spacing: 1px;">Select Sign</h2>
+        <p id="z-forecast" class="forecast">Your cosmic security briefing is being decrypted. Please select your zodiac sign.</p>
+        <div class="protocol">
+            <span id="ui-protocol-lbl" class="protocol-lbl">Security Protocol</span>
+            <p id="z-protocol" style="font-size:14px; margin:0; color: #fff;">Awaiting data...</p>
         </div>
     </div>
 
-    <div class="ad-unit">
-        [ SECURE AD STREAM - AD_UNIT_BOTTOM ]
+    <div class="ad-container" style="min-height: 100px;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-format="fluid"
+             data-ad-layout-key="-fb+5w+4e-db+86"
+             data-ad-client="ca-app-pub-4545564564564564"
+             data-ad-slot="456456456"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
-    <button class="action-button">Unlock Elite Dojo Training</button>
+    <button id="ui-btn" class="btn-elite" onclick="celebrate()">Start Elite Training</button>
 
-    <div class="footer-info">
-        <p>Stay Safe Elite © 2026 | AI Generated Threat Intelligence</p>
-    </div>
-
+    <footer style="text-align:center; padding: 40px 0; opacity: 0.3; font-size: 9px; letter-spacing: 1px; text-transform: uppercase;">
+        Stay Safe Elite © 2026 | Global Protection AI
+    </footer>
 </div>
+
+<script>
+    // Detecting User Language
+    const userLang = (navigator.language || navigator.userLanguage).split('-')[0];
+    
+    // Translation Engine
+    const translations = {
+        en: { tagline: "Daily Threat Intelligence", protocol: "Security Protocol", btn: "Start Elite Training", shareMsg: "My Daily Safety Zodiac! 🛡️", signs: ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"] },
+        el: { tagline: "Ημερήσια Ανάλυση Απειλών", protocol: "Πρωτόκολλο Ασφαλείας", btn: "Έναρξη Elite Εκπαίδευσης", shareMsg: "Το Ζώδιο Ασφαλείας μου για σήμερα! 🛡️", signs: ["Κριός", "Ταύρος", "Δίδυμοι", "Καρκίνος", "Λέων", "Παρθένος", "Ζυγός", "Σκορπιός", "Τοξότης", "Αιγόκερως", "Υδροχόος", "Ιχθύες"] }
+    };
+
+    const ui = translations[userLang] || translations.en;
+
+    // Apply translations to UI
+    document.getElementById('ui-tagline').innerText = ui.tagline;
+    document.getElementById('ui-protocol-lbl').innerText = ui.protocol;
+    document.getElementById('ui-btn').innerText = ui.btn;
+
+    const zodiacIcons = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
+    const selector = document.getElementById('selector');
+
+    // Build the selector
+    zodiacIcons.forEach((icon, i) => {
+        const div = document.createElement('div');
+        div.className = 'zodiac-item';
+        div.innerHTML = `<span class="icon">${icon}</span><span class="name">${ui.signs[i]}</span>`;
+        div.onclick = () => {
+            document.querySelectorAll('.zodiac-item').forEach(el => el.classList.remove('active'));
+            div.classList.add('active');
+            updateCard(i);
+        };
+        selector.appendChild(div);
+    });
+
+    function updateCard(i) {
+        const name = ui.signs[i];
+        document.getElementById('z-name').innerText = name;
+        // This content will be populated by your Gemini AI daily JSON
+        document.getElementById('z-forecast').innerText = "The digital stars align for " + name + ". Your firewall is your shield today. Beware of unexpected direct messages.";
+        document.getElementById('z-protocol').innerText = "Run a Scam Radar scan immediately.";
+    }
+
+    // Viral Share Function
+    function shareZodiac() {
+        const name = document.getElementById('z-name').innerText;
+        const forecast = document.getElementById('z-forecast').innerText;
+        const text = `${ui.shareMsg}\n\n✨ ${name}: ${forecast}\n\nStay Safe with Stay Safe Elite!`;
+        
+        if (navigator.share) {
+            navigator.share({ title: 'Safety Zodiac Daily', text: text, url: 'https://staysafeelite.com' });
+        } else {
+            navigator.clipboard.writeText(text);
+            alert("Copied to clipboard! Share it with your friends.");
+        }
+    }
+
+    // Celebration Function (Πίμπολα)
+    function celebrate() {
+        confetti({ 
+            particleCount: 200, 
+            spread: 70, 
+            origin: { y: 0.6 }, 
+            colors: ['#4facfe', '#c5a059', '#ffffff'],
+            disableForReducedMotion: true
+        });
+    }
+</script>
 
 </body>
 </html>
