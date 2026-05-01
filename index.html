@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stay Safe Elite</title>
+
+<link rel="manifest" href="manifest.webmanifest">
+
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020617">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="quiz.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root { --bg: #020617; --card: rgba(15, 23, 42, 0.9); --accent: #38bdf8; --gold: #facc15; --text: #f8fafc; --muted: #94a3b8; --danger: #ef4444; --success: #22c55e; }
+* { box-sizing: border-box; font-family: -apple-system, system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+.hidden { display: none !important; }
+
+/* Header & XP Bar */
+.app-header { padding: 45px 20px 15px; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(56,189,248,0.2); position: sticky; top: 0; z-index: 100; }
+.xp-bar { background: rgba(255,255,255,0.1); border-radius: 10px; height: 10px; overflow: hidden; margin-top: 8px; }
+.xp-fill { background: linear-gradient(90deg, var(--gold), #fbbf24); height: 100%; width: 0%; transition: 0.8s; }
+
+/* SOS BUTTON - ELITE POSITION */
+.panic-btn { 
+    position: fixed; right: 20px; bottom: 210px; width: 70px; height: 70px; 
+    background: var(--danger); border-radius: 50%; display: flex; align-items: center; 
+    justify-content: center; box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); 
+    z-index: 999; border: 4px solid rgba(255,255,255,0.2); cursor: pointer;
+    animation: panic-pulse 1.5s infinite;
+}
+@keyframes panic-pulse { 0% { transform: scale(1); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
+@keyframes about-pulse { 0%,100% { box-shadow: 0 0 8px rgba(250,204,21,0.2); } 50% { box-shadow: 0 0 20px rgba(250,204,21,0.5); } }
+
+/* DOJO GATEWAY - ORIGINAL ELITE SIZE */
+.dojo-gateway {
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), #020617);
+    border: 3px solid var(--gold); border-radius: 28px; padding: 15px; margin: 20px 0;
+    position: relative; overflow: hidden; cursor: pointer; display: flex; align-items: center; gap: 15px;
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.3); transition: 0.3s;
+}
+.dojo-avatar-circle { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--gold); overflow: hidden; background: #000; flex-shrink: 0; }
+.dojo-avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+.gate-info h3 { margin: 0; font-size: 1.1rem; color: #fff; text-transform: uppercase; }
+.gate-info p { margin: 4px 0 0; font-size: 0.65rem; color: var(--gold); font-weight: bold; }
+.premium-tag { position: absolute; top: 12px; right: 15px; background: var(--gold); color: #000; font-size: 0.55rem; padding: 3px 8px; border-radius: 6px; font-weight: 900; }
+
+/* Cards & Grid */
+.glass-card { background: var(--card); backdrop-filter: blur(10px); border-radius: 28px; padding: 25px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.08); position: relative; }
+.main-cta { background: linear-gradient(135deg, var(--accent), #0ea5e9); border: none; color: #020617; padding: 18px; border-radius: 20px; font-size: 16px; font-weight: 800; width: 100%; cursor: pointer; margin-top: 15px; }
+
+/* QUIZ DESIGN - FIX FOR VISIBILITY */
+#quiz-question p.q-text { color: #ffffff !important; display: block !important; font-size: 1.1rem; font-weight: bold; text-align: center; }
+.option-btn {
+    background: #1e293b; color: white; border: none; padding: 15px; border-radius: 15px;
+    width: 100%; margin-bottom: 10px; font-weight: bold; cursor: pointer; transition: 0.2s;
+}
+.option-btn.correct { background: var(--success) !important; }
+.option-btn.wrong { background: var(--danger) !important; }
+
+/* ═══════════════════════════════════════
+   ELITE TOOLS GRID — NEON ICONS
+═══════════════════════════════════════ */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.tool-card {
+    background: rgba(255,255,255,0.03);
+    border-radius: 22px;
+    padding: 22px 12px 18px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.07);
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px;
+    position: relative; overflow: hidden;
+    transition: transform 0.15s;
+}
+.tool-card:active { transform: scale(0.94); }
+
+.tool-icon-wrap {
+    width: 58px; height: 58px;
+    border-radius: 17px;
+    display: flex; align-items: center; justify-content: center;
+}
+.tool-icon-wrap svg { width: 30px; height: 30px; }
+
+.tool-card small {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 2px; color: #94a3b8;
+    text-transform: uppercase;
+}
+
+/* per-tool neon colors */
+.tool-timer   .tool-icon-wrap { background: rgba(56,189,248,0.1);  border: 1px solid rgba(56,189,248,0.28); box-shadow: 0 0 14px rgba(56,189,248,0.18); }
+.tool-sos     .tool-icon-wrap { background: rgba(239,68,68,0.1);   border: 1px solid rgba(239,68,68,0.32);  box-shadow: 0 0 14px rgba(239,68,68,0.22); }
+.tool-nature  .tool-icon-wrap { background: rgba(34,197,94,0.1);   border: 1px solid rgba(34,197,94,0.28);  box-shadow: 0 0 14px rgba(34,197,94,0.18); }
+.tool-scams   .tool-icon-wrap { background: rgba(245,158,11,0.1);  border: 1px solid rgba(245,158,11,0.28); box-shadow: 0 0 14px rgba(245,158,11,0.18); }
+.tool-checkup .tool-icon-wrap { background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.28);box-shadow: 0 0 14px rgba(167,139,250,0.18); }
+.tool-vault   .tool-icon-wrap { background: rgba(250,204,21,0.1);  border: 1px solid rgba(250,204,21,0.28); box-shadow: 0 0 14px rgba(250,204,21,0.18); }
+.tool-ai      .tool-icon-wrap {
+    background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(14,165,233,0.06));
+    border: 1px solid rgba(56,189,248,0.45);
+    box-shadow: 0 0 20px rgba(56,189,248,0.3), 0 0 40px rgba(56,189,248,0.1);
+    animation: ai-glow 2.5s infinite;
+}
+@keyframes ai-glow {
+    0%,100% { box-shadow: 0 0 20px rgba(56,189,248,0.3), 0 0 40px rgba(56,189,248,0.1); }
+    50%      { box-shadow: 0 0 30px rgba(56,189,248,0.5), 0 0 56px rgba(56,189,248,0.2); }
+}
+
+.tool-new-badge {
+    position: absolute; top: 9px; right: 9px;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: #020617; font-size: 0.48rem; font-weight: 900;
+    padding: 2px 6px; border-radius: 5px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+/* Navigation */
+.nav-tabs { position: fixed; bottom: 0; left: 0; right: 0; height: 80px; background: rgba(2, 6, 23, 0.98); display: flex; border-top: 1px solid rgba(255,255,255,0.05); z-index: 1000; padding-bottom: env(safe-area-inset-bottom); }
+.nav-tab { flex: 1; background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.nav-tab.active { color: var(--accent); }
+
+/* Overlays */
+.overlay { position: fixed; inset: 0; background: var(--bg); z-index: 10000; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; overflow-y: auto; }
+.lang-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; width: 100%; max-width: 400px; padding-bottom: 40px; }
+.lang-btn { background: #1e293b; padding: 15px; border-radius: 15px; color: white; border: 1px solid #334155; font-weight: bold; cursor: pointer; }
+
+/* ── LOCK BADGE — discrete, no greying ── */
+.lock-badge {
+    position: absolute; top: 9px; left: 9px;
+    font-size: 0.72rem; line-height: 1;
+    pointer-events: none; opacity: 0.9; z-index: 2;
+}
+
+/* ── TAP RIPPLE ── */
+@keyframes tap-ripple {
+    0%   { transform: scale(1);   opacity: 0.5; }
+    100% { transform: scale(2.4); opacity: 0; }
+}
+.tap-ripple {
+    position: absolute; inset: 0; border-radius: inherit;
+    background: rgba(56,189,248,0.15);
+    animation: tap-ripple 0.35s ease-out forwards;
+    pointer-events: none;
+}
+
+/* ── TOAST ── */
+#lock-toast {
+    position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+    background: rgba(15,23,42,0.96); border: 1px solid rgba(56,189,248,0.25);
+    color: #f8fafc; font-size: 0.78rem; font-weight: 700;
+    padding: 10px 24px; border-radius: 30px;
+    backdrop-filter: blur(12px);
+    z-index: 99999; opacity: 0; transition: opacity 0.2s;
+    pointer-events: none; white-space: nowrap; letter-spacing: 0.4px;
+}
+#lock-toast.show { opacity: 1; }
+
+/* ══════════════════════════════════
+   TRAVEL GLOBE BUTTON
+══════════════════════════════════ */
+.travel-btn {
+    position: fixed; left: 20px; bottom: 210px;
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    z-index: 999; cursor: pointer;
+    overflow: visible;
+    animation: travel-pulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 22px rgba(30,120,200,0.65), 0 0 44px rgba(30,120,200,0.3);
+}
+@keyframes travel-pulse {
+    0%   { transform: scale(1);   box-shadow: 0 0 22px rgba(30,120,200,0.65), 0 0 44px rgba(30,120,200,0.3); }
+    70%  { transform: scale(1.1); box-shadow: 0 0 34px rgba(30,120,200,0.9), 0 0 64px rgba(30,120,200,0.5); }
+    100% { transform: scale(1);   box-shadow: 0 0 22px rgba(30,120,200,0.65), 0 0 44px rgba(30,120,200,0.3); }
+}
+/* Equatorial orbit ring — flat ellipse centred on the globe middle */
+.travel-btn .eq-orbit {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 84px; height: 28px;
+    margin-top: -14px; margin-left: -42px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255,255,255,0.28);
+    animation: eq-spin 4.5s linear infinite;
+    pointer-events: none;
+}
+.travel-btn .eq-orbit .plane-dot {
+    position: absolute;
+    top: -10px; left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+    width: 20px; height: 20px;
+    filter: drop-shadow(0 0 4px rgba(255,255,255,0.9));
+}
+@keyframes eq-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+<div id="lock-toast"></div>
+
+<div id="panic_button" class="panic-btn hidden" onclick="window.location.href='emergency.html'">
+    <span>🆘</span>
+</div>
+
+<div id="travel_button" class="travel-btn hidden" onclick="window.location.href='travel-hub.html'">
+    <svg width="70" height="70" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="border-radius:50%;display:block;">
+        <defs>
+            <radialGradient id="tOcean" cx="38%" cy="30%" r="70%">
+                <stop offset="0%"   stop-color="#2e8fcc"/>
+                <stop offset="55%"  stop-color="#1a6aaa"/>
+                <stop offset="100%" stop-color="#0d3d6e"/>
+            </radialGradient>
+            <clipPath id="tClip"><circle cx="100" cy="100" r="98"/></clipPath>
+        </defs>
+        <circle cx="100" cy="100" r="98" fill="url(#tOcean)"/>
+        <g clip-path="url(#tClip)" fill="#2d8a4e" opacity="0.92">
+            <path d="M55 28 L62 24 L72 22 L84 26 L90 32 L88 40 L82 46 L76 52 L72 60 L68 68 L62 74 L54 78 L46 76 L40 70 L38 62 L42 52 L48 42 L52 34Z"/>
+            <path d="M62 74 L68 78 L66 88 L60 92 L55 86 L54 78Z"/>
+            <path d="M90 18 L100 14 L110 18 L112 28 L106 34 L96 32 L88 26Z"/>
+            <path d="M66 96 L76 92 L84 96 L88 108 L88 122 L84 136 L78 148 L70 154 L62 150 L58 138 L58 122 L60 108Z"/>
+            <path d="M100 34 L108 30 L116 32 L120 40 L116 48 L110 52 L104 50 L100 44Z"/>
+            <path d="M106 24 L112 20 L118 24 L118 34 L112 36 L107 32Z"/>
+            <path d="M98 48 L104 46 L106 54 L102 58 L97 54Z"/>
+            <path d="M106 56 L118 52 L128 58 L134 70 L136 86 L134 102 L128 116 L120 126 L112 130 L104 126 L98 114 L96 100 L98 84 L102 68Z"/>
+            <path d="M122 28 L136 24 L152 26 L164 32 L172 42 L174 56 L170 68 L160 76 L148 80 L136 78 L126 72 L120 62 L118 50 L120 38Z"/>
+            <path d="M138 80 L146 78 L150 92 L144 104 L138 100 L134 88Z"/>
+            <path d="M158 76 L168 74 L174 82 L170 90 L162 90 L156 84Z"/>
+            <path d="M174 48 L180 44 L184 52 L180 60 L174 58Z"/>
+            <path d="M158 110 L174 106 L184 114 L186 128 L180 140 L168 144 L156 140 L150 128 L152 116Z"/>
+            <path d="M188 140 L192 136 L194 146 L190 150 L186 144Z"/>
+            <path d="M60 178 Q100 168 140 178 Q160 188 100 196 Q40 188 60 178Z"/>
+        </g>
+        <g clip-path="url(#tClip)" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="0.8">
+            <ellipse cx="100" cy="100" rx="98" ry="26"/>
+            <ellipse cx="100" cy="100" rx="98" ry="55"/>
+            <ellipse cx="100" cy="100" rx="98" ry="80"/>
+            <ellipse cx="100" cy="100" rx="40" ry="98"/>
+            <ellipse cx="100" cy="100" rx="80" ry="98"/>
+        </g>
+        <circle cx="100" cy="100" r="98" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+        <ellipse cx="76" cy="62" rx="24" ry="14" fill="rgba(255,255,255,0.07)" transform="rotate(-30,76,62)"/>
+    </svg>
+    <div class="eq-orbit">
+        <svg class="plane-dot" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z" fill="white"/>
+        </svg>
+    </div>
+</div>
+
+<section id="onboarding" class="overlay">
+    <div>
+        <div style="font-size:60px; margin-bottom:20px;">🛡️</div>
+        <h1>Stay Safe Elite</h1>
+        <p style="color:var(--muted);">Select Your Language</p>
+        <div class="lang-grid">
+            <div class="lang-btn" onclick="initApp('el')">🇬🇷 Greek</div>
+            <div class="lang-btn" onclick="initApp('en')">🇺🇸 English</div>
+            <div class="lang-btn" onclick="initApp('de')">🇩🇪 German</div>
+            <div class="lang-btn" onclick="initApp('fr')">🇫🇷 French</div>
+            <div class="lang-btn" onclick="initApp('es')">🇪🇸 Spanish</div>
+            <div class="lang-btn" onclick="initApp('it')">🇮🇹 Italian</div>
+            <div class="lang-btn" onclick="initApp('pt')">🇵🇹 Portuguese</div>
+            <div class="lang-btn" onclick="initApp('ru')">🇷🇺 Russian</div>
+            <div class="lang-btn" onclick="initApp('zh')">🇨🇳 Chinese</div>
+            <div class="lang-btn" onclick="initApp('hi')">🇮🇳 Hindi</div>
+        </div>
+    </div>
+</section>
+
+<div id="main_app" class="hidden">
+    <header class="app-header">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="color:var(--gold); font-weight:bold;">🔥 <span id="streak_val">1</span> <span id="txt_days">DAYS</span></div>
+            <div style="font-weight:900; color:var(--accent); cursor:pointer;" onclick="resetApp()">LEVEL <span id="user-level">1</span></div>
+        </div>
+        <div class="xp-bar"><div id="xp-fill" class="xp-fill"></div></div>
+    </header>
+
+    <main style="padding: 20px 20px 140px;">
+        <section id="screen_home">
+
+            <div style="text-align:center; padding: 10px 8px 20px;">
+                <h1 style="font-size:1.45rem; font-weight:900; color:#fff; margin:0 0 8px; font-family:'Rajdhani',sans-serif; letter-spacing:1px;">
+                    Stay Safe Elite
+                </h1>
+                <div style="font-size:0.95rem; font-weight:700; color:var(--accent); margin-bottom:8px; letter-spacing:0.5px;">
+                    Protect Your Life – Digital &amp; Physical
+                </div>
+                <div style="font-size:0.8rem; color:var(--muted); max-width:260px; margin:0 auto 14px; line-height:1.55;">
+                    Train your awareness. Protect yourself from scams and real-life threats.
+                </div>
+                <div onclick="window.location.href='about.html'" style="display:inline-flex; align-items:center; gap:6px; background:rgba(250,204,21,0.08); border:1px solid rgba(250,204,21,0.3); border-radius:30px; padding:7px 20px; cursor:pointer; animation:about-pulse 2.5s infinite;">
+                    <span style="font-size:0.72rem; font-weight:800; color:var(--gold); font-family:'Rajdhani',sans-serif; letter-spacing:1.5px; text-transform:uppercase;">👤 Meet the Team</span>
+                </div>
+            </div>
+            <div class="glass-card">
+                <div id="quiz-pill" style="font-size: 0.7rem; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 5px;">Daily Training</div>
+                <div id="quiz-container">
+                    <h2 id="quiz_title">🛡️ Stay Safe Elite</h2>
+                    <div id="quiz-question">
+                        <p id="quiz_text" style="color:var(--muted); font-size:0.9rem; margin-top:10px;">Ready for today's safety challenge?</p>
+                    </div>
+                </div>
+                <div id="quiz-options" style="margin-top:15px;"></div>
+                <button class="main-cta" id="quiz_btn" onclick="handleQuizStart()">START QUIZ</button>
+            </div>
+
+            <h3 id="txt_achievements" style="font-size:1rem; margin-bottom:10px;">🏆 Achievements</h3>
+            <div class="badge-grid" style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                <div id="badge-home" style="background:rgba(255,255,255,0.05); padding:12px; border-radius:18px; text-align:center; font-size:20px;">🎖️</div>
+                <div id="badge-digital" style="background:rgba(255,255,255,0.05); padding:12px; border-radius:18px; text-align:center; font-size:20px;">🛡️</div>
+                <div id="badge-scam" style="background:rgba(255,255,255,0.05); padding:12px; border-radius:18px; text-align:center; font-size:20px;">💎</div>
+                <div id="badge-emergency" style="background:rgba(255,255,255,0.05); padding:12px; border-radius:18px; text-align:center; font-size:20px;">🛠️</div>
+            </div>
+
+            <div class="dojo-gateway" id="dojo_card" onclick="goLocked('dojo.html')">
+                <div class="premium-tag">PREMIUM</div>
+                <span class="lock-badge">🔒</span>
+                <div class="dojo-avatar-circle">
+                    <img src="https://minamar7.github.io/StaySafeTips/IMG_20260209_231913.jpg" alt="Master">
+                </div>
+                <div class="gate-info">
+                    <h3 id="txt_dojo_title">Elite Defense Dojo</h3>
+                    <p id="txt_dojo_sub">MASTER TANG SOO DO</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen_premium" class="hidden">
+            <div class="glass-card">
+                <h2 id="txt_tools_title" style="color:var(--gold); margin:0;">Elite Tools 🔓</h2>
+
+                <div class="tools-grid">
+
+                    <div class="tool-card tool-timer" onclick="window.location.href='timer.html'">
+                        <div class="tool-icon-wrap"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="17" r="10" stroke="#38bdf8" stroke-width="2"/><path d="M16 11v6l4 2" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 4h6" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/><path d="M16 4v3" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/></svg></div>
+                        <small id="t1">SAFE TIMER</small>
+                    </div>
+
+                    <div class="tool-card tool-sos" onclick="window.location.href='sos-hub.html'">
+                        <div class="tool-icon-wrap"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="11" stroke="#ef4444" stroke-width="2"/><circle cx="16" cy="16" r="6" stroke="#ef4444" stroke-width="1.5" stroke-opacity="0.4"/><path d="M16 9v3M16 20v3M9 16h3M20 16h3" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="16" r="2.5" fill="#ef4444"/></svg></div>
+                        <small id="t2">SOS HUB</small>
+                    </div>
+
+                    <div class="tool-card tool-nature" onclick="window.location.href='weather-alerts.html'">
+                        <div class="tool-icon-wrap"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="11" stroke="#22c55e" stroke-width="2"/><path d="M5 16h22" stroke="#22c55e" stroke-width="1.5" stroke-opacity="0.4"/><path d="M16 5c-3 3-4 7-4 11s1 8 4 11" stroke="#22c55e" stroke-width="1.5"/><path d="M16 5c3 3 4 7 4 11s-1 8-4 11" stroke="#22c55e" stroke-width="1.5"/></svg></div>
+                        <small id="t3">NATURE</small>
+                    </div>
+
+                    <div class="tool-card tool-scams" id="card_scams" onclick="goLocked('scam-alerts.html')">
+                        <span class="lock-badge">🔒</span>
+                        <div class="tool-icon-wrap"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4L28 26H4L16 4z" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round"/><path d="M16 13v5" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/><circle cx="16" cy="22" r="1.5" fill="#f59e0b"/></svg></div>
+                        <small id="t4">SCAMS</small>
+                    </div>
+
+                    <div class="tool-card tool-checkup" onclick="window.location.href='checkup.html'">
+                        <div class="tool-icon-wrap"><svg viewBox="0 0 32 32" fill="none"><path d="M16 5L6 9v8c0 6 4.5 10.5 10 13 5.5-2.5 10-7 10-13V9L16 5z" stroke="#a78bfa" stroke-width="2" stroke-linejoin="round"/><path d="M11 16l3.5 3.5L21 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <small id="t5">CHECKUP</small>
+                    </div>
+
+                    <div class="tool-card tool-ai" id="card_ai" onclick="goLocked('ai-threat.html')">
+                        <div class="tool-new-badge">NEW</div>
+                        <span class="lock-badge">🔒</span>
+                        <div class="tool-icon-wrap"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="4.5" stroke="#38bdf8" stroke-width="1.8"/><circle cx="16" cy="16" r="2" fill="#38bdf8" fill-opacity="0.7"/><circle cx="16" cy="5" r="1.8" stroke="#38bdf8" stroke-width="1.5"/><circle cx="16" cy="27" r="1.8" stroke="#38bdf8" stroke-width="1.5"/><circle cx="5" cy="16" r="1.8" stroke="#38bdf8" stroke-width="1.5"/><circle cx="27" cy="16" r="1.8" stroke="#38bdf8" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.3" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6"/><circle cx="23.5" cy="8.5" r="1.3" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6"/><circle cx="8.5" cy="23.5" r="1.3" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6"/><circle cx="23.5" cy="23.5" r="1.3" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6"/><line x1="16" y1="6.8" x2="16" y2="11.5" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.5"/><line x1="16" y1="20.5" x2="16" y2="25.2" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.5"/><line x1="6.8" y1="16" x2="11.5" y2="16" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.5"/><line x1="20.5" y1="16" x2="25.2" y2="16" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.5"/><line x1="9.8" y1="9.8" x2="12.8" y2="12.8" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.4"/><line x1="22.2" y1="9.8" x2="19.2" y2="12.8" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.4"/><line x1="9.8" y1="22.2" x2="12.8" y2="19.2" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.4"/><line x1="22.2" y1="22.2" x2="19.2" y2="19.2" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.4"/></svg></div>
+                        <small id="t6">AI THREAT</small>
+                    </div>
+
+                    <div class="tool-card tool-vault" id="card_vault" onclick="goLocked('vault.html')">
+                        <span class="lock-badge">🔒</span>
+                        <div class="tool-icon-wrap"><svg viewBox="0 0 32 32" fill="none"><rect x="5" y="11" width="22" height="16" rx="4" stroke="#facc15" stroke-width="2"/><path d="M11 11V8a5 5 0 0 1 10 0v3" stroke="#facc15" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="19" r="2.5" stroke="#facc15" stroke-width="1.8"/><path d="M16 21.5v2" stroke="#facc15" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+                        <small>VAULT</small>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="nav-tabs">
+        <button class="nav-tab active" id="nav_home" onclick="showScreen('home', this)">🏠</button>
+        <button class="nav-tab" onclick="window.location.href='scam-alerts2.html'">📡</button>
+        <button class="nav-tab" id="nav_premium" onclick="showScreen('premium', this)">💎</button>
+    </nav>
+
+    <div id="ad-unit-footer" style="position:fixed; bottom:80px; width:100%; height:50px; background:#020617; border-top:1px solid rgba(56,189,248,0.2); z-index:998; display:flex; align-items:center; justify-content:center;">
+        <span style="color:#1e293b; font-size:9px; letter-spacing:2px;">SECURE AD STREAM</span>
+    </div>
+</div>
+
+<script>
+window.googletag = window.googletag || {cmd: []};
+googletag.cmd.push(function() {
+    googletag.defineSlot('/4000056160039274/6359424861', [320, 50], 'ad-unit-footer').addService(googletag.pubads());
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+});
+
+// ═══════════════════════════════════════
+// PREMIUM LOCK SYSTEM
+// ═══════════════════════════════════════
+function isPremium() {
+    return localStorage.getItem('premium_user') === 'true';
+}
+
+function goLocked(dest) {
+    if (isPremium()) {
+        window.location.href = dest;
+    } else {
+        sessionStorage.setItem('premium_dest', dest);
+        window.location.href = 'premium.html';
+    }
+}
+
+// ═══════════════════════════════════════
+// QUIZ LEVEL LOCK (level 4+)
+// ═══════════════════════════════════════
+const QUIZ_LOCK_LEVEL = 4;
+
+function handleQuizStart() {
+    const level = parseInt(localStorage.getItem('quiz_level') || '1');
+    if (level < QUIZ_LOCK_LEVEL) { _doStartQuiz(); return; }
+    if (isPremium()) { _doStartQuiz(); return; }
+    sessionStorage.setItem('premium_dest', '');
+    window.location.href = 'premium.html';
+}
+
+function _doStartQuiz() {
+    const qBtn   = document.getElementById('quiz_btn');
+    const qTitle = document.getElementById('quiz_title');
+    const qText  = document.getElementById('quiz_text');
+    if (qBtn)   qBtn.classList.add('hidden');
+    if (qTitle) qTitle.classList.add('hidden');
+    if (qText)  qText.classList.add('hidden');
+    if (window.QuizEngine) window.QuizEngine.start(currentLang, 'quiz-options');
+}
+
+// backward compat — quiz.js may call startEngine()
+function startEngine() { _doStartQuiz(); }
+
+// ═══════════════════════════════════════
+// TRANSLATIONS
+// ═══════════════════════════════════════
+const translations = {
+    'en': { days: 'DAYS', training: 'Daily Training', start: 'START QUIZ', ach: '🏆 Achievements', dojo: 'Elite Defense Dojo', dojo_sub: 'MASTER TANG SOO DO', tools: 'Elite Tools 🔓', t1: 'SAFE TIMER', t2: 'SOS HUB', t3: 'NATURE', t4: 'SCAMS', t5: 'CHECKUP', t6: 'AI THREAT', ready: 'Ready for today\'s safety challenge?' },
+    'el': { days: 'ΗΜΕΡΕΣ', training: 'Καθημερινή Εκπαίδευση', start: 'ΕΝΑΡΞΗ ΤΕΣΤ', ach: '🏆 Επιτεύγματα', dojo: 'Elite Dojo Άμυνας', dojo_sub: 'MASTER TANG SOO DO', tools: 'Elite Εργαλεία 🔓', t1: 'ΧΡΟΝΟΜΕΤΡΟ', t2: 'SOS HUB', t3: 'ΦΥΣΗ', t4: 'ΑΠΑΤΕΣ', t5: 'ΕΛΕΓΧΟΣ', t6: 'AI ΑΝΑΛΥΣΗ', ready: 'Έτοιμος για τη σημερινή πρόκληση;' },
+    'de': { days: 'TAGE', training: 'Tägliches Training', start: 'QUIZ STARTEN', ach: '🏆 Erfolge', dojo: 'Elite-Verteidigungs-Dojo', dojo_sub: 'MEISTER TANG SOO DO', tools: 'Elite-Tools 🔓', t1: 'SICHERER TIMER', t2: 'SOS HUB', t3: 'NATUR', t4: 'BETRUG', t5: 'CHECKUP', t6: 'KI-ANALYSE', ready: 'Bereit für die heutige Herausforderung?' },
+    'fr': { days: 'JOURS', training: 'Entraînement Quotidien', start: 'DÉMARRER LE QUIZ', ach: '🏆 Succès', dojo: 'Dojo de Défense Elite', dojo_sub: 'MAÎTRE TANG SOO DO', tools: 'Outils Elite 🔓', t1: 'MINUTEUR', t2: 'SOS HUB', t3: 'NATURE', t4: 'ARNAQUES', t5: 'CHECKUP', t6: 'IA MENACE', ready: 'Prêt pour le défi du jour?' },
+    'es': { days: 'DÍAS', training: 'Entrenamiento Diario', start: 'INICIAR QUIZ', ach: '🏆 Logros', dojo: 'Dojo de Defensa Élite', dojo_sub: 'MAESTRO TANG SOO DO', tools: 'Herramientas Élite 🔓', t1: 'TEMPORIZADOR', t2: 'SOS HUB', t3: 'NATURALEZA', t4: 'ESTAFAS', t5: 'CHECKUP', t6: 'IA AMENAZA', ready: '¿Listo para el desafío de hoy?' },
+    'it': { days: 'GIORNI', training: 'Allenamento Quotidiano', start: 'INIZIA QUIZ', ach: '🏆 Traguardi', dojo: 'Dojo di Difesa Elite', dojo_sub: 'MAESTRO TANG SOO DO', tools: 'Strumentι Elite 🔓', t1: 'TIMER SICURO', t2: 'SOS HUB', t3: 'NATURA', t4: 'TRUFFE', t5: 'CHECKUP', t6: 'IA MINACCIA', ready: 'Pronto per la sfida di oggi?' },
+    'pt': { days: 'DIAS', training: 'Treino Diário', start: 'INICIAR QUIZ', ach: '🏆 Conquistas', dojo: 'Dojo de Defensa Elite', dojo_sub: 'MESTRE TANG SOO DO', tools: 'Ferramentas Elite 🔓', t1: 'TEMPORIZADOR', t2: 'SOS HUB', t3: 'NATUREZA', t4: 'FRAUDES', t5: 'CHECKUP', t6: 'IA AMEAÇA', ready: 'Pronto para o desafio de hoje?' },
+    'ru': { days: 'ДНИ', training: 'Тренировка', start: 'НАЧАТЬ', ach: '🏆 Достижения', dojo: 'Элитное Додзё', dojo_sub: 'МАСТЕР TANG SOO DO', tools: 'Инструменты 🔓', t1: 'ТАЙМЕР', t2: 'SOS HUB', t3: 'ПРИРОДА', t4: 'МОШЕННИКИ', t5: 'ПРОВЕРКА', t6: 'ИИ УГРОЗА', ready: 'Готовы к испытанию?' },
+    'zh': { days: '天', training: '每日训练', start: '开始测验', ach: '🏆 成就', dojo: '精英防卫道场', dojo_sub: '唐手道大师', tools: '精英工具 🔓', t1: '安全计时器', t2: 'SOS中心', t3: '自然', t4: '诈骗', t5: '检查', t6: 'AI威胁', ready: '准备好迎接今天的安全挑战了吗？' },
+    'hi': { days: 'दिन', training: 'दैनिक प्रशिक्षण', start: 'क्विज़ शुरू करें', ach: '🏆 उपलब्धियाँ', dojo: 'एलीट डिफेंस डोजो', dojo_sub: 'मास्टर TANG SOO DO', tools: 'एलीट टूल्स 🔓', t1: 'सेफ टाइमर', t2: 'SOS हब', t3: 'प्रकृति', t4: 'धोखाधड़ी', t5: 'चेकअप', t6: 'AI खतरा', ready: 'आज की सुरक्षा चुनौती के लिए तैयार हैं?' }
+};
+
+let currentLang = localStorage.getItem('user_lang') || 'en';
+
+function initApp(lang) {
+    localStorage.setItem('user_lang', lang);
+    localStorage.setItem('app_init', 'true');
+    currentLang = lang;
+    applyTranslations(lang);
+    showMainApp();
+}
+
+function applyTranslations(lang) {
+    const t = translations[lang] || translations['en'];
+    const ids = {
+        'txt_days': 'days', 'quiz-pill': 'training', 'quiz_btn': 'start', 
+        'txt_achievements': 'ach', 'txt_dojo_title': 'dojo', 
+        'txt_dojo_sub': 'dojo_sub', 'txt_tools_title': 'tools',
+        't1': 't1', 't2': 't2', 't3': 't3', 't4': 't4', 't5': 't5', 't6': 't6', 'quiz_text': 'ready'
+    };
+    for (let id in ids) {
+        let el = document.getElementById(id);
+        if (el) el.innerText = t[ids[id]];
+    }
+}
+
+function showMainApp() {
+    document.getElementById('onboarding').classList.add('hidden');
+    document.getElementById('main_app').classList.remove('hidden');
+    document.getElementById('panic_button').classList.remove('hidden');
+    document.getElementById('travel_button').classList.remove('hidden');
+    applyTranslations(currentLang);
+}
+
+function showScreen(screen, btn) {
+    document.getElementById('screen_home').classList.add('hidden');
+    document.getElementById('screen_premium').classList.add('hidden');
+    document.getElementById('screen_' + screen).classList.remove('hidden');
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+}
+
+function resetApp() {
+    localStorage.removeItem('app_init');
+    localStorage.removeItem('premium_user');
+    location.reload();
+}
+
+// Service Worker Registration για PWA συμβατότητα
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed', err));
+    });
+}
+
+window.onload = () => { if (localStorage.getItem('app_init') === 'true') showMainApp(); };
+</script>
+
+<footer style="margin-top: 50px; padding: 20px 20px 150px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05);">
+    <a href="privacy.html" style="color: #64748b; text-decoration: none; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; display: inline-block;">
+        Privacy Policy & Disclaimer
+    </a>
+    <p style="color: #334155; font-size: 0.6rem; margin-top: 10px;">&copy; 2026 Stay Safe Elite. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
