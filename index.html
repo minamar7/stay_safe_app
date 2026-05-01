@@ -234,17 +234,45 @@ body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden;
 
 <div id="side-menu">
     <button onclick="toggleMenu()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--accent); font-size: 24px; cursor: pointer;">✕</button>
-    <h2 style="color: var(--gold); font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; margin-bottom: 35px; font-size: 1.5rem;">ELITE MENU</h2>
-    <div style="display: flex; flex-direction: column;">
-        <div class="menu-item" onclick="location.href='index.html'; toggleMenu();">🏠 Home</div>
-        <div class="menu-item" onclick="location.href='vault.html'">🔐 Security Vault</div>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h2 style="color: var(--gold); font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; margin: 0; font-size: 1.5rem;">ELITE HUB</h2>
+        <small style="color: var(--accent); font-size: 0.6rem; letter-spacing: 1px;">PRODUCTION READY v1.0</small>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px; overflow-y: auto; max-height: 80vh; padding-right: 5px;">
+        
+        <div class="menu-item" onclick="location.href='index.html'; toggleMenu();">🏠 Home Dashboard</div>
+        
+        <div style="color: var(--muted); font-size: 0.65rem; margin-top: 10px; padding-left: 10px; text-transform: uppercase;">Safety Tools</div>
+        <div class="menu-item" onclick="location.href='sos-hub.html'">🆘 SOS Emergency Hub</div>
+        <div class="menu-item" onclick="location.href='timer.html'">⏱️ Safe Timer</div>
+        <div class="menu-item" onclick="location.href='travel-hub.html'">🌍 World Travel Hub</div>
+        <div class="menu-item" onclick="location.href='weather-alerts.html'">⛈️ Nature & Weather</div>
+        
+        <div style="color: var(--muted); font-size: 0.65rem; margin-top: 10px; padding-left: 10px; text-transform: uppercase;">Cyber Protection</div>
+        <div class="menu-item" onclick="location.href='scam-alerts2.html'">📡 Live Scam Feed</div>
+        <div class="menu-item" onclick="location.href='checkup.html'">🛡️ Digital Checkup</div>
+        
+        <div style="color: var(--gold); font-size: 0.65rem; margin-top: 10px; padding-left: 10px; text-transform: uppercase;">Elite Premium</div>
+        <div class="menu-item" onclick="goLocked('dojo.html')" style="border: 1px solid rgba(250, 204, 21, 0.2);">🥋 Defense Dojo <span style="float:right;">🔒</span></div>
+        <div class="menu-item" onclick="goLocked('ai-threat.html')" style="border: 1px solid rgba(250, 204, 21, 0.2);">🤖 AI Threat Analysis <span style="float:right;">🔒</span></div>
+        <div class="menu-item" onclick="goLocked('scam-alerts.html')" style="border: 1px solid rgba(250, 204, 21, 0.2);">🚫 Advanced Anti-Scam <span style="float:right;">🔒</span></div>
+        <div class="menu-item" onclick="goLocked('vault.html')" style="border: 1px solid rgba(250, 204, 21, 0.2);">🔐 Security Vault <span style="float:right;">🔒</span></div>
+
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05); margin: 15px 0;">
+        
         <div class="menu-item" onclick="location.href='about.html'">👥 Meet the Team</div>
-        <div class="menu-item" onclick="location.href='settings.html'">⚙️ Settings</div>
-        <div class="menu-item" onclick="location.href='help.html'">❓ Help</div>
-        <div onclick="resetApp()" style="padding: 15px; color: var(--danger); margin-top: 30px; font-weight: bold; cursor: pointer; border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; text-align: center;">🚪 Exit</div>
+        <div class="menu-item" onclick="location.href='settings.html'">⚙️ App Settings</div>
+        <div class="menu-item" onclick="location.href='help.html'">❓ Help Center</div>
+        
+        <div onclick="resetApp()" style="padding: 12px; color: var(--danger); margin-top: 15px; font-weight: bold; cursor: pointer; border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; text-align: center; background: rgba(239,68,68,0.05); font-size: 0.9rem;">
+            🚪 Exit Elite
+        </div>
     </div>
 </div>
 <div id="menu-overlay" onclick="toggleMenu()"></div>
+
 
 <div id="lock-toast"></div>
 
