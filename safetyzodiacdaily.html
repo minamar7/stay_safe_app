@@ -1,107 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Safety Zodiac Daily - Stay Safe Elite</title>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-4545564564564564" crossorigin="anonymous"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        :root { --blue: #4facfe; --gold: #c5a059; --bg: #0a0e14; }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        :root { --blue: #4facfe; --gold: #c5a059; --bg: #000000; --card-bg: rgba(20, 27, 38, 0.75); }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
         .app-container { width: 100%; max-width: 450px; }
         
-        /* HEADER */
-        .header { text-align: center; padding: 20px 0; border-bottom: 1px solid #1a222d; }
-        .logo-text { font-size: 24px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+        /* ELITE UI ELEMENTS */
+        .header { text-align: center; padding: 20px 0; }
+        .logo-text { font-size: 24px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin: 0; }
         .logo-text span { color: var(--blue); }
         .tagline { color: var(--gold); font-size: 10px; font-weight: bold; margin-top: 5px; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* ADMOB CONTAINERS */
-        .ad-container { width: 100%; display: flex; justify-content: center; margin: 15px 0; background: rgba(255,255,255,0.02); border-radius: 12px; min-height: 50px; overflow: hidden; }
+        .ad-container { width: 100%; display: flex; justify-content: center; margin: 15px 0; min-height: 50px; border-radius: 12px; background: rgba(255,255,255,0.03); }
 
-        /* HORIZONTAL SELECTOR */
-        .zodiac-selector { display: flex; overflow-x: auto; gap: 12px; padding: 20px 0; scrollbar-width: none; }
+        .zodiac-selector { display: flex; overflow-x: auto; gap: 12px; padding: 20px 5px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .zodiac-selector::-webkit-scrollbar { display: none; }
-        .zodiac-item { flex: 0 0 auto; text-align: center; padding: 12px; border: 1px solid #1a222d; border-radius: 18px; min-width: 65px; background: #0d121a; cursor: pointer; transition: 0.3s; }
-        .zodiac-item.active { border-color: var(--gold); background: rgba(197, 160, 89, 0.1); transform: scale(1.1); }
-        .zodiac-item .icon { font-size: 24px; display: block; }
-        .zodiac-item .name { font-size: 9px; text-transform: uppercase; color: #666; margin-top: 5px; font-weight: bold; }
+        .zodiac-item { flex: 0 0 auto; text-align: center; padding: 15px 10px; border: 1px solid #1a222d; border-radius: 20px; min-width: 70px; background: #0d121a; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .zodiac-item.active { border-color: var(--gold); background: rgba(197, 160, 89, 0.15); transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2); }
+        .zodiac-item .icon { font-size: 28px; display: block; margin-bottom: 5px; }
+        .zodiac-item .name { font-size: 10px; text-transform: uppercase; color: #777; font-weight: bold; }
+        .zodiac-item.active .name { color: var(--blue); }
 
-        /* MAIN CARD */
-        .zodiac-card { background: linear-gradient(145deg, #141b26, #0d121a); border: 1px solid var(--gold); border-radius: 25px; padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); position: relative; }
-        .share-btn { position: absolute; top: 20px; right: 20px; background: rgba(79, 172, 254, 0.15); border: none; border-radius: 50%; width: 42px; height: 42px; color: var(--blue); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        /* GLASS CARD */
+        .zodiac-card { 
+            background: var(--card-bg); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(197, 160, 89, 0.3); 
+            border-radius: 30px; padding: 25px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; 
+            min-height: 250px; transition: 0.5s;
+        }
+        .share-btn { position: absolute; top: 20px; right: 20px; background: rgba(79, 172, 254, 0.2); border: none; border-radius: 50%; width: 45px; height: 45px; color: var(--blue); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+
+        /* SECURITY METER */
+        .meter-container { margin: 20px 0 10px 0; }
+        .meter-bar { width: 100%; height: 6px; background: #1a222d; border-radius: 10px; overflow: hidden; }
+        .meter-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), var(--blue)); transition: width 1.5s ease-in-out; }
         
-        .forecast { font-size: 16px; line-height: 1.6; color: #e0e0e0; font-style: italic; margin: 20px 0; border-left: 3px solid var(--gold); padding-left: 15px; }
-        .protocol { background: rgba(79, 172, 254, 0.08); border-radius: 15px; padding: 15px; border: 1px solid rgba(79, 172, 254, 0.2); }
-        .protocol-lbl { color: var(--blue); font-size: 11px; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 5px; }
+        .forecast { font-size: 16px; line-height: 1.7; color: #efefef; font-style: italic; margin: 20px 0; opacity: 0; transition: 0.5s; }
+        .forecast.visible { opacity: 1; }
+        .protocol { background: rgba(79, 172, 254, 0.1); border-radius: 15px; padding: 15px; border-left: 4px solid var(--blue); }
         
-        .btn-elite { background: linear-gradient(to right, #4facfe, #00f2fe); color: #000; border: none; width: 100%; padding: 20px; border-radius: 50px; font-weight: 900; text-transform: uppercase; cursor: pointer; margin-top: 25px; box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4); }
+        .btn-elite { background: linear-gradient(45deg, #4facfe, #00f2fe); color: #000; border: none; width: 100%; padding: 20px; border-radius: 50px; font-weight: 900; text-transform: uppercase; cursor: pointer; margin-top: 25px; box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4); transition: 0.3s; }
+        .btn-elite:active { transform: scale(0.96); }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    
     <div class="ad-container">
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:320px;height:50px"
-             data-ad-client="ca-app-pub-4545564564564564"
-             data-ad-slot="4546456456"></ins>
+        <ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="ca-app-pub-4545564564564564" data-ad-slot="4546456456"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
     <div class="header">
         <h1 class="logo-text">SAFETY <span>ZODIAC</span></h1>
-        <p id="ui-tagline" class="tagline">Daily Threat Intelligence</p>
+        <p id="ui-tagline" class="tagline">Loading Intelligence...</p>
     </div>
 
     <div class="zodiac-selector" id="selector"></div>
 
     <div class="zodiac-card" id="card">
-        <button class="share-btn" onclick="shareZodiac()">
-            <span style="transform: rotate(-45deg); display: inline-block; margin-bottom: 3px;">✈</span>
-        </button>
-        <h2 id="z-name" style="color: var(--blue); margin-top:0; text-transform: uppercase;">Select Sign</h2>
-        <p id="z-forecast" class="forecast">Choose your sign to reveal your cosmic security briefing.</p>
+        <button class="share-btn" onclick="shareZodiac()">✈</button>
+        <h2 id="z-name" style="color: var(--blue); margin:0; text-transform: uppercase; letter-spacing: 1px;">Elite Protection</h2>
+        
+        <div class="meter-container">
+            <div class="meter-bar"><div id="meter-fill" class="meter-fill"></div></div>
+            <div style="display:flex; justify-content: space-between; font-size: 9px; color: var(--gold); margin-top: 5px; font-weight: bold;">
+                <span>SECURITY INDEX</span><span id="meter-val">0%</span>
+            </div>
+        </div>
+
+        <p id="z-forecast" class="forecast">Select your sign to decrypt your daily security protocol from Vercel Node.</p>
+        
         <div class="protocol">
-            <span id="ui-protocol-lbl" class="protocol-lbl">Security Protocol</span>
-            <p id="z-protocol" style="font-size:14px; margin:0; color: #fff;">Awaiting input...</p>
+            <span id="ui-protocol-lbl" style="color: var(--blue); font-size: 10px; font-weight: bold; text-transform: uppercase;">Protocol</span>
+            <p id="z-protocol" style="font-size:14px; margin:5px 0 0 0; color: #fff; font-weight: 500;">Awaiting Data...</p>
         </div>
     </div>
 
     <div class="ad-container" style="min-height: 100px;">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-format="fluid"
-             data-ad-layout-key="-fb+5w+4e-db+86"
-             data-ad-client="ca-app-pub-4545564564564564"
-             data-ad-slot="456456456"></ins>
+        <ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86" data-ad-client="ca-app-pub-4545564564564564" data-ad-slot="456456456"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
-    <button id="ui-btn" class="btn-elite" onclick="celebrate()">Start Elite Training</button>
-
-    <footer style="text-align:center; padding: 40px 0; opacity: 0.3; font-size: 9px; text-transform: uppercase;">Stay Safe Elite © 2026</footer>
+    <button id="ui-btn" class="btn-elite" onclick="celebrate()">Start Training</button>
+    <footer style="text-align:center; padding: 30px 0; opacity: 0.4; font-size: 8px;">STAY SAFE ELITE © 2026</footer>
 </div>
 
 <script>
-    /**
-     * API_NAME: safety_zodiac_daily
-     * Description: This script handles the daily security forecasts.
-     */
+    // VERCEL INTEGRATION
+    const VERCEL_URL = "https://your-vercel-project.vercel.app/api/safety_zodiac_daily"; // Εδώ θα βάλεις το δικό σου URL
+
     const userLang = (navigator.language || navigator.userLanguage).split('-')[0];
     const translations = {
-        en: { tagline: "Daily Threat Intelligence", protocol: "Security Protocol", btn: "Start Elite Training", shareMsg: "My Daily Safety Zodiac! 🛡️", signs: ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"] },
-        el: { tagline: "Ημερήσια Ανάλυση Απειλών", protocol: "Πρωτόκολλο Ασφαλείας", btn: "Έναρξη Elite Εκπαίδευσης", shareMsg: "Το Ζώδιο Ασφαλείας μου! 🛡️", signs: ["Κριός", "Ταύρος", "Δίδυμοι", "Καρκίνος", "Λέων", "Παρθένος", "Ζυγός", "Σκορπιός", "Τοξότης", "Αιγόκερως", "Υδροχόος", "Ιχθύες"] }
+        en: { tagline: "Daily Threat Intelligence", protocol: "Security Protocol", btn: "Start Elite Training", signs: ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"] },
+        el: { tagline: "Ημερήσια Ανάλυση Απειλών", protocol: "Πρωτόκολλο Ασφαλείας", btn: "Έναρξη Elite Εκπαίδευσης", signs: ["Κριός", "Ταύρος", "Δίδυμοι", "Καρκίνος", "Λέων", "Παρθένος", "Ζυγός", "Σκορπιός", "Τοξότης", "Αιγόκερως", "Υδροχόος", "Ιχθύες"] }
     };
 
     const ui = translations[userLang] || translations.en;
     document.getElementById('ui-tagline').innerText = ui.tagline;
-    document.getElementById('ui-protocol-lbl').innerText = ui.protocol;
     document.getElementById('ui-btn').innerText = ui.btn;
 
     const zodiacIcons = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
@@ -114,28 +120,51 @@
         div.onclick = () => {
             document.querySelectorAll('.zodiac-item').forEach(el => el.classList.remove('active'));
             div.classList.add('active');
-            updateCard(i);
+            fetchZodiacData(i);
         };
         selector.appendChild(div);
     });
 
-    function updateCard(i) {
-        // Here the app will inject data from safety_zodiac_daily API
-        const name = ui.signs[i];
-        document.getElementById('z-name').innerText = name;
-        document.getElementById('z-forecast').innerText = "The digital stars align for " + name + ". Your firewall is your shield today. Watch out for unknown direct messages.";
-        document.getElementById('z-protocol').innerText = "Activate Scam Radar now.";
-    }
+    async function fetchZodiacData(index) {
+        const forecastEl = document.getElementById('z-forecast');
+        forecastEl.classList.remove('visible');
+        
+        // Reset Meter
+        document.getElementById('meter-fill').style.width = '0%';
+        document.getElementById('meter-val').innerText = '0%';
 
-    function shareZodiac() {
-        const text = `${ui.shareMsg}\n\n✨ ${document.getElementById('z-name').innerText}: ${document.getElementById('z-forecast').innerText}\n\nStay protected with Stay Safe Elite!`;
-        if (navigator.share) navigator.share({ title: 'Safety Zodiac', text: text, url: 'https://staysafeelite.com' });
-        else { navigator.clipboard.writeText(text); alert("Copied!"); }
+        try {
+            // Εδώ καλούμε το Vercel API
+            // const response = await fetch(`${VERCEL_URL}?sign=${ui.signs[index]}&lang=${userLang}`);
+            // const data = await response.json();
+            
+            // Mock-up data (Ο προγραμματιστής θα το συνδέσει με το response παραπάνω)
+            setTimeout(() => {
+                const randomSecure = Math.floor(Math.random() * (99 - 70 + 1) + 70);
+                document.getElementById('z-name').innerText = ui.signs[index];
+                forecastEl.innerText = "The stars are aligned for " + ui.signs[index] + ". Your digital perimeter is secure, but stay alert for unusual network traffic tonight.";
+                document.getElementById('z-protocol').innerText = "Encrypted Connection Required.";
+                
+                // Animate Meter
+                document.getElementById('meter-fill').style.width = randomSecure + '%';
+                document.getElementById('meter-val').innerText = randomSecure + '%';
+                forecastEl.classList.add('visible');
+            }, 500);
+
+        } catch (error) {
+            forecastEl.innerText = "Error connecting to safety_zodiac_daily. Check your connection.";
+        }
     }
 
     function celebrate() {
-        confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 }, colors: ['#4facfe', '#c5a059', '#ffffff'] });
+        confetti({ particleCount: 150, spread: 60, origin: { y: 0.7 }, colors: ['#4facfe', '#c5a059', '#ffffff'] });
+    }
+
+    function shareZodiac() {
+        const text = `🛡️ Stay Safe Elite Zodiac: ${document.getElementById('z-name').innerText}\nIndex: ${document.getElementById('meter-val').innerText}\n${document.getElementById('z-forecast').innerText}`;
+        if (navigator.share) navigator.share({ title: 'Safety Zodiac', text: text });
     }
 </script>
 </body>
 </html>
+
